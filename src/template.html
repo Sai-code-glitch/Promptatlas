@@ -1,0 +1,288 @@
+<title>Prompt Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: sticky search bar; category index on the left, prompt list on the right; a detail drawer slides over from the right to fill and copy a prompt. */
+:root {
+  --bg: #F2F3EF; --surface: #FFFFFF; --sunk: #E9EBE5; --ink: #15181D; --muted: #5A6170;
+  --line: #D8DBD3; --accent: #1F48C9; --accent-ink: #FFFFFF; --accent-soft: #E3E9FB;
+  --var-bg: #FCE8B6; --var-ink: #5E3E00; --filled-bg: #D6F0E0; --filled-ink: #0F4A2A; --star: #C98700;
+  --shadow: 0 18px 50px rgba(20, 24, 30, .18);
+  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0E1114; --surface: #161A1F; --sunk: #1D2228; --ink: #E7E9EC; --muted: #98A0AC;
+  --line: #2A3038; --accent: #86A3FF; --accent-ink: #0B1020; --accent-soft: #1C2540;
+  --var-bg: #3B2F12; --var-ink: #FFD47E; --filled-bg: #12321F; --filled-ink: #8BE0AE; --star: #FFC14D;
+  --shadow: 0 18px 50px rgba(0, 0, 0, .5); color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0E1114; --surface: #161A1F; --sunk: #1D2228; --ink: #E7E9EC; --muted: #98A0AC;
+  --line: #2A3038; --accent: #86A3FF; --accent-ink: #0B1020; --accent-soft: #1C2540;
+  --var-bg: #3B2F12; --var-ink: #FFD47E; --filled-bg: #12321F; --filled-ink: #8BE0AE; --star: #FFC14D;
+  --shadow: 0 18px 50px rgba(0, 0, 0, .5); color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.55 var(--f-body); }
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-inline: 20px; }
+
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+.top-row { display: flex; align-items: center; gap: 16px; padding-block: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+.brand h1 { font: 700 24px/1 var(--f-display); letter-spacing: -.01em; margin: 0; }
+.brand h1 b { color: var(--accent); font-weight: 700; }
+.brand span { color: var(--muted); font-size: 13px; }
+.search { flex: 1 1 320px; position: relative; min-width: 0; }
+.search input { width: 100%; padding: 11px 44px 11px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.search kbd { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font: 12px var(--f-mono); color: var(--muted); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; }
+
+.intro { padding-block: 28px 18px; display: grid; gap: 8px; }
+.intro h2 { font: 700 clamp(26px, 4vw, 40px)/1.1 var(--f-display); margin: 0; letter-spacing: -.02em; text-wrap: balance; max-width: 22ch; }
+.intro p { margin: 0; color: var(--muted); max-width: 64ch; }
+.anatomy { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.anatomy span { font: 12px var(--f-mono); padding: 3px 8px; border-radius: 6px; background: var(--sunk); color: var(--muted); }
+
+.layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 28px; padding-block: 8px 60px; }
+nav.cats { position: sticky; top: 90px; align-self: start; max-height: calc(100vh - 110px); overflow: auto; display: grid; gap: 2px; }
+.cat { display: flex; justify-content: space-between; gap: 10px; align-items: center; text-align: left; border: 0; background: none; padding: 7px 10px; border-radius: 8px; cursor: pointer; color: var(--muted); }
+.cat:hover { background: var(--sunk); color: var(--ink); }
+.cat[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.cat .n { font: 12px var(--f-mono); font-variant-numeric: tabular-nums; }
+.cat-sep { height: 1px; background: var(--line); margin: 8px 4px; }
+
+.results-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.results-head h3 { margin: 0; font: 600 18px var(--f-display); }
+.results-head span { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+
+.list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.card { position: relative; display: grid; gap: 8px; align-content: start; text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 16px 14px; cursor: pointer; transition: border-color .15s, transform .15s; min-width: 0; }
+.card:hover { border-color: var(--accent); transform: translateY(-1px); }
+.card .cat-label { font: 600 11px var(--f-body); text-transform: uppercase; letter-spacing: .07em; color: var(--accent); }
+.card h4 { margin: 0; font: 600 16px/1.3 var(--f-body); padding-right: 28px; }
+.card p { margin: 0; color: var(--muted); font-size: 14px; }
+.card .meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+.pill { font: 11.5px var(--f-mono); padding: 2px 7px; border-radius: 5px; background: var(--sunk); color: var(--muted); white-space: nowrap; }
+.pill.var { background: var(--var-bg); color: var(--var-ink); }
+.star { position: absolute; top: 12px; right: 12px; border: 0; background: none; cursor: pointer; font-size: 18px; line-height: 1; color: var(--line); padding: 2px; }
+.star[aria-pressed="true"] { color: var(--star); }
+.empty { padding: 40px 20px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: 12px; }
+
+.request { margin-top: 28px; padding: 18px 20px; border-radius: 12px; background: var(--sunk); display: grid; gap: 6px; }
+.request h4 { margin: 0; font: 600 16px var(--f-display); }
+.request p { margin: 0; color: var(--muted); max-width: 70ch; }
+
+/* Drawer */
+.scrim { position: fixed; inset: 0; background: rgba(10, 12, 16, .45); z-index: 9; }
+aside.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(760px, 100%); background: var(--surface); z-index: 10; box-shadow: var(--shadow); display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.d-head { padding: 18px 22px 14px; border-bottom: 1px solid var(--line); display: grid; gap: 6px; }
+.d-head .row { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
+.d-head h2 { margin: 0; font: 700 24px/1.2 var(--f-display); text-wrap: balance; }
+.d-head p { margin: 0; color: var(--muted); }
+.icon-btn { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px 10px; cursor: pointer; flex: none; }
+.d-body { flex: 1; overflow: auto; padding: 18px 22px 24px; display: grid; gap: 20px; align-content: start; }
+.d-section h5 { margin: 0 0 10px; font: 600 12px var(--f-body); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.field { display: grid; gap: 4px; min-width: 0; }
+.field label { font: 600 12.5px var(--f-mono); color: var(--var-ink); background: var(--var-bg); justify-self: start; padding: 1px 6px; border-radius: 4px; }
+.field small { color: var(--muted); font-size: 12px; }
+.field textarea { width: 100%; min-height: 40px; resize: vertical; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: var(--bg); font-size: 14px; }
+pre.prompt { margin: 0; white-space: pre-wrap; word-break: break-word; font: 13.5px/1.65 var(--f-mono); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+pre.prompt .v { background: var(--var-bg); color: var(--var-ink); border-radius: 3px; padding: 0 2px; }
+pre.prompt .f { background: var(--filled-bg); color: var(--filled-ink); border-radius: 3px; padding: 0 2px; }
+pre.prompt .h { color: var(--accent); font-weight: 600; }
+.d-foot { border-top: 1px solid var(--line); padding: 12px 22px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 9px; padding: 9px 14px; cursor: pointer; font-weight: 500; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.d-foot .info { margin-left: auto; color: var(--muted); font: 12px var(--f-mono); font-variant-numeric: tabular-nums; }
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 9px 16px; border-radius: 9px; z-index: 20; font-weight: 500; }
+
+@media (max-width: 820px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  nav.cats { position: static; max-height: none; display: flex; overflow-x: auto; gap: 6px; padding-bottom: 4px; }
+  .cat { white-space: nowrap; border: 1px solid var(--line); }
+  .cat-sep { display: none; }
+  .search kbd { display: none; }
+  .d-head, .d-body, .d-foot { padding-inline: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
+</style>
+
+<header class="top">
+  <div class="wrap top-row">
+    <div class="brand"><h1>Prompt <b>Atlas</b></h1><span id="countLine"></span></div>
+    <div class="search">
+      <input id="q" type="search" placeholder="Search prompts, tags, or tasks (e.g. sql, debug, landing page)" aria-label="Search prompts" autocomplete="off">
+      <kbd>/</kbd>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="intro">
+    <h2>Ready-to-run prompts for every job AI can do.</h2>
+    <p>Each prompt is complete: it sets a role, the goal, the inputs you fill in, step-by-step instructions, constraints, and the exact output format. Open one, fill the highlighted fields, and copy it into Claude, ChatGPT, Gemini, or any model.</p>
+    <div class="anatomy" aria-label="Prompt structure"><span># Role</span><span># Goal</span><span># Inputs</span><span># Instructions</span><span># Constraints</span><span># Output format</span><span># Before you answer</span></div>
+  </section>
+
+  <div class="layout">
+    <nav class="cats" id="cats" aria-label="Categories"></nav>
+    <section aria-live="polite">
+      <div class="results-head"><h3 id="resTitle">All prompts</h3><span id="resCount"></span></div>
+      <div class="list" id="list"></div>
+      <div class="request">
+        <h4>Need a prompt that isn't here?</h4>
+        <p>Ask in the PROMPTING project chat with the task you want to automate (for example "a prompt to review Terraform plans"). New prompts are added to this library with the same complete structure.</p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="dTitle">
+  <div class="d-head">
+    <div class="row"><h2 id="dTitle"></h2><button class="icon-btn" id="dClose" aria-label="Close">Close</button></div>
+    <p id="dDesc"></p>
+    <div class="meta" id="dTags" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+  </div>
+  <div class="d-body">
+    <div class="d-section" id="dFieldsWrap">
+      <h5>Fill in your inputs</h5>
+      <div class="fields" id="dFields"></div>
+    </div>
+    <div class="d-section">
+      <h5>Prompt</h5>
+      <pre class="prompt" id="dPrompt"></pre>
+    </div>
+  </div>
+  <div class="d-foot">
+    <button class="btn primary" id="copyFilled">Copy prompt</button>
+    <button class="btn" id="copyRaw">Copy template</button>
+    <button class="btn" id="clearFields">Clear inputs</button>
+    <span class="info" id="dInfo"></span>
+  </div>
+</aside>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const PROMPTS = /*__PROMPTS__*/[];
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+let favs = new Set(store.get("pa-favs", []));
+let state = { cat: "All", q: "" };
+let current = null, values = {};
+
+const cats = [...new Set(PROMPTS.map(p => p.category))];
+$("#countLine").textContent = `${PROMPTS.length} prompts · ${cats.length} categories`;
+
+function renderCats() {
+  const counts = {}; PROMPTS.forEach(p => counts[p.category] = (counts[p.category] || 0) + 1);
+  const items = [["All", PROMPTS.length], ["Saved", favs.size], null, ...cats.map(c => [c, counts[c]])];
+  $("#cats").innerHTML = items.map(it => it ? `<button class="cat" data-cat="${esc(it[0])}" aria-pressed="${state.cat === it[0]}"><span>${esc(it[0] === "Saved" ? "★ Saved" : it[0])}</span><span class="n">${it[1]}</span></button>` : `<div class="cat-sep"></div>`).join("");
+}
+
+function matches(p, terms) {
+  const hay = (p.title + " " + p.category + " " + p.tags.join(" ") + " " + p.description + " " + p.prompt).toLowerCase();
+  return terms.every(t => hay.includes(t));
+}
+function score(p, terms) {
+  let s = 0; const t = p.title.toLowerCase(), g = p.tags.join(" ").toLowerCase();
+  terms.forEach(x => { if (t.includes(x)) s += 5; if (g.includes(x)) s += 3; if (p.description.toLowerCase().includes(x)) s += 1; });
+  return s;
+}
+
+function renderList() {
+  const terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+  let items = PROMPTS.filter(p => state.cat === "All" || (state.cat === "Saved" ? favs.has(p.id) : p.category === state.cat));
+  if (terms.length) items = items.filter(p => matches(p, terms)).sort((a, b) => score(b, terms) - score(a, terms));
+  $("#resTitle").textContent = state.cat === "All" ? (terms.length ? "Search results" : "All prompts") : state.cat === "Saved" ? "Saved prompts" : state.cat;
+  $("#resCount").textContent = `${items.length} ${items.length === 1 ? "prompt" : "prompts"}`;
+  if (!items.length) {
+    $("#list").innerHTML = `<div class="empty">${state.cat === "Saved" && !terms.length ? "Star a prompt to keep it here." : "No prompts match that search. Try a broader word, or ask for a new prompt below."}</div>`;
+    return;
+  }
+  $("#list").innerHTML = items.map(p => `
+    <article class="card" data-id="${p.id}" tabindex="0" role="button" aria-label="Open ${esc(p.title)}">
+      <button class="star" data-star="${p.id}" aria-pressed="${favs.has(p.id)}" aria-label="Save ${esc(p.title)}">★</button>
+      <span class="cat-label">${esc(p.category)}</span>
+      <h4>${esc(p.title)}</h4>
+      <p>${esc(p.description)}</p>
+      <div class="meta">${p.tags.slice(0, 3).map(t => `<span class="pill">${esc(t)}</span>`).join("")}<span class="pill var">${p.variables.length} inputs</span></div>
+    </article>`).join("");
+}
+
+function highlight(text) {
+  return esc(text).split("\n").map(line => {
+    if (/^# /.test(line)) return `<span class="h">${line}</span>`;
+    return line.replace(/\{\{(\w+)\}\}/g, (m, n) => values[n] ? `<span class="f">${esc(values[n])}</span>` : `<span class="v">${m}</span>`);
+  }).join("\n");
+}
+function filled(text) { return text.replace(/\{\{(\w+)\}\}/g, (m, n) => values[n] || m); }
+function updatePreview() {
+  $("#dPrompt").innerHTML = highlight(current.prompt);
+  const out = filled(current.prompt);
+  const left = (out.match(/\{\{\w+\}\}/g) || []).length;
+  $("#dInfo").textContent = `~${Math.ceil(out.length / 4)} tokens · ${left ? left + " blanks left" : "all inputs filled"}`;
+}
+
+function openPrompt(id, push = true) {
+  current = PROMPTS.find(p => p.id === id); if (!current) return;
+  values = store.get("pa-vals-" + id, {});
+  $("#dTitle").textContent = current.title;
+  $("#dDesc").textContent = current.description;
+  $("#dTags").innerHTML = [current.category, ...current.tags].map(t => `<span class="pill">${esc(t)}</span>`).join("");
+  $("#dFields").innerHTML = current.variables.map(v => `
+    <div class="field"><label for="f-${v.name}">{{${esc(v.name)}}}</label>
+    <textarea id="f-${v.name}" data-var="${v.name}" rows="1" placeholder="${esc(v.hint || v.name.replace(/_/g, " "))}">${esc(values[v.name] || "")}</textarea>
+    ${v.hint ? `<small>${esc(v.hint)}</small>` : ""}</div>`).join("");
+  $("#dFieldsWrap").hidden = !current.variables.length;
+  updatePreview();
+  $("#drawer").hidden = false; $("#scrim").hidden = false;
+  document.body.style.overflow = "hidden";
+  if (push) history.replaceState(null, "", "#" + id);
+  $("#dClose").focus();
+}
+function closeDrawer() {
+  $("#drawer").hidden = true; $("#scrim").hidden = true; document.body.style.overflow = "";
+  history.replaceState(null, "", location.pathname + location.search);
+  const card = current && document.querySelector(`.card[data-id="${current.id}"]`); if (card) card.focus();
+  current = null;
+}
+
+let toastTimer;
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => t.hidden = true, 1800); }
+async function copy(text, msg) {
+  try { await navigator.clipboard.writeText(text); toast(msg); }
+  catch { const r = document.createRange(); r.selectNodeContents($("#dPrompt")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast("Copy blocked here. The prompt is selected, press Ctrl+C or Cmd+C."); }
+}
+
+$("#cats").addEventListener("click", e => { const b = e.target.closest(".cat"); if (!b) return; state.cat = b.dataset.cat; store.set("pa-cat", state.cat); renderCats(); renderList(); });
+$("#q").addEventListener("input", e => { state.q = e.target.value; renderList(); });
+$("#list").addEventListener("click", e => {
+  const s = e.target.closest("[data-star]");
+  if (s) { e.stopPropagation(); const id = s.dataset.star; favs.has(id) ? favs.delete(id) : favs.add(id); store.set("pa-favs", [...favs]); renderCats(); renderList(); return; }
+  const c = e.target.closest(".card"); if (c) openPrompt(c.dataset.id);
+});
+$("#list").addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("card")) { e.preventDefault(); openPrompt(e.target.dataset.id); } });
+$("#dFields").addEventListener("input", e => { const v = e.target.dataset.var; if (!v) return; values[v] = e.target.value; store.set("pa-vals-" + current.id, values); updatePreview(); });
+$("#copyFilled").addEventListener("click", () => copy(filled(current.prompt), "Prompt copied"));
+$("#copyRaw").addEventListener("click", () => copy(current.prompt, "Template copied with {{placeholders}}"));
+$("#clearFields").addEventListener("click", () => { values = {}; store.set("pa-vals-" + current.id, values); document.querySelectorAll("#dFields textarea").forEach(t => t.value = ""); updatePreview(); });
+$("#dClose").addEventListener("click", closeDrawer);
+$("#scrim").addEventListener("click", closeDrawer);
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && current) closeDrawer();
+  if (e.key === "/" && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA") { e.preventDefault(); $("#q").focus(); }
+});
+
+state.cat = store.get("pa-cat", "All"); if (state.cat !== "All" && state.cat !== "Saved" && !cats.includes(state.cat)) state.cat = "All";
+renderCats(); renderList();
+const h = location.hash.slice(1); if (h) openPrompt(h, false);
+</script>

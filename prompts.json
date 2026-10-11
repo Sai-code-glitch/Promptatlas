@@ -1,0 +1,3317 @@
+[
+ {
+  "id": "build-a-feature-from-a-spec",
+  "title": "Build a feature from a spec",
+  "category": "Code Generation",
+  "tags": [
+   "feature",
+   "implementation",
+   "any language"
+  ],
+  "description": "Turn a written requirement into production-ready, tested code that fits an existing codebase.",
+  "variables": [
+   {
+    "name": "language",
+    "hint": "Programming language and version, e.g. TypeScript 5.4"
+   },
+   {
+    "name": "framework",
+    "hint": "Framework or runtime, e.g. Next.js 14, Django 5, Spring Boot 3"
+   },
+   {
+    "name": "feature_spec",
+    "hint": "What the feature must do, including user-facing behaviour and acceptance criteria"
+   },
+   {
+    "name": "existing_code",
+    "hint": "Relevant files, interfaces, or snippets the feature must integrate with"
+   },
+   {
+    "name": "conventions",
+    "hint": "Style guide, lint rules, folder structure, naming rules (or 'infer from code')"
+   }
+  ],
+  "prompt": "# Role\nYou are a senior software engineer who writes clean, idiomatic, production-grade {{language}} and follows the conventions of the codebase in front of them.\n\n# Goal\nImplement the feature described below so it can be merged with minimal review changes.\n\n# Inputs\n- Language: {{language}}\n- Framework: {{framework}}\n- Feature spec: {{feature_spec}}\n- Existing code: {{existing_code}}\n- Conventions: {{conventions}}\n\n# Instructions\n1. Restate the requirement in 3-5 bullet points and list any assumptions you are making.\n2. Identify every file that needs to be created or changed and explain why.\n3. Design the public interface first (function signatures, types, API routes, props) before writing internals.\n4. Implement the feature completely. No placeholders, no 'TODO: implement', no elided sections.\n5. Handle edge cases: empty input, nulls, large input, concurrency, network failure, and permission errors where relevant.\n6. Write unit tests covering the happy path, each edge case, and at least one failure path.\n7. Review your own code against the conventions and fix anything that does not match.\n\n# Constraints\n- Match the existing code style exactly; do not introduce new libraries unless you justify them.\n- Validate all external input. Never log secrets or personal data.\n- Prefer readability over cleverness; add comments only where intent is not obvious.\n- Keep functions small and single-purpose.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\n1. Summary of the approach (max 6 bullets)\n2. File tree of changed/new files\n3. Full code for each file in fenced blocks labelled with the file path\n4. Tests in fenced blocks\n5. How to run and verify\n6. Open questions or follow-ups\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "generate-a-rest-api-endpoint",
+  "title": "Generate a REST API endpoint",
+  "category": "Code Generation",
+  "tags": [
+   "api",
+   "backend",
+   "rest"
+  ],
+  "description": "Create a complete, validated, documented REST endpoint with error handling and tests.",
+  "variables": [
+   {
+    "name": "framework",
+    "hint": "e.g. Express, FastAPI, Go net/http, ASP.NET Core"
+   },
+   {
+    "name": "resource",
+    "hint": "Resource name and fields with types, e.g. Order {id, customerId, items[], total}"
+   },
+   {
+    "name": "operations",
+    "hint": "Which operations: list, get, create, update, delete, custom actions"
+   },
+   {
+    "name": "auth",
+    "hint": "Authentication/authorization rules, e.g. JWT, only owners can edit"
+   },
+   {
+    "name": "storage",
+    "hint": "Database or ORM in use, e.g. PostgreSQL via Prisma"
+   }
+  ],
+  "prompt": "# Role\nYou are a backend engineer experienced in designing secure, well-documented HTTP APIs with {{framework}}.\n\n# Goal\nProduce a complete endpoint for the resource below, ready to drop into the project.\n\n# Inputs\n- Framework: {{framework}}\n- Resource: {{resource}}\n- Operations: {{operations}}\n- Auth: {{auth}}\n- Storage: {{storage}}\n\n# Instructions\n1. Define routes, HTTP methods, status codes, and request/response schemas in a table.\n2. Implement request validation with clear error messages (field name + reason).\n3. Implement the handlers, service layer, and data-access layer separately.\n4. Add pagination, filtering, and sorting for list endpoints.\n5. Return consistent error bodies: {error: {code, message, details}}.\n6. Write an OpenAPI 3.1 snippet for the endpoints.\n7. Write integration tests for success, validation failure, unauthorized, forbidden, and not-found cases.\n\n# Constraints\n- Use parameterized queries only; no string-built SQL.\n- Idempotency for PUT/DELETE; return 201 + Location header on create.\n- No business logic in the route/controller layer.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nRoute table, then code per layer in labelled fenced blocks, OpenAPI YAML, tests, and a curl example for each route.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-cli-tool",
+  "title": "Write a CLI tool",
+  "category": "Code Generation",
+  "tags": [
+   "cli",
+   "scripting",
+   "tooling"
+  ],
+  "description": "Build a polished command-line tool with argument parsing, help text, errors, and exit codes.",
+  "variables": [
+   {
+    "name": "language",
+    "hint": "e.g. Python, Go, Rust, Node.js"
+   },
+   {
+    "name": "purpose",
+    "hint": "What the tool does"
+   },
+   {
+    "name": "commands",
+    "hint": "Subcommands, flags, and arguments you want"
+   },
+   {
+    "name": "io",
+    "hint": "Inputs/outputs: files, stdin/stdout, JSON, network"
+   }
+  ],
+  "prompt": "# Role\nYou are a tooling engineer who builds ergonomic, well-documented command-line utilities.\n\n# Goal\nCreate a CLI that does the job below and feels professional to use.\n\n# Inputs\n- Language: {{language}}\n- Purpose: {{purpose}}\n- Commands: {{commands}}\n- Io: {{io}}\n\n# Instructions\n1. Design the command surface: subcommands, flags (short + long), defaults, and environment variable overrides.\n2. Write --help text with examples for every subcommand.\n3. Implement with the standard argument-parsing library for the language.\n4. Support --json output for machine use and human-readable output by default.\n5. Use exit codes: 0 success, 1 user error, 2 usage error, >2 internal errors.\n6. Add --verbose and --quiet modes and colored output that disables when not a TTY.\n7. Write tests for parsing and for core logic.\n\n# Constraints\n- No crashes with stack traces for user errors; print a clear message and a hint.\n- Read from stdin when the input argument is '-'.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nUsage synopsis, full source code, packaging/install instructions, and test code.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "implement-an-algorithm-with-complexity-analysis",
+  "title": "Implement an algorithm with complexity analysis",
+  "category": "Code Generation",
+  "tags": [
+   "algorithms",
+   "data structures",
+   "interview"
+  ],
+  "description": "Solve an algorithmic problem with a correct, optimal solution and a clear explanation.",
+  "variables": [
+   {
+    "name": "problem",
+    "hint": "Problem statement with constraints and examples"
+   },
+   {
+    "name": "language",
+    "hint": "Language for the solution"
+   }
+  ],
+  "prompt": "# Role\nYou are a competitive programmer and computer science educator.\n\n# Goal\nSolve the problem optimally and explain it so a mid-level engineer fully understands it.\n\n# Inputs\n- Problem: {{problem}}\n- Language: {{language}}\n\n# Instructions\n1. Restate the problem and the input constraints. Note what the constraints imply about the target complexity.\n2. Describe a brute-force approach and its complexity.\n3. Derive the optimal approach step by step, naming the technique (two pointers, DP, graph search, etc.).\n4. Write clean code with meaningful names.\n5. Trace the code on the given examples and on 3 tricky edge cases you choose.\n6. State time and space complexity with justification.\n\n# Constraints\n- Code must compile/run as written.\n- Handle empty input and boundary values.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSections: Understanding, Brute force, Optimal idea, Code, Walkthrough, Complexity, Edge cases.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "convert-code-between-languages",
+  "title": "Convert code between languages",
+  "category": "Code Generation",
+  "tags": [
+   "migration",
+   "port",
+   "translation"
+  ],
+  "description": "Port code to another language idiomatically, not line by line.",
+  "variables": [
+   {
+    "name": "source_language",
+    "hint": "Language of the original code"
+   },
+   {
+    "name": "target_language",
+    "hint": "Language to port to"
+   },
+   {
+    "name": "code",
+    "hint": "The code to convert"
+   },
+   {
+    "name": "target_env",
+    "hint": "Runtime/version/framework constraints for the target"
+   }
+  ],
+  "prompt": "# Role\nYou are an engineer fluent in both {{source_language}} and {{target_language}} and their ecosystems.\n\n# Goal\nRewrite the code in the target language so it behaves identically and reads like native code.\n\n# Inputs\n- Source language: {{source_language}}\n- Target language: {{target_language}}\n- Code: {{code}}\n- Target env: {{target_env}}\n\n# Instructions\n1. Summarize what the code does and list its external dependencies.\n2. Map each dependency to the idiomatic equivalent in the target ecosystem.\n3. Rewrite using target-language idioms (error handling, collections, async model, typing).\n4. Preserve behaviour exactly, including edge cases and error semantics. Call out any unavoidable differences.\n5. Provide tests that prove equivalence on representative inputs.\n\n# Constraints\n- Do not leave untranslated sections.\n- Flag any behaviour that cannot be replicated exactly.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nDependency mapping table, converted code, list of behavioural differences, equivalence tests.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-regular-expression",
+  "title": "Write a regular expression",
+  "category": "Code Generation",
+  "tags": [
+   "regex",
+   "parsing",
+   "validation"
+  ],
+  "description": "Get a correct, explained regex with test cases instead of a guess.",
+  "variables": [
+   {
+    "name": "flavor",
+    "hint": "Regex engine: PCRE, JavaScript, Python re, Go RE2, .NET, POSIX"
+   },
+   {
+    "name": "match_what",
+    "hint": "What must match"
+   },
+   {
+    "name": "must_not_match",
+    "hint": "Examples that must NOT match"
+   },
+   {
+    "name": "examples",
+    "hint": "Sample input strings"
+   }
+  ],
+  "prompt": "# Role\nYou are a regex expert who writes readable, safe patterns.\n\n# Goal\nProduce a regex that matches exactly what is wanted and nothing else.\n\n# Inputs\n- Flavor: {{flavor}}\n- Match what: {{match_what}}\n- Must not match: {{must_not_match}}\n- Examples: {{examples}}\n\n# Instructions\n1. Write the pattern.\n2. Explain it token by token in a table.\n3. Provide a verbose/commented version if the flavor supports it.\n4. List 8+ test strings with expected match/no-match and captured groups.\n5. Check for catastrophic backtracking and fix it if present.\n\n# Constraints\n- Use only features supported by the stated flavor.\n- Anchor the pattern when full-string matching is intended.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nPattern, explanation table, commented version, test table, code snippet using it in the target language.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "scaffold-a-new-project",
+  "title": "Scaffold a new project",
+  "category": "Code Generation",
+  "tags": [
+   "boilerplate",
+   "setup",
+   "starter"
+  ],
+  "description": "Generate a production-ready project skeleton with tooling, CI, and conventions set up.",
+  "variables": [
+   {
+    "name": "project_type",
+    "hint": "e.g. web app, library, microservice, mobile app"
+   },
+   {
+    "name": "stack",
+    "hint": "Languages, frameworks, database"
+   },
+   {
+    "name": "tooling",
+    "hint": "Package manager, linter, formatter, test runner preferences"
+   },
+   {
+    "name": "deploy_target",
+    "hint": "Where it will run"
+   }
+  ],
+  "prompt": "# Role\nYou are a staff engineer who sets up repositories that teams enjoy working in.\n\n# Goal\nCreate the full starting structure for the project below.\n\n# Inputs\n- Project type: {{project_type}}\n- Stack: {{stack}}\n- Tooling: {{tooling}}\n- Deploy target: {{deploy_target}}\n\n# Instructions\n1. Propose a folder structure and explain each top-level directory.\n2. Provide config files: package/dependency manifest, linter, formatter, editor config, .gitignore, env example.\n3. Add a minimal working example (hello endpoint/page/function) with a test.\n4. Add a CI workflow that installs, lints, tests, and builds.\n5. Add a Dockerfile if relevant, and a README with setup, scripts, and conventions.\n\n# Constraints\n- Pin major versions.\n- No secrets in files; use .env.example.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nFile tree, then each file's full content in fenced blocks labelled with its path, then setup commands.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-sql-schema-and-migrations",
+  "title": "Write a SQL schema and migrations",
+  "category": "Code Generation",
+  "tags": [
+   "database",
+   "schema",
+   "migrations"
+  ],
+  "description": "Design normalized tables, indexes, constraints, and reversible migrations.",
+  "variables": [
+   {
+    "name": "database",
+    "hint": "e.g. PostgreSQL 16, MySQL 8, SQLite"
+   },
+   {
+    "name": "domain",
+    "hint": "Entities, relationships, and key workflows"
+   },
+   {
+    "name": "query_patterns",
+    "hint": "The most frequent reads/writes"
+   },
+   {
+    "name": "scale",
+    "hint": "Expected row counts and growth"
+   }
+  ],
+  "prompt": "# Role\nYou are a database engineer specializing in {{database}} schema design.\n\n# Goal\nDesign a schema for the domain below and provide migrations.\n\n# Inputs\n- Database: {{database}}\n- Domain: {{domain}}\n- Query patterns: {{query_patterns}}\n- Scale: {{scale}}\n\n# Instructions\n1. List entities and relationships; draw an ER diagram in Mermaid.\n2. Write CREATE TABLE statements with types, PKs, FKs, NOT NULL, CHECK, UNIQUE, and defaults.\n3. Add indexes justified by the stated query patterns.\n4. Write up and down migrations.\n5. Explain normalization choices and any intentional denormalization.\n6. Provide seed data for local development.\n\n# Constraints\n- Use timestamps with time zones; include created_at/updated_at.\n- Name constraints explicitly.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nMermaid ER diagram, DDL, index rationale table, migrations, seed SQL.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "find-the-root-cause-of-a-bug",
+  "title": "Find the root cause of a bug",
+  "category": "Debugging",
+  "tags": [
+   "bug",
+   "root cause",
+   "troubleshooting"
+  ],
+  "description": "Systematically diagnose a bug from symptoms, code, and logs, then fix it properly.",
+  "variables": [
+   {
+    "name": "symptom",
+    "hint": "What happens vs. what should happen"
+   },
+   {
+    "name": "code",
+    "hint": "Relevant code"
+   },
+   {
+    "name": "error_output",
+    "hint": "Error messages, stack traces, logs"
+   },
+   {
+    "name": "environment",
+    "hint": "OS, runtime versions, deployment, recent changes"
+   },
+   {
+    "name": "repro_steps",
+    "hint": "Steps to reproduce and how often it happens"
+   }
+  ],
+  "prompt": "# Role\nYou are a principal engineer known for methodical debugging.\n\n# Goal\nFind the root cause (not just the symptom) and propose a minimal, safe fix.\n\n# Inputs\n- Symptom: {{symptom}}\n- Code: {{code}}\n- Error output: {{error_output}}\n- Environment: {{environment}}\n- Repro steps: {{repro_steps}}\n\n# Instructions\n1. Summarize the observed vs. expected behaviour.\n2. List at least 3 hypotheses ranked by likelihood, each with the evidence for and against it.\n3. For each hypothesis, give the fastest experiment to confirm or rule it out.\n4. Identify the most likely root cause and explain the exact mechanism step by step.\n5. Provide the fix as a diff, and explain why it addresses the cause rather than masking it.\n6. Write a regression test that fails before the fix and passes after.\n7. List any other places in the code where the same bug pattern may exist.\n\n# Constraints\n- Do not suggest broad rewrites when a targeted fix works.\n- If information is missing, say exactly what to collect.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSummary, Hypotheses table, Root cause, Fix (diff), Regression test, Related risks.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "explain-an-error-message",
+  "title": "Explain an error message",
+  "category": "Debugging",
+  "tags": [
+   "error",
+   "stack trace",
+   "beginner"
+  ],
+  "description": "Decode a cryptic error or stack trace and get exact steps to fix it.",
+  "variables": [
+   {
+    "name": "error",
+    "hint": "Full error message and stack trace"
+   },
+   {
+    "name": "code",
+    "hint": "Code around the failing line"
+   },
+   {
+    "name": "stack",
+    "hint": "Language, framework, versions"
+   }
+  ],
+  "prompt": "# Role\nYou are a patient senior developer mentoring a teammate.\n\n# Goal\nExplain what the error means and how to fix it in this specific context.\n\n# Inputs\n- Error: {{error}}\n- Code: {{code}}\n- Stack: {{stack}}\n\n# Instructions\n1. Explain the error in plain language in 2-3 sentences.\n2. Point to the exact line and the frame in the stack trace that matters, and explain why the others are noise.\n3. List the common causes of this error, then say which one applies here.\n4. Give the fix with corrected code.\n5. Explain how to prevent it in the future (types, lint rule, test).\n\n# Constraints\n- Avoid jargon without explanation.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nWhat it means, Where it happens, Why, Fix (code), Prevention.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "diagnose-a-performance-problem",
+  "title": "Diagnose a performance problem",
+  "category": "Debugging",
+  "tags": [
+   "performance",
+   "profiling",
+   "latency"
+  ],
+  "description": "Find bottlenecks and get prioritized optimizations with expected impact.",
+  "variables": [
+   {
+    "name": "stack",
+    "hint": "Language/runtime/framework/database"
+   },
+   {
+    "name": "symptom",
+    "hint": "What is slow and how slow (p50/p95/p99, throughput)"
+   },
+   {
+    "name": "target",
+    "hint": "Performance target"
+   },
+   {
+    "name": "code_or_query",
+    "hint": "Hot code paths, queries, or config"
+   },
+   {
+    "name": "profile_data",
+    "hint": "Profiler output, EXPLAIN plans, flame graphs, metrics (if any)"
+   }
+  ],
+  "prompt": "# Role\nYou are a performance engineer experienced with profiling {{stack}} systems.\n\n# Goal\nIdentify why the system is slow and how to make it meet the target.\n\n# Inputs\n- Stack: {{stack}}\n- Symptom: {{symptom}}\n- Target: {{target}}\n- Code or query: {{code_or_query}}\n- Profile data: {{profile_data}}\n\n# Instructions\n1. Form a hypothesis about where time is spent (CPU, I/O, locks, network, GC, N+1 queries).\n2. Specify exactly what to measure and with which tool if data is missing.\n3. Analyse the provided data and pinpoint the bottlenecks.\n4. Propose optimizations ranked by impact-to-effort, each with estimated gain.\n5. Provide code/config changes for the top 3.\n6. Describe how to benchmark before/after reliably.\n\n# Constraints\n- Do not optimize without evidence; label anything speculative.\n- Preserve correctness; note any trade-offs (memory, consistency).\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nBottleneck analysis, Optimization table (change, impact, effort, risk), Code changes, Benchmark plan.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "fix-a-memory-leak",
+  "title": "Fix a memory leak",
+  "category": "Debugging",
+  "tags": [
+   "memory",
+   "leak",
+   "resources"
+  ],
+  "description": "Track down growing memory usage and stop the leak.",
+  "variables": [
+   {
+    "name": "runtime",
+    "hint": "e.g. Node.js, JVM, Python, Go, browser"
+   },
+   {
+    "name": "symptom",
+    "hint": "Memory growth pattern and timeframe"
+   },
+   {
+    "name": "code",
+    "hint": "Suspected code: caches, listeners, timers, closures, globals"
+   },
+   {
+    "name": "heap_data",
+    "hint": "Heap snapshots or profiler output if available"
+   }
+  ],
+  "prompt": "# Role\nYou are a runtime internals specialist for {{runtime}}.\n\n# Goal\nFind what retains memory and fix it.\n\n# Inputs\n- Runtime: {{runtime}}\n- Symptom: {{symptom}}\n- Code: {{code}}\n- Heap data: {{heap_data}}\n\n# Instructions\n1. List the leak patterns common to this runtime and check the code for each.\n2. Explain how to capture and compare heap snapshots to confirm the culprit.\n3. Identify the retaining path and the root cause.\n4. Provide the fix, including proper cleanup/disposal.\n5. Suggest monitoring to catch regressions.\n\n# Constraints\n- Distinguish real leaks from expected cache growth.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSuspects checklist, Diagnosis steps, Root cause, Fix, Monitoring.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "debug-a-flaky-test",
+  "title": "Debug a flaky test",
+  "category": "Debugging",
+  "tags": [
+   "flaky",
+   "tests",
+   "ci"
+  ],
+  "description": "Make an intermittently failing test deterministic.",
+  "variables": [
+   {
+    "name": "test_code",
+    "hint": "The flaky test"
+   },
+   {
+    "name": "code_under_test",
+    "hint": "Code being tested"
+   },
+   {
+    "name": "failure_logs",
+    "hint": "Logs from failing runs"
+   },
+   {
+    "name": "frequency",
+    "hint": "How often it fails and where (local, CI, parallel runs)"
+   }
+  ],
+  "prompt": "# Role\nYou are a test infrastructure engineer.\n\n# Goal\nFind why the test is non-deterministic and make it reliable without weakening it.\n\n# Inputs\n- Test code: {{test_code}}\n- Code under test: {{code_under_test}}\n- Failure logs: {{failure_logs}}\n- Frequency: {{frequency}}\n\n# Instructions\n1. Check for common causes: timing/sleeps, shared state, test order dependence, randomness, time zones/clocks, network, concurrency, resource limits.\n2. Identify the most likely cause from the evidence.\n3. Show how to reproduce it reliably (e.g. loop runs, seed, stress).\n4. Fix the test or the code; replace sleeps with explicit waits/conditions.\n5. Explain why the fix is deterministic.\n\n# Constraints\n- Never fix flakiness by adding retries or increasing timeouts alone.\n- Do not delete assertions.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nCause analysis, Repro method, Fix (diff), Why it is now deterministic.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "debug-a-production-incident",
+  "title": "Debug a production incident",
+  "category": "Debugging",
+  "tags": [
+   "incident",
+   "on-call",
+   "sre"
+  ],
+  "description": "Structured help during a live incident: triage, mitigate, and find the cause.",
+  "variables": [
+   {
+    "name": "impact",
+    "hint": "Who/what is affected and how badly"
+   },
+   {
+    "name": "timeline",
+    "hint": "When it started and what changed recently (deploys, config, traffic)"
+   },
+   {
+    "name": "signals",
+    "hint": "Dashboards, alerts, logs, error rates"
+   },
+   {
+    "name": "architecture",
+    "hint": "Brief system description"
+   }
+  ],
+  "prompt": "# Role\nYou are an experienced SRE acting as incident commander's technical advisor.\n\n# Goal\nHelp mitigate impact fast, then find the cause.\n\n# Inputs\n- Impact: {{impact}}\n- Timeline: {{timeline}}\n- Signals: {{signals}}\n- Architecture: {{architecture}}\n\n# Instructions\n1. Assess severity and recommend immediate mitigation options (rollback, feature flag, scale, failover) with risks.\n2. Propose the next 3 diagnostic checks in priority order with exact commands/queries.\n3. Build a hypothesis list correlated with the timeline.\n4. Once cause is likely, propose a permanent fix.\n5. Draft a short status update for stakeholders.\n\n# Constraints\n- Mitigation before root cause.\n- Prefer reversible actions.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSeverity, Mitigation options, Next checks, Hypotheses, Stakeholder update draft.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "thorough-code-review",
+  "title": "Thorough code review",
+  "category": "Code Review & Refactoring",
+  "tags": [
+   "review",
+   "pull request",
+   "quality"
+  ],
+  "description": "Get a senior-level review covering correctness, security, performance, and readability.",
+  "variables": [
+   {
+    "name": "diff",
+    "hint": "The code or diff to review"
+   },
+   {
+    "name": "context",
+    "hint": "What the change is supposed to do"
+   },
+   {
+    "name": "language",
+    "hint": "Language/framework"
+   },
+   {
+    "name": "standards",
+    "hint": "Team standards to enforce (optional)"
+   }
+  ],
+  "prompt": "# Role\nYou are a meticulous staff engineer doing a code review.\n\n# Goal\nReview the change and give actionable, prioritized feedback.\n\n# Inputs\n- Diff: {{diff}}\n- Context: {{context}}\n- Language: {{language}}\n- Standards: {{standards}}\n\n# Instructions\n1. Summarize what the change does in 2-3 sentences.\n2. Check correctness: logic errors, edge cases, off-by-one, null handling, error paths, concurrency.\n3. Check security: injection, authz gaps, secrets, unsafe deserialization, input validation.\n4. Check performance: complexity, N+1 queries, unnecessary allocation, blocking I/O.\n5. Check readability, naming, structure, duplication, and test coverage.\n6. For each finding give severity (blocker/major/minor/nit), location, explanation, and a suggested fix in code.\n\n# Constraints\n- Be specific; quote the line.\n- Do not nitpick formatting a linter would catch.\n- Acknowledge what is done well.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSummary; Findings table (severity, location, issue, fix); Suggested code changes; Verdict (approve / request changes) with reason.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "refactor-for-readability",
+  "title": "Refactor for readability",
+  "category": "Code Review & Refactoring",
+  "tags": [
+   "refactor",
+   "clean code",
+   "maintainability"
+  ],
+  "description": "Restructure messy code without changing its behaviour.",
+  "variables": [
+   {
+    "name": "code",
+    "hint": "The code to refactor"
+   },
+   {
+    "name": "language",
+    "hint": "Language and version"
+   },
+   {
+    "name": "pain_points",
+    "hint": "What bothers you about it (optional)"
+   }
+  ],
+  "prompt": "# Role\nYou are a clean-code practitioner who refactors in safe, small steps.\n\n# Goal\nMake the code easier to read, test, and change, while preserving behaviour exactly.\n\n# Inputs\n- Code: {{code}}\n- Language: {{language}}\n- Pain points: {{pain_points}}\n\n# Instructions\n1. List code smells found (long function, deep nesting, duplication, unclear names, primitive obsession, etc.).\n2. Plan a sequence of small refactoring steps, each named (Extract Function, Replace Conditional with Polymorphism, ...).\n3. Apply them and show the final code.\n4. Write characterization tests that prove behaviour is unchanged.\n5. Explain each change in one line.\n\n# Constraints\n- No behaviour changes, no new features.\n- Keep the public interface unless asked.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSmells list, Refactoring plan, Final code, Characterization tests, Change log.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "modernize-legacy-code",
+  "title": "Modernize legacy code",
+  "category": "Code Review & Refactoring",
+  "tags": [
+   "legacy",
+   "upgrade",
+   "migration"
+  ],
+  "description": "Upgrade old code to current language features and libraries safely.",
+  "variables": [
+   {
+    "name": "code",
+    "hint": "Legacy code"
+   },
+   {
+    "name": "current_versions",
+    "hint": "Current language/framework versions"
+   },
+   {
+    "name": "target_versions",
+    "hint": "Target versions"
+   }
+  ],
+  "prompt": "# Role\nYou are an engineer specializing in incremental legacy modernization.\n\n# Goal\nBring the code up to modern standards with a safe migration path.\n\n# Inputs\n- Code: {{code}}\n- Current versions: {{current_versions}}\n- Target versions: {{target_versions}}\n\n# Instructions\n1. List deprecated APIs and outdated patterns found.\n2. Map each to its modern replacement.\n3. Propose an incremental migration plan that keeps the system working at each step.\n4. Show the modernized code.\n5. List breaking changes and how to test for them.\n\n# Constraints\n- Each step must be independently deployable.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nDeprecation table, Migration plan, Modernized code, Risk/testing checklist.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "simplify-complex-code",
+  "title": "Simplify complex code",
+  "category": "Code Review & Refactoring",
+  "tags": [
+   "simplify",
+   "complexity"
+  ],
+  "description": "Reduce cyclomatic complexity and cognitive load.",
+  "variables": [
+   {
+    "name": "code",
+    "hint": "The code"
+   },
+   {
+    "name": "language",
+    "hint": "Language"
+   }
+  ],
+  "prompt": "# Role\nYou are an engineer who values simple, obvious code.\n\n# Goal\nMake this code as simple as possible but no simpler.\n\n# Inputs\n- Code: {{code}}\n- Language: {{language}}\n\n# Instructions\n1. Measure or estimate the current complexity and point out the hardest parts to follow.\n2. Remove dead code, redundant conditions, and unnecessary abstraction.\n3. Use early returns, guard clauses, lookup tables, and standard library functions.\n4. Show before/after and the reduction in lines/branches.\n\n# Constraints\n- Behaviour must be identical.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nAnalysis, Simplified code, Before/after comparison.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-comprehensive-unit-tests",
+  "title": "Write comprehensive unit tests",
+  "category": "Testing & QA",
+  "tags": [
+   "unit tests",
+   "tdd",
+   "coverage"
+  ],
+  "description": "Generate a full unit test suite covering happy paths, edge cases, and failures.",
+  "variables": [
+   {
+    "name": "code",
+    "hint": "Code under test"
+   },
+   {
+    "name": "test_framework",
+    "hint": "e.g. Jest, Vitest, pytest, JUnit 5, Go testing"
+   },
+   {
+    "name": "mocking_rules",
+    "hint": "What may be mocked (external I/O, time, randomness)"
+   }
+  ],
+  "prompt": "# Role\nYou are a test-focused engineer expert in {{test_framework}}.\n\n# Goal\nWrite tests that would catch real regressions in this code.\n\n# Inputs\n- Code: {{code}}\n- Test framework: {{test_framework}}\n- Mocking rules: {{mocking_rules}}\n\n# Instructions\n1. List the behaviours to test as a test plan (one line each).\n2. Cover: happy path, boundary values, empty/null input, invalid input, error handling, and state transitions.\n3. Use Arrange-Act-Assert with descriptive test names that read as specifications.\n4. Mock only true external boundaries; use fakes/fixtures for the rest.\n5. Use table-driven/parameterized tests where cases repeat.\n6. Note any code that is hard to test and suggest a refactor.\n\n# Constraints\n- Tests must be deterministic and independent.\n- One logical assertion focus per test.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nTest plan, Full test file(s), Notes on testability, Command to run.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "create-a-qa-test-plan",
+  "title": "Create a QA test plan",
+  "category": "Testing & QA",
+  "tags": [
+   "test plan",
+   "qa",
+   "manual testing"
+  ],
+  "description": "Produce a structured test plan with test cases for a feature or release.",
+  "variables": [
+   {
+    "name": "feature",
+    "hint": "Feature description and acceptance criteria"
+   },
+   {
+    "name": "platforms",
+    "hint": "Browsers/devices/OS to cover"
+   },
+   {
+    "name": "risk_areas",
+    "hint": "Known risky areas"
+   }
+  ],
+  "prompt": "# Role\nYou are a QA lead.\n\n# Goal\nCreate a test plan the team can execute before release.\n\n# Inputs\n- Feature: {{feature}}\n- Platforms: {{platforms}}\n- Risk areas: {{risk_areas}}\n\n# Instructions\n1. Define scope (in/out), test types (functional, regression, accessibility, performance, security), and environments.\n2. Write test cases with ID, title, preconditions, steps, expected result, priority.\n3. Include negative, boundary, and accessibility cases.\n4. Define entry/exit criteria and a defect severity scale.\n\n# Constraints\n- Every acceptance criterion maps to at least one test case.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nPlan overview, Test case table, Traceability matrix, Entry/exit criteria.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-end-to-end-tests",
+  "title": "Write end-to-end tests",
+  "category": "Testing & QA",
+  "tags": [
+   "e2e",
+   "playwright",
+   "cypress"
+  ],
+  "description": "Generate robust browser tests for critical user journeys.",
+  "variables": [
+   {
+    "name": "e2e_tool",
+    "hint": "Playwright, Cypress, Selenium, etc."
+   },
+   {
+    "name": "journeys",
+    "hint": "User flows to test"
+   },
+   {
+    "name": "app_details",
+    "hint": "URLs, test accounts, key selectors or markup"
+   }
+  ],
+  "prompt": "# Role\nYou are an automation engineer expert in {{e2e_tool}}.\n\n# Goal\nAutomate the user journeys below with stable, maintainable tests.\n\n# Inputs\n- E2e tool: {{e2e_tool}}\n- Journeys: {{journeys}}\n- App details: {{app_details}}\n\n# Instructions\n1. Define page objects or fixtures for reusable parts.\n2. Use resilient selectors (roles, labels, test ids) instead of CSS paths.\n3. Use auto-waiting assertions; no fixed sleeps.\n4. Set up and tear down test data via API where possible.\n5. Add assertions for visible outcomes and network responses.\n\n# Constraints\n- Tests must run in parallel safely.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nFolder structure, page objects, test files, config, CI command.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "generate-test-data",
+  "title": "Generate test data",
+  "category": "Testing & QA",
+  "tags": [
+   "fixtures",
+   "mock data",
+   "seed"
+  ],
+  "description": "Create realistic, varied test data including edge cases.",
+  "variables": [
+   {
+    "name": "schema",
+    "hint": "Fields, types, constraints"
+   },
+   {
+    "name": "count",
+    "hint": "How many records"
+   },
+   {
+    "name": "format",
+    "hint": "JSON, CSV, SQL inserts, etc."
+   },
+   {
+    "name": "edge_cases",
+    "hint": "Special cases to include"
+   }
+  ],
+  "prompt": "# Role\nYou are a test data engineer.\n\n# Goal\nGenerate data that exercises the system realistically.\n\n# Inputs\n- Schema: {{schema}}\n- Count: {{count}}\n- Format: {{format}}\n- Edge cases: {{edge_cases}}\n\n# Instructions\n1. Generate realistic values (names, addresses, dates across time zones, unicode, long strings).\n2. Include edge cases: empty strings, max lengths, nulls where allowed, special characters, duplicates if relevant.\n3. Keep referential integrity across related records.\n4. Mark which records are edge cases.\n\n# Constraints\n- No real personal data.\n- Must satisfy all stated constraints.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nThe data in the requested format, plus a short list of included edge cases.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "design-a-system-end-to-end",
+  "title": "Design a system end to end",
+  "category": "Architecture & System Design",
+  "tags": [
+   "system design",
+   "scalability",
+   "architecture"
+  ],
+  "description": "Get a complete system design with components, data flow, scaling, and trade-offs.",
+  "variables": [
+   {
+    "name": "product",
+    "hint": "What the system does"
+   },
+   {
+    "name": "requirements",
+    "hint": "Functional requirements"
+   },
+   {
+    "name": "non_functional",
+    "hint": "Scale (users, RPS, data size), latency, availability, consistency, budget"
+   },
+   {
+    "name": "constraints",
+    "hint": "Existing tech, team size, compliance, cloud provider"
+   }
+  ],
+  "prompt": "# Role\nYou are a principal architect who has designed large-scale distributed systems.\n\n# Goal\nDesign the system below and justify every major decision.\n\n# Inputs\n- Product: {{product}}\n- Requirements: {{requirements}}\n- Non functional: {{non_functional}}\n- Constraints: {{constraints}}\n\n# Instructions\n1. Clarify requirements and do back-of-envelope estimates (QPS, storage, bandwidth).\n2. Define the API surface.\n3. Draw the high-level architecture as a Mermaid diagram.\n4. Design the data model and choose storage with justification.\n5. Deep-dive the 2-3 hardest components (caching, queues, sharding, consistency).\n6. Address scaling, failure modes, observability, security, and cost.\n7. List trade-offs and alternatives you rejected and why.\n\n# Constraints\n- Prefer boring, proven technology unless requirements demand otherwise.\n- Be explicit about consistency guarantees.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nRequirements, Estimates, API, Architecture diagram, Data model, Deep dives, Scaling & reliability, Trade-offs, Next steps.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-an-architecture-decision-record",
+  "title": "Write an Architecture Decision Record",
+  "category": "Architecture & System Design",
+  "tags": [
+   "adr",
+   "decision",
+   "documentation"
+  ],
+  "description": "Document a technical decision with context, options, and consequences.",
+  "variables": [
+   {
+    "name": "decision",
+    "hint": "The decision or question"
+   },
+   {
+    "name": "context",
+    "hint": "Background and forces at play"
+   },
+   {
+    "name": "options",
+    "hint": "Options considered"
+   }
+  ],
+  "prompt": "# Role\nYou are a tech lead who writes clear ADRs.\n\n# Goal\nWrite an ADR for the decision below.\n\n# Inputs\n- Decision: {{decision}}\n- Context: {{context}}\n- Options: {{options}}\n\n# Instructions\n1. Describe the context and problem.\n2. Evaluate each option against criteria (cost, complexity, performance, team skill, lock-in) in a table.\n3. State the decision and the main reasons.\n4. List positive and negative consequences and follow-up actions.\n\n# Constraints\n- Neutral tone; present options fairly.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nADR in Markdown: Title, Status, Context, Options, Decision, Consequences.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "compare-technologies",
+  "title": "Compare technologies",
+  "category": "Architecture & System Design",
+  "tags": [
+   "comparison",
+   "tech choice",
+   "evaluation"
+  ],
+  "description": "Objective comparison of tools/frameworks for a specific use case.",
+  "variables": [
+   {
+    "name": "options",
+    "hint": "Technologies to compare"
+   },
+   {
+    "name": "use_case",
+    "hint": "What it will be used for"
+   },
+   {
+    "name": "priorities",
+    "hint": "What matters most (speed, cost, DX, ecosystem, hiring)"
+   }
+  ],
+  "prompt": "# Role\nYou are an independent technical advisor.\n\n# Goal\nRecommend the best option for this use case with evidence.\n\n# Inputs\n- Options: {{options}}\n- Use case: {{use_case}}\n- Priorities: {{priorities}}\n\n# Instructions\n1. Define evaluation criteria weighted by the priorities.\n2. Score each option per criterion with a short justification.\n3. Highlight deal-breakers and hidden costs.\n4. Give a recommendation and when you would choose differently.\n\n# Constraints\n- Note where your knowledge may be outdated.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nWeighted comparison table, Pros/cons, Recommendation, When to choose otherwise.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "design-a-microservice-boundary",
+  "title": "Design a microservice boundary",
+  "category": "Architecture & System Design",
+  "tags": [
+   "microservices",
+   "ddd",
+   "domain"
+  ],
+  "description": "Split a domain into services using domain-driven design.",
+  "variables": [
+   {
+    "name": "domain",
+    "hint": "Business domain and workflows"
+   },
+   {
+    "name": "current_state",
+    "hint": "Monolith or current services"
+   },
+   {
+    "name": "team_structure",
+    "hint": "Teams and ownership"
+   }
+  ],
+  "prompt": "# Role\nYou are a domain-driven design consultant.\n\n# Goal\nPropose service boundaries and integration patterns.\n\n# Inputs\n- Domain: {{domain}}\n- Current state: {{current_state}}\n- Team structure: {{team_structure}}\n\n# Instructions\n1. Identify bounded contexts and the ubiquitous language of each.\n2. Draw a context map (Mermaid) with relationships.\n3. Define each service's responsibilities, data ownership, and APIs/events.\n4. Choose sync vs. async communication per interaction.\n5. Plan the migration (strangler fig) if starting from a monolith.\n\n# Constraints\n- Avoid distributed monolith: no shared databases.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nBounded contexts, Context map, Service catalogue, Integration patterns, Migration plan.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-ci-cd-pipeline",
+  "title": "Write a CI/CD pipeline",
+  "category": "DevOps & Cloud",
+  "tags": [
+   "ci/cd",
+   "github actions",
+   "pipeline"
+  ],
+  "description": "Create a complete build-test-deploy pipeline with caching and environments.",
+  "variables": [
+   {
+    "name": "ci_platform",
+    "hint": "GitHub Actions, GitLab CI, Jenkins, CircleCI, Azure DevOps"
+   },
+   {
+    "name": "stack",
+    "hint": "Language, build tools"
+   },
+   {
+    "name": "environments",
+    "hint": "dev/staging/prod and promotion rules"
+   },
+   {
+    "name": "deploy_target",
+    "hint": "Kubernetes, serverless, VM, PaaS"
+   }
+  ],
+  "prompt": "# Role\nYou are a DevOps engineer expert in {{ci_platform}}.\n\n# Goal\nCreate a fast, secure pipeline for this project.\n\n# Inputs\n- Ci platform: {{ci_platform}}\n- Stack: {{stack}}\n- Environments: {{environments}}\n- Deploy target: {{deploy_target}}\n\n# Instructions\n1. Define stages: lint, test, build, security scan, deploy.\n2. Add dependency caching and parallel jobs.\n3. Use secrets from the platform's secret store; least-privilege tokens; OIDC for cloud auth where possible.\n4. Add manual approval for production.\n5. Add rollback strategy and notifications.\n\n# Constraints\n- Pin action/image versions.\n- Fail fast.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nPipeline YAML, explanation of each job, required secrets list.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-dockerfile",
+  "title": "Write a Dockerfile",
+  "category": "DevOps & Cloud",
+  "tags": [
+   "docker",
+   "containers"
+  ],
+  "description": "Create a small, secure, cache-efficient container image.",
+  "variables": [
+   {
+    "name": "stack",
+    "hint": "Language/runtime and version"
+   },
+   {
+    "name": "app_details",
+    "hint": "Build command, start command, port, files needed"
+   }
+  ],
+  "prompt": "# Role\nYou are a container security and optimization specialist.\n\n# Goal\nWrite a production Dockerfile for the app.\n\n# Inputs\n- Stack: {{stack}}\n- App details: {{app_details}}\n\n# Instructions\n1. Use a multi-stage build.\n2. Order layers for maximum cache reuse.\n3. Run as a non-root user.\n4. Use a minimal base (distroless/alpine/slim) and justify it.\n5. Add HEALTHCHECK and .dockerignore.\n6. Provide a docker-compose file for local dev if useful.\n\n# Constraints\n- No secrets in the image.\n- Pin base image versions.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nDockerfile, .dockerignore, compose file, build/run commands, expected image size.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-kubernetes-manifests",
+  "title": "Write Kubernetes manifests",
+  "category": "DevOps & Cloud",
+  "tags": [
+   "kubernetes",
+   "k8s",
+   "helm"
+  ],
+  "description": "Production-ready Deployment, Service, Ingress, HPA, and config.",
+  "variables": [
+   {
+    "name": "app",
+    "hint": "Image, ports, env vars, resources needed"
+   },
+   {
+    "name": "requirements",
+    "hint": "Replicas, autoscaling, ingress host, TLS, storage"
+   }
+  ],
+  "prompt": "# Role\nYou are a Kubernetes platform engineer.\n\n# Goal\nCreate manifests to run the app reliably on Kubernetes.\n\n# Inputs\n- App: {{app}}\n- Requirements: {{requirements}}\n\n# Instructions\n1. Write Deployment with resource requests/limits, liveness/readiness/startup probes, and rolling update strategy.\n2. Write Service, Ingress (with TLS), HPA, PodDisruptionBudget, ConfigMap and Secret references.\n3. Apply security context (non-root, read-only root fs, drop capabilities).\n4. Explain how to apply and verify.\n\n# Constraints\n- No plaintext secrets.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nYAML manifests separated by ---, plus kubectl commands.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-infrastructure-as-code",
+  "title": "Write infrastructure as code",
+  "category": "DevOps & Cloud",
+  "tags": [
+   "terraform",
+   "iac",
+   "cloud"
+  ],
+  "description": "Generate Terraform/Pulumi/CDK code for cloud infrastructure.",
+  "variables": [
+   {
+    "name": "cloud",
+    "hint": "AWS, GCP, Azure"
+   },
+   {
+    "name": "tool",
+    "hint": "Terraform, Pulumi, CDK, Bicep"
+   },
+   {
+    "name": "resources",
+    "hint": "What to provision"
+   },
+   {
+    "name": "environments",
+    "hint": "Environments and naming"
+   }
+  ],
+  "prompt": "# Role\nYou are a cloud infrastructure engineer for {{cloud}}.\n\n# Goal\nDefine the infrastructure below as code, following best practice.\n\n# Inputs\n- Cloud: {{cloud}}\n- Tool: {{tool}}\n- Resources: {{resources}}\n- Environments: {{environments}}\n\n# Instructions\n1. Organize into modules with variables and outputs.\n2. Configure remote state and locking.\n3. Apply least-privilege IAM, encryption at rest and in transit, private networking.\n4. Tag all resources.\n5. Estimate monthly cost.\n\n# Constraints\n- No hard-coded credentials or account IDs.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nModule structure, code files, variables example, apply instructions, cost estimate.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-shell-automation-script",
+  "title": "Write a shell automation script",
+  "category": "DevOps & Cloud",
+  "tags": [
+   "bash",
+   "powershell",
+   "automation"
+  ],
+  "description": "Robust, safe shell script with error handling and logging.",
+  "variables": [
+   {
+    "name": "shell",
+    "hint": "bash, zsh, PowerShell"
+   },
+   {
+    "name": "task",
+    "hint": "What to automate"
+   },
+   {
+    "name": "os",
+    "hint": "Target OS"
+   }
+  ],
+  "prompt": "# Role\nYou are a systems engineer who writes defensive shell scripts.\n\n# Goal\nAutomate the task below with a reliable script.\n\n# Inputs\n- Shell: {{shell}}\n- Task: {{task}}\n- Os: {{os}}\n\n# Instructions\n1. Use strict mode (set -euo pipefail or equivalent).\n2. Validate inputs and dependencies at start.\n3. Add usage/help, logging with timestamps, and a dry-run flag.\n4. Make it idempotent.\n5. Clean up temp files with traps.\n\n# Constraints\n- Quote all variables.\n- No destructive commands without confirmation or --force.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nScript with comments, usage examples, and notes on required permissions.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "set-up-monitoring-and-alerts",
+  "title": "Set up monitoring and alerts",
+  "category": "DevOps & Cloud",
+  "tags": [
+   "observability",
+   "monitoring",
+   "slo"
+  ],
+  "description": "Define SLIs/SLOs, dashboards, and actionable alerts.",
+  "variables": [
+   {
+    "name": "service",
+    "hint": "What the service does and its architecture"
+   },
+   {
+    "name": "tools",
+    "hint": "Prometheus/Grafana, Datadog, CloudWatch, etc."
+   },
+   {
+    "name": "users",
+    "hint": "What users care about"
+   }
+  ],
+  "prompt": "# Role\nYou are an SRE focused on observability.\n\n# Goal\nDesign monitoring that catches user-facing problems without alert fatigue.\n\n# Inputs\n- Service: {{service}}\n- Tools: {{tools}}\n- Users: {{users}}\n\n# Instructions\n1. Define SLIs and SLOs using the golden signals (latency, traffic, errors, saturation).\n2. Write alert rules based on error-budget burn rate.\n3. Design a dashboard layout.\n4. Write a short runbook entry per alert.\n5. List logs and traces to add.\n\n# Constraints\n- Every alert must be actionable.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSLO table, Alert rules (code), Dashboard spec, Runbooks.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "security-audit-of-code",
+  "title": "Security audit of code",
+  "category": "Security",
+  "tags": [
+   "owasp",
+   "vulnerabilities",
+   "appsec"
+  ],
+  "description": "Find vulnerabilities mapped to OWASP/CWE with fixes.",
+  "variables": [
+   {
+    "name": "code",
+    "hint": "Code to audit"
+   },
+   {
+    "name": "context",
+    "hint": "What the app does, who uses it, trust boundaries"
+   }
+  ],
+  "prompt": "# Role\nYou are an application security engineer doing a defensive code audit.\n\n# Goal\nIdentify security weaknesses in this code and how to fix them.\n\n# Inputs\n- Code: {{code}}\n- Context: {{context}}\n\n# Instructions\n1. Map trust boundaries and data flows.\n2. Check OWASP Top 10 categories: injection, broken auth, access control, crypto failures, SSRF, insecure design, misconfiguration, vulnerable components, logging failures, integrity failures.\n3. For each finding: CWE id, severity (CVSS-like), location, explanation, and secure fix in code.\n4. List defence-in-depth recommendations.\n\n# Constraints\n- Defensive purpose only; describe exploits at the level needed to understand and fix them.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nData-flow summary, Findings table, Fixes, Hardening checklist.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "threat-model-a-system",
+  "title": "Threat model a system",
+  "category": "Security",
+  "tags": [
+   "threat modeling",
+   "stride"
+  ],
+  "description": "STRIDE-based threat model with mitigations.",
+  "variables": [
+   {
+    "name": "system",
+    "hint": "Architecture, components, data stores, users"
+   },
+   {
+    "name": "assets",
+    "hint": "What must be protected"
+   }
+  ],
+  "prompt": "# Role\nYou are a security architect.\n\n# Goal\nProduce a threat model for the system.\n\n# Inputs\n- System: {{system}}\n- Assets: {{assets}}\n\n# Instructions\n1. Draw a data-flow diagram (Mermaid) with trust boundaries.\n2. Apply STRIDE to each element.\n3. Rate each threat by likelihood and impact.\n4. Propose mitigations and map to owners.\n5. List residual risks.\n\n# Constraints\n- Be concrete to this system; no generic lists.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nDFD, Threat table (element, STRIDE, threat, risk, mitigation), Residual risks.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-secure-authentication",
+  "title": "Write secure authentication",
+  "category": "Security",
+  "tags": [
+   "auth",
+   "oauth",
+   "sessions"
+  ],
+  "description": "Implement login, sessions/tokens, and password handling correctly.",
+  "variables": [
+   {
+    "name": "stack",
+    "hint": "Language/framework"
+   },
+   {
+    "name": "method",
+    "hint": "Password, OAuth/OIDC, magic link, passkeys"
+   },
+   {
+    "name": "requirements",
+    "hint": "MFA, roles, session length"
+   }
+  ],
+  "prompt": "# Role\nYou are an identity and access management engineer.\n\n# Goal\nImplement authentication for the app securely.\n\n# Inputs\n- Stack: {{stack}}\n- Method: {{method}}\n- Requirements: {{requirements}}\n\n# Instructions\n1. Choose the approach and explain why.\n2. Hash passwords with Argon2id or bcrypt with proper parameters.\n3. Implement sessions or tokens with secure cookies (HttpOnly, Secure, SameSite), rotation, and revocation.\n4. Add rate limiting, account lockout, and CSRF protection.\n5. Implement authorization checks (RBAC/ABAC).\n\n# Constraints\n- Never roll your own crypto.\n- Use vetted libraries.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nDesign summary, Code, Security checklist.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "review-dependencies-for-risk",
+  "title": "Review dependencies for risk",
+  "category": "Security",
+  "tags": [
+   "supply chain",
+   "dependencies",
+   "sca"
+  ],
+  "description": "Assess third-party packages for security, license, and maintenance risk.",
+  "variables": [
+   {
+    "name": "manifest",
+    "hint": "package.json, requirements.txt, go.mod, pom.xml, etc."
+   }
+  ],
+  "prompt": "# Role\nYou are a software supply-chain security analyst.\n\n# Goal\nAssess the dependency list and recommend actions.\n\n# Inputs\n- Manifest: {{manifest}}\n\n# Instructions\n1. Flag packages that are unmaintained, deprecated, or have known vulnerability history.\n2. Flag licenses incompatible with commercial use.\n3. Suggest lighter or safer alternatives.\n4. Recommend tooling (Dependabot, Renovate, SCA scanners) and lockfile policy.\n\n# Constraints\n- State that live vulnerability data must be verified with a scanner.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nRisk table (package, issue, severity, action), Tooling recommendations.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-complex-sql-query",
+  "title": "Write a complex SQL query",
+  "category": "Data & SQL",
+  "tags": [
+   "sql",
+   "query",
+   "analytics"
+  ],
+  "description": "Translate a business question into a correct, efficient SQL query.",
+  "variables": [
+   {
+    "name": "dialect",
+    "hint": "PostgreSQL, MySQL, BigQuery, Snowflake, SQL Server, etc."
+   },
+   {
+    "name": "schema",
+    "hint": "Tables, columns, types, keys"
+   },
+   {
+    "name": "question",
+    "hint": "The business question"
+   },
+   {
+    "name": "definitions",
+    "hint": "Metric definitions, time zone, filters"
+   }
+  ],
+  "prompt": "# Role\nYou are a senior analytics engineer fluent in {{dialect}}.\n\n# Goal\nWrite a query that answers the question exactly.\n\n# Inputs\n- Dialect: {{dialect}}\n- Schema: {{schema}}\n- Question: {{question}}\n- Definitions: {{definitions}}\n\n# Instructions\n1. Restate the question and define each metric precisely.\n2. Write the query using CTEs for readability.\n3. Handle NULLs, duplicates, and time zones explicitly.\n4. Explain each CTE.\n5. Suggest indexes or partitioning if performance matters.\n6. Provide a sanity-check query to validate the result.\n\n# Constraints\n- No SELECT *.\n- Use explicit JOIN types.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nAssumptions, SQL, Explanation, Validation query.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "optimize-a-slow-query",
+  "title": "Optimize a slow query",
+  "category": "Data & SQL",
+  "tags": [
+   "sql",
+   "performance",
+   "explain"
+  ],
+  "description": "Speed up a slow query using the execution plan.",
+  "variables": [
+   {
+    "name": "query",
+    "hint": "The slow query"
+   },
+   {
+    "name": "plan",
+    "hint": "EXPLAIN/EXPLAIN ANALYZE output"
+   },
+   {
+    "name": "schema",
+    "hint": "Tables, indexes, row counts"
+   },
+   {
+    "name": "database",
+    "hint": "Engine and version"
+   }
+  ],
+  "prompt": "# Role\nYou are a database performance tuner.\n\n# Goal\nMake the query fast while returning identical results.\n\n# Inputs\n- Query: {{query}}\n- Plan: {{plan}}\n- Schema: {{schema}}\n- Database: {{database}}\n\n# Instructions\n1. Read the plan and identify the expensive nodes.\n2. Explain why each is slow.\n3. Propose rewrites, indexes, or statistics changes.\n4. Show the optimized query and expected plan.\n5. Note write-cost of new indexes.\n\n# Constraints\n- Results must be identical.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nPlan analysis, Changes, Optimized SQL, Index DDL, Expected improvement.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "design-a-data-pipeline",
+  "title": "Design a data pipeline",
+  "category": "Data & SQL",
+  "tags": [
+   "etl",
+   "elt",
+   "data engineering"
+  ],
+  "description": "Design an ingestion and transformation pipeline with quality checks.",
+  "variables": [
+   {
+    "name": "sources",
+    "hint": "Source systems and formats"
+   },
+   {
+    "name": "destination",
+    "hint": "Warehouse/lake"
+   },
+   {
+    "name": "volume",
+    "hint": "Volume and frequency"
+   },
+   {
+    "name": "tools",
+    "hint": "Preferred tools: Airflow, dbt, Spark, Fivetran, etc."
+   }
+  ],
+  "prompt": "# Role\nYou are a data engineer.\n\n# Goal\nDesign a reliable pipeline from source to destination.\n\n# Inputs\n- Sources: {{sources}}\n- Destination: {{destination}}\n- Volume: {{volume}}\n- Tools: {{tools}}\n\n# Instructions\n1. Draw the pipeline (Mermaid).\n2. Choose batch vs. streaming with reasons.\n3. Define staging, transformation, and serving layers.\n4. Add data quality checks, idempotency, backfills, and schema-change handling.\n5. Define monitoring and SLAs.\n\n# Constraints\n- Pipelines must be re-runnable without duplicates.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nDiagram, Design doc, Example code (DAG/dbt models), Quality checks list.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "clean-and-transform-a-dataset",
+  "title": "Clean and transform a dataset",
+  "category": "Data & SQL",
+  "tags": [
+   "pandas",
+   "cleaning",
+   "wrangling"
+  ],
+  "description": "Write code to clean messy data with documented decisions.",
+  "variables": [
+   {
+    "name": "tool",
+    "hint": "pandas, polars, R dplyr, SQL, Excel"
+   },
+   {
+    "name": "sample",
+    "hint": "Sample rows and column list"
+   },
+   {
+    "name": "target",
+    "hint": "Desired output shape"
+   }
+  ],
+  "prompt": "# Role\nYou are a data wrangler expert in {{tool}}.\n\n# Goal\nProduce clean, analysis-ready data.\n\n# Inputs\n- Tool: {{tool}}\n- Sample: {{sample}}\n- Target: {{target}}\n\n# Instructions\n1. Profile the data: types, missing values, duplicates, outliers, inconsistent categories.\n2. Decide how to handle each issue and justify.\n3. Write the cleaning code step by step.\n4. Add assertions validating the output.\n5. Summarize rows removed/changed.\n\n# Constraints\n- Never silently drop data; log counts.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nProfiling summary, Cleaning decisions table, Code, Validation, Change summary.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-an-excel-or-google-sheets-formula",
+  "title": "Write an Excel or Google Sheets formula",
+  "category": "Data & SQL",
+  "tags": [
+   "excel",
+   "spreadsheet",
+   "formula"
+  ],
+  "description": "Get the exact formula, explained, for any spreadsheet task.",
+  "variables": [
+   {
+    "name": "app",
+    "hint": "Excel 365, Google Sheets, LibreOffice"
+   },
+   {
+    "name": "layout",
+    "hint": "Sheet layout: columns, headers, ranges"
+   },
+   {
+    "name": "task",
+    "hint": "What the formula must calculate"
+   }
+  ],
+  "prompt": "# Role\nYou are a spreadsheet power user.\n\n# Goal\nWrite a formula that does exactly what is needed.\n\n# Inputs\n- App: {{app}}\n- Layout: {{layout}}\n- Task: {{task}}\n\n# Instructions\n1. Give the formula.\n2. Explain each function used.\n3. Give an alternative for older versions if relevant.\n4. Mention edge cases (blanks, errors) and how it handles them.\n\n# Constraints\n- Use absolute/relative references correctly.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nFormula, Explanation, Alternative, Example result.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "exploratory-data-analysis",
+  "title": "Exploratory data analysis",
+  "category": "Data Science & ML",
+  "tags": [
+   "eda",
+   "statistics",
+   "insights"
+  ],
+  "description": "A complete EDA plan and code that surfaces real insights.",
+  "variables": [
+   {
+    "name": "dataset",
+    "hint": "Description, columns, sample rows"
+   },
+   {
+    "name": "question",
+    "hint": "Business question"
+   },
+   {
+    "name": "tool",
+    "hint": "Python/R and libraries"
+   }
+  ],
+  "prompt": "# Role\nYou are a senior data scientist.\n\n# Goal\nExplore the dataset and surface insights relevant to the question.\n\n# Inputs\n- Dataset: {{dataset}}\n- Question: {{question}}\n- Tool: {{tool}}\n\n# Instructions\n1. Summarize the dataset structure and quality.\n2. Compute univariate and bivariate statistics.\n3. Choose charts that answer the question and explain each.\n4. Test hypotheses with appropriate statistical tests.\n5. Summarize insights, caveats, and next steps.\n\n# Constraints\n- Distinguish correlation from causation.\n- Report effect sizes, not just p-values.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nCode notebook sections, Findings, Caveats, Recommendations.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "build-a-machine-learning-model",
+  "title": "Build a machine learning model",
+  "category": "Data Science & ML",
+  "tags": [
+   "ml",
+   "model",
+   "training"
+  ],
+  "description": "End-to-end plan and code from problem framing to evaluation.",
+  "variables": [
+   {
+    "name": "problem",
+    "hint": "What to predict and why"
+   },
+   {
+    "name": "data",
+    "hint": "Data available, size, features"
+   },
+   {
+    "name": "metric",
+    "hint": "Success metric and constraints (latency, interpretability)"
+   }
+  ],
+  "prompt": "# Role\nYou are a machine learning engineer.\n\n# Goal\nBuild and evaluate a model that solves the problem.\n\n# Inputs\n- Problem: {{problem}}\n- Data: {{data}}\n- Metric: {{metric}}\n\n# Instructions\n1. Frame the problem (classification/regression/ranking) and define a baseline.\n2. Plan feature engineering and train/validation/test split avoiding leakage.\n3. Select candidate models and justify.\n4. Write training and evaluation code with cross-validation.\n5. Analyse errors and feature importance.\n6. Outline deployment and monitoring for drift.\n\n# Constraints\n- Report metrics on a held-out test set.\n- Check for class imbalance and bias.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nFraming, Baseline, Pipeline code, Results table, Error analysis, Deployment plan.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "explain-model-results-to-stakeholders",
+  "title": "Explain model results to stakeholders",
+  "category": "Data Science & ML",
+  "tags": [
+   "communication",
+   "ml",
+   "reporting"
+  ],
+  "description": "Translate technical model performance into business language.",
+  "variables": [
+   {
+    "name": "model_summary",
+    "hint": "Model type and purpose"
+   },
+   {
+    "name": "metrics",
+    "hint": "Performance metrics"
+   },
+   {
+    "name": "audience",
+    "hint": "Who will read this"
+   }
+  ],
+  "prompt": "# Role\nYou are a data science lead who communicates with executives.\n\n# Goal\nExplain what the model does, how good it is, and what it means for the business.\n\n# Inputs\n- Model summary: {{model_summary}}\n- Metrics: {{metrics}}\n- Audience: {{audience}}\n\n# Instructions\n1. Explain the model's purpose in one sentence.\n2. Translate metrics into concrete outcomes (e.g. out of 100 cases...).\n3. Explain limitations and risks.\n4. Recommend a decision.\n\n# Constraints\n- No jargon without a plain-language translation.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nOne-page brief: Purpose, Performance in plain terms, Risks, Recommendation.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "design-an-a-b-test",
+  "title": "Design an A/B test",
+  "category": "Data Science & ML",
+  "tags": [
+   "experiment",
+   "ab test",
+   "statistics"
+  ],
+  "description": "Plan a statistically sound experiment with sample size and analysis.",
+  "variables": [
+   {
+    "name": "change",
+    "hint": "What is being tested"
+   },
+   {
+    "name": "metric",
+    "hint": "Primary metric and baseline value"
+   },
+   {
+    "name": "traffic",
+    "hint": "Daily eligible users"
+   },
+   {
+    "name": "mde",
+    "hint": "Minimum detectable effect"
+   }
+  ],
+  "prompt": "# Role\nYou are an experimentation scientist.\n\n# Goal\nDesign an experiment that gives a trustworthy answer.\n\n# Inputs\n- Change: {{change}}\n- Metric: {{metric}}\n- Traffic: {{traffic}}\n- Mde: {{mde}}\n\n# Instructions\n1. State hypotheses.\n2. Choose primary, secondary, and guardrail metrics.\n3. Calculate sample size and duration with formulas shown.\n4. Define randomization unit and checks (SRM).\n5. Define the analysis method and decision rule.\n\n# Constraints\n- No peeking without sequential testing correction.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nExperiment design doc with calculations.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "build-a-ui-component",
+  "title": "Build a UI component",
+  "category": "Frontend & Mobile",
+  "tags": [
+   "react",
+   "component",
+   "ui"
+  ],
+  "description": "Create an accessible, responsive, reusable component with states and tests.",
+  "variables": [
+   {
+    "name": "framework",
+    "hint": "React, Vue, Svelte, Angular, SwiftUI, Flutter, Jetpack Compose"
+   },
+   {
+    "name": "component",
+    "hint": "What it is and does"
+   },
+   {
+    "name": "design",
+    "hint": "Design details: variants, sizes, states, tokens"
+   },
+   {
+    "name": "styling",
+    "hint": "CSS modules, Tailwind, styled-components, etc."
+   }
+  ],
+  "prompt": "# Role\nYou are a senior frontend engineer expert in {{framework}} and accessibility.\n\n# Goal\nBuild the component below ready for a design system.\n\n# Inputs\n- Framework: {{framework}}\n- Component: {{component}}\n- Design: {{design}}\n- Styling: {{styling}}\n\n# Instructions\n1. Define the props/API with types and defaults.\n2. Implement all states: default, hover, focus, active, disabled, loading, error, empty.\n3. Make it keyboard accessible with correct ARIA roles and labels (WCAG 2.2 AA).\n4. Make it responsive.\n5. Write tests for rendering, interaction, and accessibility.\n6. Write a usage example and a Storybook story if relevant.\n\n# Constraints\n- No hard-coded colors; use tokens.\n- Respect prefers-reduced-motion.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nProps table, Component code, Styles, Tests, Usage example.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "convert-a-design-to-code",
+  "title": "Convert a design to code",
+  "category": "Frontend & Mobile",
+  "tags": [
+   "html",
+   "css",
+   "figma"
+  ],
+  "description": "Turn a screenshot or design description into pixel-accurate, semantic code.",
+  "variables": [
+   {
+    "name": "design",
+    "hint": "Screenshot description or Figma specs"
+   },
+   {
+    "name": "stack",
+    "hint": "HTML/CSS, Tailwind, React, etc."
+   },
+   {
+    "name": "breakpoints",
+    "hint": "Target screen sizes"
+   }
+  ],
+  "prompt": "# Role\nYou are a frontend developer who translates designs into semantic, maintainable code.\n\n# Goal\nRecreate the design accurately and responsively.\n\n# Inputs\n- Design: {{design}}\n- Stack: {{stack}}\n- Breakpoints: {{breakpoints}}\n\n# Instructions\n1. Break the design into a component hierarchy.\n2. Write semantic HTML with landmarks and headings.\n3. Implement layout with flex/grid and design tokens.\n4. Handle responsive breakpoints.\n5. List any assumptions about missing specs.\n\n# Constraints\n- Accessible contrast and focus states.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nComponent tree, Code, Assumptions.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "fix-a-css-layout-problem",
+  "title": "Fix a CSS layout problem",
+  "category": "Frontend & Mobile",
+  "tags": [
+   "css",
+   "layout",
+   "responsive"
+  ],
+  "description": "Diagnose and fix layout, overflow, alignment, or responsive bugs.",
+  "variables": [
+   {
+    "name": "html_css",
+    "hint": "Relevant HTML and CSS"
+   },
+   {
+    "name": "problem",
+    "hint": "What looks wrong and where"
+   },
+   {
+    "name": "expected",
+    "hint": "What it should look like"
+   }
+  ],
+  "prompt": "# Role\nYou are a CSS expert.\n\n# Goal\nFix the layout so it behaves as intended on all target screens.\n\n# Inputs\n- Html css: {{html_css}}\n- Problem: {{problem}}\n- Expected: {{expected}}\n\n# Instructions\n1. Explain why the current CSS produces this result (box model, flex/grid behaviour, stacking context, etc.).\n2. Give the minimal fix.\n3. Explain how to prevent similar issues.\n\n# Constraints\n- Avoid magic numbers and !important unless justified.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nCause, Fix (code), Prevention tips.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "improve-web-performance-core-web-vitals",
+  "title": "Improve web performance (Core Web Vitals)",
+  "category": "Frontend & Mobile",
+  "tags": [
+   "lcp",
+   "cls",
+   "performance"
+  ],
+  "description": "Raise Lighthouse and Core Web Vitals scores with prioritized fixes.",
+  "variables": [
+   {
+    "name": "page",
+    "hint": "URL or description and stack"
+   },
+   {
+    "name": "metrics",
+    "hint": "Current Lighthouse/CWV numbers"
+   },
+   {
+    "name": "assets",
+    "hint": "Key scripts, images, fonts"
+   }
+  ],
+  "prompt": "# Role\nYou are a web performance specialist.\n\n# Goal\nImprove LCP, INP, and CLS for the page.\n\n# Inputs\n- Page: {{page}}\n- Metrics: {{metrics}}\n- Assets: {{assets}}\n\n# Instructions\n1. Identify the LCP element and what delays it.\n2. Find layout shift sources.\n3. Find long tasks hurting INP.\n4. Give fixes ranked by impact with code/config examples (image formats, preload, code splitting, font-display, caching).\n\n# Constraints\n- Do not break functionality.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nDiagnosis per metric, Prioritized fix list, Code examples.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "audit-accessibility",
+  "title": "Audit accessibility",
+  "category": "Frontend & Mobile",
+  "tags": [
+   "a11y",
+   "wcag",
+   "inclusive"
+  ],
+  "description": "WCAG 2.2 audit of markup or a UI with concrete fixes.",
+  "variables": [
+   {
+    "name": "ui",
+    "hint": "HTML/JSX or description of the interface"
+   },
+   {
+    "name": "users",
+    "hint": "Target users and assistive tech to support"
+   }
+  ],
+  "prompt": "# Role\nYou are an accessibility specialist (CPACC/WAS level).\n\n# Goal\nFind accessibility barriers and fix them.\n\n# Inputs\n- Ui: {{ui}}\n- Users: {{users}}\n\n# Instructions\n1. Check perceivable, operable, understandable, robust criteria.\n2. Check keyboard navigation, focus order, screen-reader names, contrast, motion, forms, errors.\n3. For each issue: WCAG criterion, severity, affected users, fix in code.\n\n# Constraints\n- Prefer native HTML over ARIA.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nIssue table, Fixed code, Testing checklist (manual + automated).\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-world-class-prompt-for-any-task",
+  "title": "Write a world-class prompt for any task",
+  "category": "AI, Prompts & Agents",
+  "tags": [
+   "prompt engineering",
+   "meta prompt",
+   "llm"
+  ],
+  "description": "Meta-prompt: turn a rough idea into a complete, structured prompt for any AI model.",
+  "variables": [
+   {
+    "name": "task_idea",
+    "hint": "What I want the AI to do, in my own words"
+   },
+   {
+    "name": "audience",
+    "hint": "Who will use the output"
+   },
+   {
+    "name": "model",
+    "hint": "Target model or tool, if known"
+   },
+   {
+    "name": "examples",
+    "hint": "Any examples of good output (optional)"
+   },
+   {
+    "name": "placeholders",
+    "hint": ""
+   }
+  ],
+  "prompt": "# Role\nYou are an expert prompt engineer who writes clear, complete, testable prompts for large language models.\n\n# Goal\nTurn my rough request into a production-quality prompt that leaves nothing to guesswork.\n\n# Inputs\n- Task idea: {{task_idea}}\n- Audience: {{audience}}\n- Model: {{model}}\n- Examples: {{examples}}\n\n# Instructions\n1. Ask me up to 5 clarifying questions if anything critical is missing; otherwise proceed.\n2. Write the prompt with these sections: Role, Context, Task, Inputs (as {{placeholders}}), Step-by-step instructions, Constraints, Output format, Quality checklist.\n3. Include 1-2 short examples if they would improve consistency.\n4. Add instructions for handling missing or ambiguous input.\n5. Add a self-check the model should run before answering.\n6. Explain briefly why each section is there and how to adapt it.\n\n# Constraints\n- Be explicit and specific; no vague words like 'good' or 'nice' without criteria.\n- Use clear delimiters for inputs.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\n1. The final prompt in one fenced block\n2. Placeholder list with descriptions\n3. Tips to tune it\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "improve-an-existing-prompt",
+  "title": "Improve an existing prompt",
+  "category": "AI, Prompts & Agents",
+  "tags": [
+   "prompt engineering",
+   "optimization",
+   "evaluation"
+  ],
+  "description": "Diagnose why a prompt underperforms and rewrite it.",
+  "variables": [
+   {
+    "name": "prompt",
+    "hint": "The current prompt"
+   },
+   {
+    "name": "bad_outputs",
+    "hint": "Examples of outputs that were wrong and why"
+   },
+   {
+    "name": "goal",
+    "hint": "What a great output looks like"
+   }
+  ],
+  "prompt": "# Role\nYou are a prompt engineer who debugs prompts using evidence.\n\n# Goal\nMake the prompt produce consistently better output.\n\n# Inputs\n- Prompt: {{prompt}}\n- Bad outputs: {{bad_outputs}}\n- Goal: {{goal}}\n\n# Instructions\n1. Diagnose the failure modes (ambiguity, missing context, conflicting instructions, no format, no examples).\n2. Rewrite the prompt fixing each.\n3. Show a diff-style list of changes and the reason for each.\n4. Propose 5 test inputs to evaluate the new prompt, including edge cases.\n\n# Constraints\n- Keep what already works.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nDiagnosis, Improved prompt, Change log, Test set.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "design-an-ai-agent",
+  "title": "Design an AI agent",
+  "category": "AI, Prompts & Agents",
+  "tags": [
+   "agents",
+   "tools",
+   "automation"
+  ],
+  "description": "Design an autonomous agent: tools, loop, memory, guardrails, and evaluation.",
+  "variables": [
+   {
+    "name": "workflow",
+    "hint": "The task the agent should do end to end"
+   },
+   {
+    "name": "tools",
+    "hint": "APIs/systems it can access"
+   },
+   {
+    "name": "framework",
+    "hint": "Claude Agent SDK, LangGraph, custom, etc."
+   },
+   {
+    "name": "risk",
+    "hint": "What actions are risky or irreversible"
+   }
+  ],
+  "prompt": "# Role\nYou are an AI systems architect who builds reliable LLM agents.\n\n# Goal\nDesign an agent that completes the workflow reliably and safely.\n\n# Inputs\n- Workflow: {{workflow}}\n- Tools: {{tools}}\n- Framework: {{framework}}\n- Risk: {{risk}}\n\n# Instructions\n1. Decide whether this needs an agent or a fixed workflow, and justify.\n2. Define the tools with names, descriptions, JSON schemas, and error behaviour.\n3. Write the agent's system prompt.\n4. Design the control loop, stopping conditions, and max steps.\n5. Design memory/context management.\n6. Add guardrails: human approval for risky actions, input/output validation, permissions.\n7. Define an evaluation set and success metrics.\n\n# Constraints\n- Least privilege for tools.\n- All irreversible actions require confirmation.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nArchitecture diagram (Mermaid), Tool schemas, System prompt, Loop pseudocode, Guardrails, Eval plan.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "design-a-rag-system",
+  "title": "Design a RAG system",
+  "category": "AI, Prompts & Agents",
+  "tags": [
+   "rag",
+   "retrieval",
+   "embeddings"
+  ],
+  "description": "Retrieval-augmented generation design: chunking, retrieval, prompting, evaluation.",
+  "variables": [
+   {
+    "name": "documents",
+    "hint": "Document types, size, update frequency"
+   },
+   {
+    "name": "questions",
+    "hint": "Typical user questions"
+   },
+   {
+    "name": "stack",
+    "hint": "Vector DB, model, language preferences"
+   }
+  ],
+  "prompt": "# Role\nYou are an ML engineer specializing in retrieval-augmented generation.\n\n# Goal\nDesign a RAG system that answers accurately with citations.\n\n# Inputs\n- Documents: {{documents}}\n- Questions: {{questions}}\n- Stack: {{stack}}\n\n# Instructions\n1. Design ingestion: parsing, cleaning, chunking strategy (size/overlap/semantic), metadata.\n2. Choose embedding model and retrieval (hybrid search, reranking).\n3. Write the answer-generation prompt with citation rules and 'I don't know' behaviour.\n4. Plan evaluation: retrieval recall, answer faithfulness, relevance.\n5. Address freshness, access control, and cost.\n\n# Constraints\n- Answers must be grounded in retrieved text.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nPipeline diagram, Component choices, Prompt, Eval plan, Example code.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-system-prompt-for-a-chatbot",
+  "title": "Write a system prompt for a chatbot",
+  "category": "AI, Prompts & Agents",
+  "tags": [
+   "system prompt",
+   "chatbot",
+   "assistant"
+  ],
+  "description": "Complete system prompt for a customer-facing or internal assistant.",
+  "variables": [
+   {
+    "name": "product",
+    "hint": "What the assistant is for"
+   },
+   {
+    "name": "audience",
+    "hint": "Who talks to it"
+   },
+   {
+    "name": "tone",
+    "hint": "Brand voice"
+   },
+   {
+    "name": "knowledge",
+    "hint": "What it knows / can look up"
+   },
+   {
+    "name": "boundaries",
+    "hint": "What it must not do; escalation rules"
+   }
+  ],
+  "prompt": "# Role\nYou are a conversational AI designer.\n\n# Goal\nWrite a system prompt that makes the assistant helpful, on-brand, and safe.\n\n# Inputs\n- Product: {{product}}\n- Audience: {{audience}}\n- Tone: {{tone}}\n- Knowledge: {{knowledge}}\n- Boundaries: {{boundaries}}\n\n# Instructions\n1. Write identity and purpose.\n2. Define tone with examples.\n3. List capabilities and tools.\n4. Define how to handle out-of-scope, sensitive, or unclear requests.\n5. Define escalation to humans.\n6. Define response format and length rules.\n7. Add 3 example exchanges.\n\n# Constraints\n- Never invent policies, prices, or facts; say when unsure.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSystem prompt in a fenced block, then a test conversation list.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "create-an-llm-evaluation-set",
+  "title": "Create an LLM evaluation set",
+  "category": "AI, Prompts & Agents",
+  "tags": [
+   "evals",
+   "testing",
+   "llm"
+  ],
+  "description": "Build test cases and grading rubrics to measure an AI feature.",
+  "variables": [
+   {
+    "name": "feature",
+    "hint": "The AI feature and its prompt"
+   },
+   {
+    "name": "quality_criteria",
+    "hint": "What good looks like"
+   }
+  ],
+  "prompt": "# Role\nYou are an AI evaluation engineer.\n\n# Goal\nCreate an eval suite that reliably measures quality.\n\n# Inputs\n- Feature: {{feature}}\n- Quality criteria: {{quality_criteria}}\n\n# Instructions\n1. Define dimensions (accuracy, completeness, format, safety, tone).\n2. Write a scoring rubric (1-5) with anchors for each dimension.\n3. Write 20 diverse test cases: typical, edge, adversarial, and out-of-scope.\n4. Write an LLM-as-judge prompt with the rubric.\n5. Explain how to track results over time.\n\n# Constraints\n- Include expected outputs or key facts for each case.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nRubric table, Test cases (JSON), Judge prompt, Process notes.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "automate-a-workflow-with-ai",
+  "title": "Automate a workflow with AI",
+  "category": "AI, Prompts & Agents",
+  "tags": [
+   "automation",
+   "zapier",
+   "n8n",
+   "workflow"
+  ],
+  "description": "Map a manual process and automate it with AI and integration tools.",
+  "variables": [
+   {
+    "name": "process",
+    "hint": "Current manual steps"
+   },
+   {
+    "name": "tools",
+    "hint": "Apps involved and automation platform (Zapier, Make, n8n, scripts)"
+   },
+   {
+    "name": "volume",
+    "hint": "How often / how many"
+   }
+  ],
+  "prompt": "# Role\nYou are an automation consultant.\n\n# Goal\nAutomate the process end to end with clear human checkpoints.\n\n# Inputs\n- Process: {{process}}\n- Tools: {{tools}}\n- Volume: {{volume}}\n\n# Instructions\n1. Map the current process and its pain points.\n2. Mark which steps AI can do, which rules can do, and which need a human.\n3. Design the automated flow (Mermaid) with triggers, actions, and error handling.\n4. Write the AI prompts used in each AI step.\n5. Estimate time saved and list risks.\n\n# Constraints\n- Add logging and a fallback when AI output fails validation.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nCurrent vs. future flow, Step table, Prompts, Setup instructions, ROI estimate.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "generate-structured-data-from-text",
+  "title": "Generate structured data from text",
+  "category": "AI, Prompts & Agents",
+  "tags": [
+   "extraction",
+   "json",
+   "parsing"
+  ],
+  "description": "Extract fields from unstructured text into strict JSON.",
+  "variables": [
+   {
+    "name": "text",
+    "hint": "Source text"
+   },
+   {
+    "name": "schema",
+    "hint": "JSON schema or field list with types"
+   }
+  ],
+  "prompt": "# Role\nYou are a precise information-extraction system.\n\n# Goal\nExtract the requested fields from the text into valid JSON.\n\n# Inputs\n- Text: {{text}}\n- Schema: {{schema}}\n\n# Instructions\n1. Read the full text.\n2. Extract each field exactly; normalize dates to ISO 8601 and numbers to plain values.\n3. Use null when a field is not present; never guess.\n4. Validate the result against the schema.\n\n# Constraints\n- Output only JSON, no commentary.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nA single JSON object matching the schema.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-readme",
+  "title": "Write a README",
+  "category": "Documentation",
+  "tags": [
+   "readme",
+   "open source",
+   "docs"
+  ],
+  "description": "A complete README that gets new users productive fast.",
+  "variables": [
+   {
+    "name": "project",
+    "hint": "What it does, who it's for"
+   },
+   {
+    "name": "install",
+    "hint": "Install/setup steps"
+   },
+   {
+    "name": "usage",
+    "hint": "Key usage examples"
+   },
+   {
+    "name": "extras",
+    "hint": "Config, contributing, license"
+   }
+  ],
+  "prompt": "# Role\nYou are a developer-experience writer.\n\n# Goal\nWrite a README that explains the project and gets someone running in minutes.\n\n# Inputs\n- Project: {{project}}\n- Install: {{install}}\n- Usage: {{usage}}\n- Extras: {{extras}}\n\n# Instructions\n1. One-sentence description and badges.\n2. Features list.\n3. Quick start (copy-paste commands).\n4. Usage examples.\n5. Configuration table.\n6. Troubleshooting/FAQ.\n7. Contributing, license.\n\n# Constraints\n- Every command must be copy-paste runnable.\n- Short paragraphs.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nREADME.md in Markdown.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "document-an-api",
+  "title": "Document an API",
+  "category": "Documentation",
+  "tags": [
+   "api docs",
+   "openapi",
+   "reference"
+  ],
+  "description": "Clear reference docs with examples for every endpoint.",
+  "variables": [
+   {
+    "name": "api",
+    "hint": "Endpoints, code, or OpenAPI spec"
+   },
+   {
+    "name": "auth",
+    "hint": "How authentication works"
+   },
+   {
+    "name": "audience",
+    "hint": "Who integrates"
+   }
+  ],
+  "prompt": "# Role\nYou are a technical writer for developer APIs.\n\n# Goal\nProduce API reference documentation.\n\n# Inputs\n- Api: {{api}}\n- Auth: {{auth}}\n- Audience: {{audience}}\n\n# Instructions\n1. Write overview, authentication, base URL, errors, rate limits, versioning.\n2. For each endpoint: purpose, parameters table, request example, response example, errors.\n3. Provide examples in curl and 2 languages.\n\n# Constraints\n- Examples must be consistent with schemas.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nMarkdown docs with tables and code blocks.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "add-code-comments-and-docstrings",
+  "title": "Add code comments and docstrings",
+  "category": "Documentation",
+  "tags": [
+   "comments",
+   "docstrings",
+   "jsdoc"
+  ],
+  "description": "Document code with useful docstrings and comments in the language's standard format.",
+  "variables": [
+   {
+    "name": "code",
+    "hint": "The code"
+   },
+   {
+    "name": "format",
+    "hint": "JSDoc, Google/NumPy docstrings, Javadoc, rustdoc, etc."
+   }
+  ],
+  "prompt": "# Role\nYou are an engineer who writes helpful, concise documentation.\n\n# Goal\nAdd documentation that explains intent, not the obvious.\n\n# Inputs\n- Code: {{code}}\n- Format: {{format}}\n\n# Instructions\n1. Add docstrings to every public function/class: purpose, params, returns, errors, example.\n2. Add inline comments only for non-obvious logic.\n3. Return the full code.\n\n# Constraints\n- Do not change code behaviour.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nFull documented code.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-technical-design-document",
+  "title": "Write a technical design document",
+  "category": "Documentation",
+  "tags": [
+   "design doc",
+   "rfc",
+   "spec"
+  ],
+  "description": "A complete RFC/design doc for review.",
+  "variables": [
+   {
+    "name": "problem",
+    "hint": "Problem and motivation"
+   },
+   {
+    "name": "proposal",
+    "hint": "Proposed solution (rough)"
+   },
+   {
+    "name": "constraints",
+    "hint": "Constraints, timelines, dependencies"
+   }
+  ],
+  "prompt": "# Role\nYou are a staff engineer writing an RFC.\n\n# Goal\nWrite a design doc reviewers can approve or challenge.\n\n# Inputs\n- Problem: {{problem}}\n- Proposal: {{proposal}}\n- Constraints: {{constraints}}\n\n# Instructions\n1. Sections: Summary, Background, Goals/Non-goals, Proposal, Alternatives, Detailed design, Data/API changes, Rollout plan, Security/privacy, Observability, Risks, Open questions.\n\n# Constraints\n- Explicit non-goals.\n- Measurable success criteria.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nMarkdown design doc.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-release-notes-and-changelog",
+  "title": "Write release notes and changelog",
+  "category": "Documentation",
+  "tags": [
+   "changelog",
+   "release notes"
+  ],
+  "description": "Turn commits or PRs into user-friendly release notes.",
+  "variables": [
+   {
+    "name": "changes",
+    "hint": "Commit messages, PR titles, or diff summary"
+   },
+   {
+    "name": "version",
+    "hint": "Version number"
+   },
+   {
+    "name": "audience",
+    "hint": "End users, developers, or both"
+   }
+  ],
+  "prompt": "# Role\nYou are a product-minded technical writer.\n\n# Goal\nWrite release notes users actually read.\n\n# Inputs\n- Changes: {{changes}}\n- Version: {{version}}\n- Audience: {{audience}}\n\n# Instructions\n1. Group into: Highlights, New, Improved, Fixed, Breaking changes, Deprecations.\n2. Rewrite each item as a user benefit.\n3. Give migration steps for breaking changes.\n\n# Constraints\n- Follow Keep a Changelog and SemVer conventions.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nMarkdown release notes.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-runbook",
+  "title": "Write a runbook",
+  "category": "Documentation",
+  "tags": [
+   "runbook",
+   "operations",
+   "sop"
+  ],
+  "description": "Step-by-step operational runbook for an alert or task.",
+  "variables": [
+   {
+    "name": "scenario",
+    "hint": "Alert or operational task"
+   },
+   {
+    "name": "system",
+    "hint": "Relevant systems and access"
+   }
+  ],
+  "prompt": "# Role\nYou are an SRE who writes runbooks people can follow at 3 a.m..\n\n# Goal\nWrite a runbook for the scenario below.\n\n# Inputs\n- Scenario: {{scenario}}\n- System: {{system}}\n\n# Instructions\n1. Purpose and when to use.\n2. Impact and severity.\n3. Diagnosis steps with exact commands.\n4. Remediation steps.\n5. Escalation contacts placeholders.\n6. Verification and follow-up.\n\n# Constraints\n- Numbered, imperative steps.\n- Every command copy-pasteable.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nMarkdown runbook.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-blog-post",
+  "title": "Write a blog post",
+  "category": "Writing & Content",
+  "tags": [
+   "blog",
+   "article",
+   "seo"
+  ],
+  "description": "Long-form, well-structured, engaging article on any topic.",
+  "variables": [
+   {
+    "name": "topic",
+    "hint": "Topic and angle"
+   },
+   {
+    "name": "topic_field",
+    "hint": "Field/industry"
+   },
+   {
+    "name": "audience",
+    "hint": "Who reads it and what they know"
+   },
+   {
+    "name": "length",
+    "hint": "Target word count"
+   },
+   {
+    "name": "tone",
+    "hint": "Tone of voice"
+   },
+   {
+    "name": "keyword",
+    "hint": "Primary SEO keyword (optional)"
+   }
+  ],
+  "prompt": "# Role\nYou are an expert writer and editor in {{topic_field}}.\n\n# Goal\nWrite an original, engaging, accurate blog post.\n\n# Inputs\n- Topic: {{topic}}\n- Topic field: {{topic_field}}\n- Audience: {{audience}}\n- Length: {{length}}\n- Tone: {{tone}}\n- Keyword: {{keyword}}\n\n# Instructions\n1. Propose 5 headline options and pick the strongest.\n2. Outline with H2/H3 headings.\n3. Write a hook intro that states the reader's problem.\n4. Write the body with concrete examples, data points (flag ones to verify), and actionable advice.\n5. Conclude with a summary and a call to action.\n6. Add a meta description (155 chars) and 3 social snippets.\n\n# Constraints\n- No filler, no clichés.\n- Short paragraphs, varied sentence length.\n- Flag any claim that needs a source.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nHeadline, Meta description, Article in Markdown, Social snippets.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "edit-and-improve-writing",
+  "title": "Edit and improve writing",
+  "category": "Writing & Content",
+  "tags": [
+   "editing",
+   "proofreading",
+   "clarity"
+  ],
+  "description": "Professional edit for clarity, flow, grammar, and impact.",
+  "variables": [
+   {
+    "name": "text",
+    "hint": "Text to edit"
+   },
+   {
+    "name": "goal",
+    "hint": "Purpose and audience"
+   },
+   {
+    "name": "level",
+    "hint": "Light proofread, line edit, or heavy rewrite"
+   }
+  ],
+  "prompt": "# Role\nYou are a senior editor.\n\n# Goal\nImprove the text while keeping the author's voice and meaning.\n\n# Inputs\n- Text: {{text}}\n- Goal: {{goal}}\n- Level: {{level}}\n\n# Instructions\n1. Fix grammar, spelling, punctuation.\n2. Improve clarity and concision.\n3. Improve structure and flow.\n4. Return the edited text.\n5. List the most important changes and why.\n\n# Constraints\n- Preserve meaning and voice.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nEdited text, then a bullet list of key changes.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "summarize-any-document",
+  "title": "Summarize any document",
+  "category": "Writing & Content",
+  "tags": [
+   "summary",
+   "tl;dr",
+   "notes"
+  ],
+  "description": "Accurate, layered summary with key points and action items.",
+  "variables": [
+   {
+    "name": "content",
+    "hint": "Text to summarize"
+   },
+   {
+    "name": "audience",
+    "hint": "Who will read the summary"
+   },
+   {
+    "name": "length",
+    "hint": "Target length"
+   }
+  ],
+  "prompt": "# Role\nYou are an analyst who writes precise summaries.\n\n# Goal\nSummarize the content so a busy reader gets everything important.\n\n# Inputs\n- Content: {{content}}\n- Audience: {{audience}}\n- Length: {{length}}\n\n# Instructions\n1. One-sentence TL;DR.\n2. Key points (5-10 bullets).\n3. Important numbers, dates, names.\n4. Decisions and action items with owners if mentioned.\n5. Open questions or gaps.\n\n# Constraints\n- No information not in the source.\n- Keep numbers exact.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nTL;DR, Key points, Facts, Actions, Open questions.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-professional-email",
+  "title": "Write a professional email",
+  "category": "Writing & Content",
+  "tags": [
+   "email",
+   "communication",
+   "business"
+  ],
+  "description": "Clear, well-toned email for any situation.",
+  "variables": [
+   {
+    "name": "recipient",
+    "hint": "Who and relationship"
+   },
+   {
+    "name": "purpose",
+    "hint": "What you need"
+   },
+   {
+    "name": "context",
+    "hint": "Background"
+   },
+   {
+    "name": "tone",
+    "hint": "Formal, friendly, firm, apologetic"
+   }
+  ],
+  "prompt": "# Role\nYou are a skilled business communicator.\n\n# Goal\nWrite an email that gets the desired response.\n\n# Inputs\n- Recipient: {{recipient}}\n- Purpose: {{purpose}}\n- Context: {{context}}\n- Tone: {{tone}}\n\n# Instructions\n1. Write a specific subject line.\n2. Open with the point.\n3. Give necessary context briefly.\n4. Make a clear ask with deadline if any.\n5. Close politely.\n6. Provide a shorter alternative version.\n\n# Constraints\n- Under 200 words unless needed.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSubject, Email, Short version.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-story-or-fiction-scene",
+  "title": "Write a story or fiction scene",
+  "category": "Writing & Content",
+  "tags": [
+   "fiction",
+   "creative writing",
+   "story"
+  ],
+  "description": "Creative story with vivid characters, conflict, and a strong ending.",
+  "variables": [
+   {
+    "name": "premise",
+    "hint": "Premise or idea"
+   },
+   {
+    "name": "genre",
+    "hint": "Genre"
+   },
+   {
+    "name": "length",
+    "hint": "Word count"
+   },
+   {
+    "name": "pov",
+    "hint": "Point of view and tense"
+   },
+   {
+    "name": "audience",
+    "hint": "Age group"
+   }
+  ],
+  "prompt": "# Role\nYou are an award-winning fiction author.\n\n# Goal\nWrite an original story.\n\n# Inputs\n- Premise: {{premise}}\n- Genre: {{genre}}\n- Length: {{length}}\n- Pov: {{pov}}\n- Audience: {{audience}}\n\n# Instructions\n1. Define character goals and conflict.\n2. Open in the middle of action.\n3. Show, don't tell; use sensory detail.\n4. Build tension to a climax.\n5. End with a resonant resolution.\n\n# Constraints\n- Original content; avoid clichés.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nTitle and the story.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "repurpose-content-across-formats",
+  "title": "Repurpose content across formats",
+  "category": "Writing & Content",
+  "tags": [
+   "repurpose",
+   "social",
+   "newsletter"
+  ],
+  "description": "Turn one piece of content into posts, threads, newsletter, and video script.",
+  "variables": [
+   {
+    "name": "content",
+    "hint": "Original content"
+   },
+   {
+    "name": "channels",
+    "hint": "Target channels"
+   },
+   {
+    "name": "brand_voice",
+    "hint": "Voice description"
+   }
+  ],
+  "prompt": "# Role\nYou are a content strategist.\n\n# Goal\nRepurpose the content for multiple channels.\n\n# Inputs\n- Content: {{content}}\n- Channels: {{channels}}\n- Brand voice: {{brand_voice}}\n\n# Instructions\n1. Extract the core message and 5 key insights.\n2. Create a version per channel following its format norms and length limits.\n\n# Constraints\n- Each piece stands alone.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSection per channel with ready-to-post copy.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-speech-or-presentation-script",
+  "title": "Write a speech or presentation script",
+  "category": "Writing & Content",
+  "tags": [
+   "speech",
+   "presentation",
+   "public speaking"
+  ],
+  "description": "Memorable talk script with structure, stories, and timing.",
+  "variables": [
+   {
+    "name": "topic",
+    "hint": "Topic and key message"
+   },
+   {
+    "name": "audience",
+    "hint": "Audience"
+   },
+   {
+    "name": "duration",
+    "hint": "Length in minutes"
+   },
+   {
+    "name": "occasion",
+    "hint": "Event"
+   }
+  ],
+  "prompt": "# Role\nYou are a speechwriter.\n\n# Goal\nWrite a speech that informs and moves the audience.\n\n# Inputs\n- Topic: {{topic}}\n- Audience: {{audience}}\n- Duration: {{duration}}\n- Occasion: {{occasion}}\n\n# Instructions\n1. Hook opening.\n2. Three main points with a story or example each.\n3. Transitions.\n4. Strong close with a call to action.\n5. Mark pauses and estimated timing.\n\n# Constraints\n- About 130 words per minute.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nScript with timing marks, then slide outline.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "create-a-marketing-strategy",
+  "title": "Create a marketing strategy",
+  "category": "Marketing & SEO",
+  "tags": [
+   "strategy",
+   "go-to-market",
+   "growth"
+  ],
+  "description": "Full marketing plan: audience, positioning, channels, budget, KPIs.",
+  "variables": [
+   {
+    "name": "product",
+    "hint": "Product/service"
+   },
+   {
+    "name": "industry",
+    "hint": "Industry"
+   },
+   {
+    "name": "audience",
+    "hint": "Target customers"
+   },
+   {
+    "name": "goal",
+    "hint": "Goal and timeframe"
+   },
+   {
+    "name": "budget",
+    "hint": "Budget"
+   }
+  ],
+  "prompt": "# Role\nYou are a CMO with experience in {{industry}}.\n\n# Goal\nBuild a marketing strategy that hits the goal.\n\n# Inputs\n- Product: {{product}}\n- Industry: {{industry}}\n- Audience: {{audience}}\n- Goal: {{goal}}\n- Budget: {{budget}}\n\n# Instructions\n1. Define ICP and personas.\n2. Write positioning statement and value proposition.\n3. Analyse 3 competitors.\n4. Select channels and justify.\n5. Build a 90-day plan with milestones.\n6. Allocate budget.\n7. Define KPIs and measurement.\n\n# Constraints\n- Recommendations must fit the budget.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nStrategy doc with tables.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-high-converting-landing-page-copy",
+  "title": "Write high-converting landing page copy",
+  "category": "Marketing & SEO",
+  "tags": [
+   "copywriting",
+   "landing page",
+   "conversion"
+  ],
+  "description": "Full landing page copy from hero to FAQ.",
+  "variables": [
+   {
+    "name": "product",
+    "hint": "Product and key features"
+   },
+   {
+    "name": "audience",
+    "hint": "Who visits and their pain"
+   },
+   {
+    "name": "offer",
+    "hint": "Offer/CTA"
+   },
+   {
+    "name": "proof",
+    "hint": "Testimonials, stats, logos"
+   }
+  ],
+  "prompt": "# Role\nYou are a direct-response copywriter.\n\n# Goal\nWrite landing page copy that converts the target visitor.\n\n# Inputs\n- Product: {{product}}\n- Audience: {{audience}}\n- Offer: {{offer}}\n- Proof: {{proof}}\n\n# Instructions\n1. Hero: headline, subheadline, CTA (3 variants).\n2. Problem section.\n3. Solution and benefits (benefits over features).\n4. How it works (3 steps).\n5. Social proof.\n6. Objection handling.\n7. FAQ.\n8. Final CTA.\n\n# Constraints\n- Specific, concrete language.\n- No unverifiable claims.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSection-by-section copy.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "seo-keyword-and-content-plan",
+  "title": "SEO keyword and content plan",
+  "category": "Marketing & SEO",
+  "tags": [
+   "seo",
+   "keywords",
+   "content plan"
+  ],
+  "description": "Keyword clusters and a content calendar to rank.",
+  "variables": [
+   {
+    "name": "site",
+    "hint": "Site/niche"
+   },
+   {
+    "name": "audience",
+    "hint": "Audience"
+   },
+   {
+    "name": "seed_keywords",
+    "hint": "Seed keywords"
+   },
+   {
+    "name": "competitors",
+    "hint": "Competitor sites"
+   }
+  ],
+  "prompt": "# Role\nYou are an SEO strategist.\n\n# Goal\nBuild an SEO content plan.\n\n# Inputs\n- Site: {{site}}\n- Audience: {{audience}}\n- Seed keywords: {{seed_keywords}}\n- Competitors: {{competitors}}\n\n# Instructions\n1. Group keywords into topic clusters with search intent.\n2. Define pillar and supporting pages.\n3. Prioritize by intent, difficulty, and business value.\n4. Create a 3-month content calendar.\n5. Give on-page SEO guidelines.\n\n# Constraints\n- Note that volumes must be verified in an SEO tool.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nCluster table, Calendar, On-page checklist.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-ad-copy-variations",
+  "title": "Write ad copy variations",
+  "category": "Marketing & SEO",
+  "tags": [
+   "ads",
+   "ppc",
+   "facebook ads",
+   "google ads"
+  ],
+  "description": "Multiple ad variants per platform for testing.",
+  "variables": [
+   {
+    "name": "product",
+    "hint": "Product and offer"
+   },
+   {
+    "name": "platform",
+    "hint": "Google, Meta, LinkedIn, TikTok"
+   },
+   {
+    "name": "audience",
+    "hint": "Target audience"
+   }
+  ],
+  "prompt": "# Role\nYou are a performance marketer.\n\n# Goal\nWrite ads to test.\n\n# Inputs\n- Product: {{product}}\n- Platform: {{platform}}\n- Audience: {{audience}}\n\n# Instructions\n1. Write 5 variants each with a different angle (pain, benefit, social proof, urgency, curiosity).\n2. Respect each platform's character limits.\n3. Suggest visuals for each.\n\n# Constraints\n- Follow platform ad policies.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nTable of variants with angle, headline, body, CTA, visual idea.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "social-media-content-calendar",
+  "title": "Social media content calendar",
+  "category": "Marketing & SEO",
+  "tags": [
+   "social media",
+   "calendar",
+   "posts"
+  ],
+  "description": "A month of posts with copy, hashtags, and formats.",
+  "variables": [
+   {
+    "name": "brand",
+    "hint": "Brand and voice"
+   },
+   {
+    "name": "platforms",
+    "hint": "Platforms"
+   },
+   {
+    "name": "goals",
+    "hint": "Goals"
+   },
+   {
+    "name": "frequency",
+    "hint": "Posts per week"
+   }
+  ],
+  "prompt": "# Role\nYou are a social media manager.\n\n# Goal\nCreate a content calendar that grows engagement.\n\n# Inputs\n- Brand: {{brand}}\n- Platforms: {{platforms}}\n- Goals: {{goals}}\n- Frequency: {{frequency}}\n\n# Instructions\n1. Define content pillars.\n2. Plan posts per day with format, copy, hashtags, and visual idea.\n3. Include engagement prompts.\n\n# Constraints\n- Platform-native formats.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nCalendar table.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-an-email-marketing-sequence",
+  "title": "Write an email marketing sequence",
+  "category": "Marketing & SEO",
+  "tags": [
+   "email marketing",
+   "nurture",
+   "drip"
+  ],
+  "description": "Onboarding/nurture/sales email sequence.",
+  "variables": [
+   {
+    "name": "goal",
+    "hint": "Sequence goal"
+   },
+   {
+    "name": "audience",
+    "hint": "Audience"
+   },
+   {
+    "name": "emails",
+    "hint": "Number of emails and timing"
+   },
+   {
+    "name": "product",
+    "hint": "Product/offer"
+   }
+  ],
+  "prompt": "# Role\nYou are an email marketing specialist.\n\n# Goal\nWrite a sequence that moves readers to the goal.\n\n# Inputs\n- Goal: {{goal}}\n- Audience: {{audience}}\n- Emails: {{emails}}\n- Product: {{product}}\n\n# Instructions\n1. Plan the sequence arc.\n2. For each email: purpose, send day, subject (2 options), preview text, body, CTA.\n\n# Constraints\n- One CTA per email.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSequence overview, then each email.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-cold-outreach-sequence",
+  "title": "Write a cold outreach sequence",
+  "category": "Sales & Customer Support",
+  "tags": [
+   "outbound",
+   "cold email",
+   "prospecting"
+  ],
+  "description": "Personalized multi-touch outreach that books meetings.",
+  "variables": [
+   {
+    "name": "product",
+    "hint": "Product and value"
+   },
+   {
+    "name": "prospect",
+    "hint": "Prospect role, company, and any personalization"
+   },
+   {
+    "name": "channels",
+    "hint": "Email, LinkedIn, call"
+   }
+  ],
+  "prompt": "# Role\nYou are a top-performing SDR.\n\n# Goal\nWrite outreach that earns a reply.\n\n# Inputs\n- Product: {{product}}\n- Prospect: {{prospect}}\n- Channels: {{channels}}\n\n# Instructions\n1. Write 4 touches over 2 weeks.\n2. Personalize the opening.\n3. Lead with their problem.\n4. Soft, specific CTA.\n5. Include a call script for the phone touch.\n\n# Constraints\n- Under 120 words per email.\n- No fake familiarity.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nTouch-by-touch messages.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "handle-a-sales-objection",
+  "title": "Handle a sales objection",
+  "category": "Sales & Customer Support",
+  "tags": [
+   "objections",
+   "negotiation"
+  ],
+  "description": "Responses to common objections with reasoning.",
+  "variables": [
+   {
+    "name": "product",
+    "hint": "Product"
+   },
+   {
+    "name": "objections",
+    "hint": "Objections heard"
+   }
+  ],
+  "prompt": "# Role\nYou are a sales coach.\n\n# Goal\nPrepare strong responses to objections.\n\n# Inputs\n- Product: {{product}}\n- Objections: {{objections}}\n\n# Instructions\n1. For each: underlying concern, clarifying question, response, proof point.\n\n# Constraints\n- Honest; no pressure tactics.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nObjection table.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "respond-to-a-customer-support-ticket",
+  "title": "Respond to a customer support ticket",
+  "category": "Sales & Customer Support",
+  "tags": [
+   "support",
+   "customer service",
+   "ticket"
+  ],
+  "description": "Empathetic, accurate, complete support reply.",
+  "variables": [
+   {
+    "name": "ticket",
+    "hint": "Customer message"
+   },
+   {
+    "name": "knowledge",
+    "hint": "Relevant policy, docs, account info"
+   },
+   {
+    "name": "tone",
+    "hint": "Brand tone"
+   }
+  ],
+  "prompt": "# Role\nYou are a senior customer support specialist.\n\n# Goal\nResolve the customer's issue in one reply.\n\n# Inputs\n- Ticket: {{ticket}}\n- Knowledge: {{knowledge}}\n- Tone: {{tone}}\n\n# Instructions\n1. Acknowledge the issue specifically.\n2. Answer or give steps to resolve.\n3. Set expectations on timelines.\n4. Offer next step.\n\n# Constraints\n- Never promise what policy does not allow.\n- Never blame the customer.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nReply text, plus internal note on any follow-up.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "create-a-support-knowledge-base-article",
+  "title": "Create a support knowledge base article",
+  "category": "Sales & Customer Support",
+  "tags": [
+   "help center",
+   "faq",
+   "kb"
+  ],
+  "description": "Self-service help article that reduces tickets.",
+  "variables": [
+   {
+    "name": "issue",
+    "hint": "Problem users face"
+   },
+   {
+    "name": "solution",
+    "hint": "How to solve it"
+   }
+  ],
+  "prompt": "# Role\nYou are a support content writer.\n\n# Goal\nWrite a help article that solves the problem without contacting support.\n\n# Inputs\n- Issue: {{issue}}\n- Solution: {{solution}}\n\n# Instructions\n1. Clear title as a question or task.\n2. Short intro.\n3. Numbered steps with UI labels in bold.\n4. Troubleshooting.\n5. Related articles.\n\n# Constraints\n- Plain language, 8th-grade reading level.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nMarkdown article.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-sales-proposal",
+  "title": "Write a sales proposal",
+  "category": "Sales & Customer Support",
+  "tags": [
+   "proposal",
+   "rfp",
+   "deal"
+  ],
+  "description": "Persuasive proposal tailored to the client.",
+  "variables": [
+   {
+    "name": "client",
+    "hint": "Client and needs"
+   },
+   {
+    "name": "solution",
+    "hint": "What you offer"
+   },
+   {
+    "name": "pricing",
+    "hint": "Pricing"
+   },
+   {
+    "name": "timeline",
+    "hint": "Timeline"
+   }
+  ],
+  "prompt": "# Role\nYou are an enterprise account executive.\n\n# Goal\nWrite a proposal that wins the deal.\n\n# Inputs\n- Client: {{client}}\n- Solution: {{solution}}\n- Pricing: {{pricing}}\n- Timeline: {{timeline}}\n\n# Instructions\n1. Executive summary.\n2. Understanding of needs.\n3. Proposed solution.\n4. Deliverables and timeline.\n5. Pricing options.\n6. Why us.\n7. Next steps.\n\n# Constraints\n- Client-focused language.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nProposal document in Markdown.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-business-plan",
+  "title": "Write a business plan",
+  "category": "Business & Strategy",
+  "tags": [
+   "business plan",
+   "startup",
+   "planning"
+  ],
+  "description": "Complete business plan with market, model, and financials.",
+  "variables": [
+   {
+    "name": "business",
+    "hint": "Business idea"
+   },
+   {
+    "name": "market",
+    "hint": "Target market"
+   },
+   {
+    "name": "stage",
+    "hint": "Current stage"
+   },
+   {
+    "name": "ask",
+    "hint": "Funding ask (if any)"
+   }
+  ],
+  "prompt": "# Role\nYou are a startup advisor and former founder.\n\n# Goal\nWrite a business plan for investors or a bank.\n\n# Inputs\n- Business: {{business}}\n- Market: {{market}}\n- Stage: {{stage}}\n- Ask: {{ask}}\n\n# Instructions\n1. Executive summary.\n2. Problem and solution.\n3. Market size (TAM/SAM/SOM with method).\n4. Competition.\n5. Business model.\n6. Go-to-market.\n7. Operations and team.\n8. 3-year financial projections with assumptions.\n9. Risks.\n10. Funding use.\n\n# Constraints\n- State assumptions behind every number.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nBusiness plan document with tables.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "swot-and-competitive-analysis",
+  "title": "SWOT and competitive analysis",
+  "category": "Business & Strategy",
+  "tags": [
+   "swot",
+   "competitors",
+   "analysis"
+  ],
+  "description": "Structured SWOT plus competitor comparison and strategic moves.",
+  "variables": [
+   {
+    "name": "company",
+    "hint": "Company and offering"
+   },
+   {
+    "name": "competitors",
+    "hint": "Competitors"
+   },
+   {
+    "name": "market",
+    "hint": "Market context"
+   }
+  ],
+  "prompt": "# Role\nYou are a strategy consultant.\n\n# Goal\nAnalyse the company's position and recommend moves.\n\n# Inputs\n- Company: {{company}}\n- Competitors: {{competitors}}\n- Market: {{market}}\n\n# Instructions\n1. SWOT with specific points.\n2. Competitor comparison table.\n3. TOWS strategies (SO, WO, ST, WT).\n4. Top 3 recommendations.\n\n# Constraints\n- Specific, not generic.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSWOT grid, comparison table, strategies, recommendations.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "build-a-financial-model",
+  "title": "Build a financial model",
+  "category": "Business & Strategy",
+  "tags": [
+   "finance",
+   "forecast",
+   "unit economics"
+  ],
+  "description": "Revenue/cost model with assumptions and scenarios.",
+  "variables": [
+   {
+    "name": "business_model",
+    "hint": "How the business makes money"
+   },
+   {
+    "name": "assumptions",
+    "hint": "Known numbers"
+   },
+   {
+    "name": "horizon",
+    "hint": "Time horizon"
+   }
+  ],
+  "prompt": "# Role\nYou are an FP&A analyst.\n\n# Goal\nBuild a financial model structure and calculations.\n\n# Inputs\n- Business model: {{business_model}}\n- Assumptions: {{assumptions}}\n- Horizon: {{horizon}}\n\n# Instructions\n1. List assumptions as inputs.\n2. Build revenue, COGS, opex, and cash flow logic.\n3. Calculate unit economics (CAC, LTV, payback, margins).\n4. Create base/best/worst scenarios.\n5. Provide spreadsheet layout and formulas.\n\n# Constraints\n- Separate inputs from calculations.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nAssumptions table, model structure, formulas, scenario summary.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "prepare-for-a-decision",
+  "title": "Prepare for a decision",
+  "category": "Business & Strategy",
+  "tags": [
+   "decision making",
+   "trade-offs"
+  ],
+  "description": "Structured decision analysis with options and a recommendation.",
+  "variables": [
+   {
+    "name": "decision",
+    "hint": "The decision"
+   },
+   {
+    "name": "options",
+    "hint": "Options"
+   },
+   {
+    "name": "criteria",
+    "hint": "What matters"
+   }
+  ],
+  "prompt": "# Role\nYou are a decision analyst.\n\n# Goal\nHelp make a well-reasoned decision.\n\n# Inputs\n- Decision: {{decision}}\n- Options: {{options}}\n- Criteria: {{criteria}}\n\n# Instructions\n1. Clarify the decision and its reversibility.\n2. Weighted criteria matrix.\n3. Pre-mortem for top option.\n4. Recommendation and what would change it.\n\n# Constraints\n- Highlight uncertainty.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nMatrix, analysis, recommendation.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-meeting-agenda-and-notes",
+  "title": "Write meeting agenda and notes",
+  "category": "Business & Strategy",
+  "tags": [
+   "meetings",
+   "agenda",
+   "minutes"
+  ],
+  "description": "Agenda before, structured minutes after.",
+  "variables": [
+   {
+    "name": "purpose",
+    "hint": "Meeting purpose"
+   },
+   {
+    "name": "attendees",
+    "hint": "Attendees"
+   },
+   {
+    "name": "transcript_or_notes",
+    "hint": "Raw notes or transcript (for minutes)"
+   }
+  ],
+  "prompt": "# Role\nYou are an efficient chief of staff.\n\n# Goal\nMake the meeting productive.\n\n# Inputs\n- Purpose: {{purpose}}\n- Attendees: {{attendees}}\n- Transcript or notes: {{transcript_or_notes}}\n\n# Instructions\n1. Agenda: objective, topics with timeboxes and owners, pre-reads.\n2. Minutes: decisions, action items (owner, due date), open issues, summary.\n\n# Constraints\n- Action items must have owners.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nAgenda and/or minutes in Markdown.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-okrs",
+  "title": "Write OKRs",
+  "category": "Business & Strategy",
+  "tags": [
+   "okrs",
+   "goals",
+   "planning"
+  ],
+  "description": "Ambitious, measurable objectives and key results.",
+  "variables": [
+   {
+    "name": "team",
+    "hint": "Team and mission"
+   },
+   {
+    "name": "priorities",
+    "hint": "Priorities for the period"
+   },
+   {
+    "name": "baseline",
+    "hint": "Current metrics"
+   }
+  ],
+  "prompt": "# Role\nYou are an OKR coach.\n\n# Goal\nWrite OKRs for the team.\n\n# Inputs\n- Team: {{team}}\n- Priorities: {{priorities}}\n- Baseline: {{baseline}}\n\n# Instructions\n1. 2-4 objectives, qualitative and inspiring.\n2. 2-4 key results each, measurable with baseline and target.\n3. Initiatives for each KR.\n\n# Constraints\n- KRs measure outcomes, not tasks.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nOKR table.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-product-requirements-document-prd",
+  "title": "Write a product requirements document (PRD)",
+  "category": "Product Management",
+  "tags": [
+   "prd",
+   "requirements",
+   "spec"
+  ],
+  "description": "Complete PRD with problem, users, requirements, and metrics.",
+  "variables": [
+   {
+    "name": "feature",
+    "hint": "Feature idea"
+   },
+   {
+    "name": "users",
+    "hint": "Target users"
+   },
+   {
+    "name": "problem",
+    "hint": "Problem and evidence"
+   },
+   {
+    "name": "constraints",
+    "hint": "Constraints and timeline"
+   }
+  ],
+  "prompt": "# Role\nYou are a senior product manager.\n\n# Goal\nWrite a PRD engineering and design can build from.\n\n# Inputs\n- Feature: {{feature}}\n- Users: {{users}}\n- Problem: {{problem}}\n- Constraints: {{constraints}}\n\n# Instructions\n1. Problem statement and evidence.\n2. Goals and non-goals.\n3. Personas and user stories with acceptance criteria.\n4. Functional and non-functional requirements.\n5. UX flow.\n6. Success metrics.\n7. Launch plan.\n8. Risks and open questions.\n\n# Constraints\n- Testable acceptance criteria (Given/When/Then).\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nPRD in Markdown.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-user-stories",
+  "title": "Write user stories",
+  "category": "Product Management",
+  "tags": [
+   "agile",
+   "user stories",
+   "backlog"
+  ],
+  "description": "INVEST user stories with acceptance criteria.",
+  "variables": [
+   {
+    "name": "feature",
+    "hint": "Feature"
+   },
+   {
+    "name": "users",
+    "hint": "User types"
+   }
+  ],
+  "prompt": "# Role\nYou are an agile product owner.\n\n# Goal\nBreak the feature into user stories.\n\n# Inputs\n- Feature: {{feature}}\n- Users: {{users}}\n\n# Instructions\n1. Write stories as 'As a ..., I want ..., so that ...'.\n2. Add Given/When/Then acceptance criteria.\n3. Estimate relative size.\n4. Order by priority.\n\n# Constraints\n- Stories must be independent and small.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nStory table.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "prioritize-a-backlog",
+  "title": "Prioritize a backlog",
+  "category": "Product Management",
+  "tags": [
+   "prioritization",
+   "rice",
+   "roadmap"
+  ],
+  "description": "Score and rank features with RICE or similar.",
+  "variables": [
+   {
+    "name": "items",
+    "hint": "Features/ideas"
+   },
+   {
+    "name": "goals",
+    "hint": "Business goals"
+   },
+   {
+    "name": "data",
+    "hint": "Reach/impact data if any"
+   }
+  ],
+  "prompt": "# Role\nYou are a product strategist.\n\n# Goal\nRank the backlog by value.\n\n# Inputs\n- Items: {{items}}\n- Goals: {{goals}}\n- Data: {{data}}\n\n# Instructions\n1. Score with RICE (Reach, Impact, Confidence, Effort).\n2. Rank and group into Now/Next/Later.\n3. Explain top choices.\n\n# Constraints\n- State assumptions behind scores.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nScoring table and roadmap.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "analyze-user-feedback",
+  "title": "Analyze user feedback",
+  "category": "Product Management",
+  "tags": [
+   "feedback",
+   "voice of customer",
+   "insights"
+  ],
+  "description": "Find themes and priorities in raw feedback.",
+  "variables": [
+   {
+    "name": "feedback",
+    "hint": "Raw feedback, reviews, survey answers"
+   }
+  ],
+  "prompt": "# Role\nYou are a user research analyst.\n\n# Goal\nTurn feedback into actionable insights.\n\n# Inputs\n- Feedback: {{feedback}}\n\n# Instructions\n1. Code feedback into themes.\n2. Count frequency and sentiment per theme.\n3. Quote representative examples.\n4. Recommend actions ranked by impact.\n\n# Constraints\n- Quotes verbatim.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nTheme table, quotes, recommendations.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "deep-research-on-a-topic",
+  "title": "Deep research on a topic",
+  "category": "Research & Analysis",
+  "tags": [
+   "research",
+   "report",
+   "analysis"
+  ],
+  "description": "Thorough, balanced research report with sources to verify.",
+  "variables": [
+   {
+    "name": "topic",
+    "hint": "Topic or question"
+   },
+   {
+    "name": "depth",
+    "hint": "Depth and length"
+   },
+   {
+    "name": "audience",
+    "hint": "Audience"
+   }
+  ],
+  "prompt": "# Role\nYou are a research analyst.\n\n# Goal\nProduce a comprehensive, balanced report on the topic.\n\n# Inputs\n- Topic: {{topic}}\n- Depth: {{depth}}\n- Audience: {{audience}}\n\n# Instructions\n1. Define scope and key questions.\n2. Background.\n3. Main findings by subtopic.\n4. Competing views and evidence.\n5. Gaps and uncertainties.\n6. Conclusions.\n7. Sources/what to verify.\n\n# Constraints\n- Separate facts from opinions.\n- Flag uncertain claims; never invent citations.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nStructured report.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "analyze-a-research-paper",
+  "title": "Analyze a research paper",
+  "category": "Research & Analysis",
+  "tags": [
+   "paper",
+   "academic",
+   "critique"
+  ],
+  "description": "Summary and critique of an academic paper.",
+  "variables": [
+   {
+    "name": "paper",
+    "hint": "Paper text or abstract"
+   },
+   {
+    "name": "field",
+    "hint": "Field"
+   }
+  ],
+  "prompt": "# Role\nYou are a peer reviewer in {{field}}.\n\n# Goal\nExplain and critically evaluate the paper.\n\n# Inputs\n- Paper: {{paper}}\n- Field: {{field}}\n\n# Instructions\n1. Summarize question, method, results.\n2. Evaluate methodology and validity.\n3. Note limitations.\n4. Explain significance.\n5. Suggest follow-up research.\n\n# Constraints\n- Fair and evidence-based.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSummary, critique, significance, questions.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "literature-review",
+  "title": "Literature review",
+  "category": "Research & Analysis",
+  "tags": [
+   "literature",
+   "academic",
+   "synthesis"
+  ],
+  "description": "Synthesize research on a topic into themes and gaps.",
+  "variables": [
+   {
+    "name": "topic",
+    "hint": "Research topic"
+   },
+   {
+    "name": "sources",
+    "hint": "Papers or notes provided"
+   }
+  ],
+  "prompt": "# Role\nYou are an academic researcher.\n\n# Goal\nWrite a literature review structure and synthesis.\n\n# Inputs\n- Topic: {{topic}}\n- Sources: {{sources}}\n\n# Instructions\n1. Group sources by theme.\n2. Compare findings.\n3. Identify gaps.\n4. Suggest research questions.\n\n# Constraints\n- Only cite provided sources.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nReview in academic style.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "market-research",
+  "title": "Market research",
+  "category": "Research & Analysis",
+  "tags": [
+   "market",
+   "trends",
+   "sizing"
+  ],
+  "description": "Market overview, sizing, trends, and opportunities.",
+  "variables": [
+   {
+    "name": "market",
+    "hint": "Market/industry"
+   },
+   {
+    "name": "geography",
+    "hint": "Region"
+   },
+   {
+    "name": "purpose",
+    "hint": "Why you need it"
+   }
+  ],
+  "prompt": "# Role\nYou are a market research consultant.\n\n# Goal\nAssess the market opportunity.\n\n# Inputs\n- Market: {{market}}\n- Geography: {{geography}}\n- Purpose: {{purpose}}\n\n# Instructions\n1. Define market.\n2. Size with top-down and bottom-up methods.\n3. Key players.\n4. Trends and drivers.\n5. Customer segments.\n6. Opportunities and threats.\n\n# Constraints\n- Mark estimates and their basis.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nReport with tables.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "survey-and-questionnaire-design",
+  "title": "Survey and questionnaire design",
+  "category": "Research & Analysis",
+  "tags": [
+   "survey",
+   "questionnaire",
+   "research"
+  ],
+  "description": "Unbiased survey that answers your research question.",
+  "variables": [
+   {
+    "name": "objective",
+    "hint": "Research objective"
+   },
+   {
+    "name": "audience",
+    "hint": "Respondents"
+   },
+   {
+    "name": "length",
+    "hint": "Max time to complete"
+   }
+  ],
+  "prompt": "# Role\nYou are a survey methodologist.\n\n# Goal\nDesign a survey that yields valid data.\n\n# Inputs\n- Objective: {{objective}}\n- Audience: {{audience}}\n- Length: {{length}}\n\n# Instructions\n1. Define what to measure.\n2. Write neutral questions with correct scale types.\n3. Order questions logically.\n4. Avoid leading/double-barreled questions.\n5. Plan analysis.\n\n# Constraints\n- Keep within the time limit.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSurvey questions with types and options.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "explain-a-concept-at-any-level",
+  "title": "Explain a concept at any level",
+  "category": "Education & Learning",
+  "tags": [
+   "explain",
+   "learning",
+   "eli5"
+  ],
+  "description": "Layered explanation from simple to expert with examples.",
+  "variables": [
+   {
+    "name": "concept",
+    "hint": "Concept"
+   },
+   {
+    "name": "level",
+    "hint": "Learner's level"
+   },
+   {
+    "name": "context",
+    "hint": "Why they're learning it"
+   }
+  ],
+  "prompt": "# Role\nYou are a world-class teacher.\n\n# Goal\nMake the concept truly understood.\n\n# Inputs\n- Concept: {{concept}}\n- Level: {{level}}\n- Context: {{context}}\n\n# Instructions\n1. One-sentence definition.\n2. Analogy.\n3. Step-by-step explanation.\n4. Worked example.\n5. Common misconceptions.\n6. Check-for-understanding questions with answers.\n\n# Constraints\n- Build from what the learner already knows.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nStructured explanation.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "create-a-learning-roadmap",
+  "title": "Create a learning roadmap",
+  "category": "Education & Learning",
+  "tags": [
+   "roadmap",
+   "curriculum",
+   "self-study"
+  ],
+  "description": "Week-by-week plan to learn a skill with resources and projects.",
+  "variables": [
+   {
+    "name": "skill",
+    "hint": "Skill"
+   },
+   {
+    "name": "current_level",
+    "hint": "Current level"
+   },
+   {
+    "name": "goal",
+    "hint": "Goal"
+   },
+   {
+    "name": "time",
+    "hint": "Hours per week and deadline"
+   }
+  ],
+  "prompt": "# Role\nYou are a learning designer and mentor.\n\n# Goal\nCreate a roadmap to reach the goal.\n\n# Inputs\n- Skill: {{skill}}\n- Current level: {{current_level}}\n- Goal: {{goal}}\n- Time: {{time}}\n\n# Instructions\n1. Break into phases and milestones.\n2. Weekly topics.\n3. Practice projects.\n4. Resource types.\n5. Self-assessment checkpoints.\n\n# Constraints\n- Realistic for the time available.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nRoadmap table.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "create-a-lesson-plan",
+  "title": "Create a lesson plan",
+  "category": "Education & Learning",
+  "tags": [
+   "teaching",
+   "lesson plan",
+   "classroom"
+  ],
+  "description": "Complete lesson plan with objectives, activities, and assessment.",
+  "variables": [
+   {
+    "name": "subject",
+    "hint": "Subject and topic"
+   },
+   {
+    "name": "grade",
+    "hint": "Grade/level"
+   },
+   {
+    "name": "duration",
+    "hint": "Duration"
+   }
+  ],
+  "prompt": "# Role\nYou are an experienced teacher.\n\n# Goal\nPlan an engaging lesson.\n\n# Inputs\n- Subject: {{subject}}\n- Grade: {{grade}}\n- Duration: {{duration}}\n\n# Instructions\n1. Learning objectives (Bloom's).\n2. Materials.\n3. Warm-up.\n4. Instruction.\n5. Guided and independent practice.\n6. Assessment.\n7. Differentiation.\n\n# Constraints\n- Timed sections.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nLesson plan.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "generate-quiz-and-practice-questions",
+  "title": "Generate quiz and practice questions",
+  "category": "Education & Learning",
+  "tags": [
+   "quiz",
+   "assessment",
+   "flashcards"
+  ],
+  "description": "Questions of varied type and difficulty with answers.",
+  "variables": [
+   {
+    "name": "material",
+    "hint": "Material or topic"
+   },
+   {
+    "name": "count",
+    "hint": "Number of questions"
+   },
+   {
+    "name": "types",
+    "hint": "MCQ, short answer, coding, etc."
+   }
+  ],
+  "prompt": "# Role\nYou are an assessment designer.\n\n# Goal\nCreate questions that test real understanding.\n\n# Inputs\n- Material: {{material}}\n- Count: {{count}}\n- Types: {{types}}\n\n# Instructions\n1. Mix difficulty levels.\n2. Plausible distractors.\n3. Answer key with explanations.\n\n# Constraints\n- One correct answer per MCQ.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nQuestions, then answer key.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "socratic-tutor",
+  "title": "Socratic tutor",
+  "category": "Education & Learning",
+  "tags": [
+   "tutor",
+   "socratic",
+   "practice"
+  ],
+  "description": "Learn by guided questioning instead of answers.",
+  "variables": [
+   {
+    "name": "topic",
+    "hint": "Topic"
+   },
+   {
+    "name": "level",
+    "hint": "My level"
+   }
+  ],
+  "prompt": "# Role\nYou are a Socratic tutor.\n\n# Goal\nGuide me to understand {{topic}} through questions.\n\n# Inputs\n- Topic: {{topic}}\n- Level: {{level}}\n\n# Instructions\n1. Ask one question at a time.\n2. Wait for my answer.\n3. Give hints, not answers, when I'm stuck.\n4. Summarize what I learned at the end.\n\n# Constraints\n- Never give the full answer unless I ask twice.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nConversational, one question per turn.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "ux-review-of-a-screen-or-flow",
+  "title": "UX review of a screen or flow",
+  "category": "Design & UX",
+  "tags": [
+   "ux",
+   "heuristics",
+   "usability"
+  ],
+  "description": "Heuristic evaluation with prioritized fixes.",
+  "variables": [
+   {
+    "name": "ui",
+    "hint": "Screen/flow description or screenshot"
+   },
+   {
+    "name": "users",
+    "hint": "Users and goals"
+   }
+  ],
+  "prompt": "# Role\nYou are a senior UX designer.\n\n# Goal\nIdentify usability problems and solutions.\n\n# Inputs\n- Ui: {{ui}}\n- Users: {{users}}\n\n# Instructions\n1. Evaluate against Nielsen's 10 heuristics.\n2. List issues with severity.\n3. Suggest concrete fixes.\n4. Note what works well.\n\n# Constraints\n- User-centred reasoning.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nIssues table, recommendations.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "create-user-personas",
+  "title": "Create user personas",
+  "category": "Design & UX",
+  "tags": [
+   "personas",
+   "research",
+   "users"
+  ],
+  "description": "Evidence-based personas with goals and pains.",
+  "variables": [
+   {
+    "name": "product",
+    "hint": "Product"
+   },
+   {
+    "name": "research",
+    "hint": "Research data available"
+   }
+  ],
+  "prompt": "# Role\nYou are a UX researcher.\n\n# Goal\nCreate personas for the product.\n\n# Inputs\n- Product: {{product}}\n- Research: {{research}}\n\n# Instructions\n1. Create 3 personas: name, role, goals, frustrations, behaviours, quote, scenario.\n\n# Constraints\n- Base on provided data; mark assumptions.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nPersona cards.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-ux-microcopy",
+  "title": "Write UX microcopy",
+  "category": "Design & UX",
+  "tags": [
+   "microcopy",
+   "ux writing",
+   "ui text"
+  ],
+  "description": "Buttons, errors, empty states, and onboarding text.",
+  "variables": [
+   {
+    "name": "screens",
+    "hint": "Screens/states"
+   },
+   {
+    "name": "voice",
+    "hint": "Voice and tone"
+   }
+  ],
+  "prompt": "# Role\nYou are a UX writer.\n\n# Goal\nWrite clear, helpful interface text.\n\n# Inputs\n- Screens: {{screens}}\n- Voice: {{voice}}\n\n# Instructions\n1. Write text per element.\n2. Errors: what happened + how to fix.\n3. Empty states with a next action.\n4. Give 2 options for key strings.\n\n# Constraints\n- Concise, action-oriented.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nTable: element, copy, notes.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "create-a-design-system-spec",
+  "title": "Create a design system spec",
+  "category": "Design & UX",
+  "tags": [
+   "design system",
+   "tokens",
+   "components"
+  ],
+  "description": "Tokens, typography, components, and usage rules.",
+  "variables": [
+   {
+    "name": "brand",
+    "hint": "Brand attributes"
+   },
+   {
+    "name": "platforms",
+    "hint": "Platforms"
+   }
+  ],
+  "prompt": "# Role\nYou are a design systems lead.\n\n# Goal\nDefine a design system foundation.\n\n# Inputs\n- Brand: {{brand}}\n- Platforms: {{platforms}}\n\n# Instructions\n1. Color tokens (light/dark) with contrast checks.\n2. Type scale.\n3. Spacing scale.\n4. Core component specs.\n5. Usage guidelines.\n\n# Constraints\n- WCAG AA contrast.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSpec document with token tables.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "image-generation-prompt",
+  "title": "Image generation prompt",
+  "category": "Image, Video & Audio",
+  "tags": [
+   "midjourney",
+   "dall-e",
+   "stable diffusion",
+   "image"
+  ],
+  "description": "Detailed prompt for AI image generators.",
+  "variables": [
+   {
+    "name": "idea",
+    "hint": "What the image shows"
+   },
+   {
+    "name": "style",
+    "hint": "Style (photo, illustration, 3D, etc.)"
+   },
+   {
+    "name": "tool",
+    "hint": "Midjourney, DALL-E, Stable Diffusion, Flux, etc."
+   },
+   {
+    "name": "aspect",
+    "hint": "Aspect ratio"
+   }
+  ],
+  "prompt": "# Role\nYou are an expert AI art director.\n\n# Goal\nWrite image prompts that produce exactly the intended image.\n\n# Inputs\n- Idea: {{idea}}\n- Style: {{style}}\n- Tool: {{tool}}\n- Aspect: {{aspect}}\n\n# Instructions\n1. Describe subject, action, setting, composition, camera/lens, lighting, color palette, mood, style references, and detail level.\n2. Add tool-specific parameters.\n3. Give a negative prompt if supported.\n4. Give 3 variations.\n\n# Constraints\n- No living artists' names or trademarks unless permitted.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nMain prompt, negative prompt, variations.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "video-script-and-storyboard",
+  "title": "Video script and storyboard",
+  "category": "Image, Video & Audio",
+  "tags": [
+   "video",
+   "youtube",
+   "storyboard"
+  ],
+  "description": "Script with shots, visuals, and timing.",
+  "variables": [
+   {
+    "name": "topic",
+    "hint": "Topic"
+   },
+   {
+    "name": "platform",
+    "hint": "YouTube, TikTok, Reels, ad"
+   },
+   {
+    "name": "length",
+    "hint": "Length"
+   }
+  ],
+  "prompt": "# Role\nYou are a video producer.\n\n# Goal\nCreate a script and storyboard.\n\n# Inputs\n- Topic: {{topic}}\n- Platform: {{platform}}\n- Length: {{length}}\n\n# Instructions\n1. Hook in first 3 seconds.\n2. Shot list with visuals, voiceover, on-screen text, duration.\n3. CTA.\n\n# Constraints\n- Fits platform norms.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nTable: time, visual, audio, text.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "ai-video-generation-prompt",
+  "title": "AI video generation prompt",
+  "category": "Image, Video & Audio",
+  "tags": [
+   "sora",
+   "runway",
+   "veo",
+   "video ai"
+  ],
+  "description": "Prompt for text-to-video models with camera and motion detail.",
+  "variables": [
+   {
+    "name": "scene",
+    "hint": "Scene"
+   },
+   {
+    "name": "duration",
+    "hint": "Duration"
+   },
+   {
+    "name": "style",
+    "hint": "Style"
+   }
+  ],
+  "prompt": "# Role\nYou are a cinematographer writing for AI video models.\n\n# Goal\nWrite a video prompt.\n\n# Inputs\n- Scene: {{scene}}\n- Duration: {{duration}}\n- Style: {{style}}\n\n# Instructions\n1. Describe subject, action, environment, camera movement, lens, lighting, pacing, and mood.\n2. Give 2 variations.\n\n# Constraints\n- One continuous shot per prompt unless the tool supports cuts.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nPrompts.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "podcast-episode-plan",
+  "title": "Podcast episode plan",
+  "category": "Image, Video & Audio",
+  "tags": [
+   "podcast",
+   "audio",
+   "interview"
+  ],
+  "description": "Episode outline, interview questions, and show notes.",
+  "variables": [
+   {
+    "name": "topic",
+    "hint": "Topic"
+   },
+   {
+    "name": "guest",
+    "hint": "Guest (if any)"
+   },
+   {
+    "name": "length",
+    "hint": "Length"
+   }
+  ],
+  "prompt": "# Role\nYou are a podcast producer.\n\n# Goal\nPlan an episode.\n\n# Inputs\n- Topic: {{topic}}\n- Guest: {{guest}}\n- Length: {{length}}\n\n# Instructions\n1. Outline segments with timing.\n2. Interview questions.\n3. Intro/outro script.\n4. Show notes and title options.\n\n# Constraints\n- Conversational.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nEpisode plan.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "tailor-a-resume-to-a-job",
+  "title": "Tailor a resume to a job",
+  "category": "Career & Hiring",
+  "tags": [
+   "resume",
+   "cv",
+   "job search"
+  ],
+  "description": "Rewrite resume bullets to match a job description.",
+  "variables": [
+   {
+    "name": "resume",
+    "hint": "Current resume"
+   },
+   {
+    "name": "job_description",
+    "hint": "Job posting"
+   }
+  ],
+  "prompt": "# Role\nYou are a career coach and technical recruiter.\n\n# Goal\nTailor the resume for this job.\n\n# Inputs\n- Resume: {{resume}}\n- Job description: {{job_description}}\n\n# Instructions\n1. Extract key requirements and keywords.\n2. Map resume experience to them.\n3. Rewrite bullets as achievement + metric.\n4. Suggest gaps to address.\n5. ATS-friendly formatting.\n\n# Constraints\n- Never invent experience.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nMatch analysis, revised resume, gap list.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "interview-preparation",
+  "title": "Interview preparation",
+  "category": "Career & Hiring",
+  "tags": [
+   "interview",
+   "behavioral",
+   "technical"
+  ],
+  "description": "Likely questions with strong STAR answers.",
+  "variables": [
+   {
+    "name": "role",
+    "hint": "Role and company"
+   },
+   {
+    "name": "background",
+    "hint": "My background"
+   }
+  ],
+  "prompt": "# Role\nYou are an interview coach.\n\n# Goal\nPrepare me for the interview.\n\n# Inputs\n- Role: {{role}}\n- Background: {{background}}\n\n# Instructions\n1. List likely behavioural, technical, and role-specific questions.\n2. Draft STAR answers from my background.\n3. Questions to ask them.\n4. Mock interview mode: ask one at a time and give feedback.\n\n# Constraints\n- Honest answers based on my real experience.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nQuestion bank, answers, my questions.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "write-a-job-description",
+  "title": "Write a job description",
+  "category": "Career & Hiring",
+  "tags": [
+   "hiring",
+   "jd",
+   "recruiting"
+  ],
+  "description": "Inclusive, accurate job description.",
+  "variables": [
+   {
+    "name": "role",
+    "hint": "Role"
+   },
+   {
+    "name": "team",
+    "hint": "Team and company"
+   },
+   {
+    "name": "requirements",
+    "hint": "Must-haves and nice-to-haves"
+   },
+   {
+    "name": "comp",
+    "hint": "Compensation and location"
+   }
+  ],
+  "prompt": "# Role\nYou are a talent acquisition lead.\n\n# Goal\nWrite a job description that attracts the right candidates.\n\n# Inputs\n- Role: {{role}}\n- Team: {{team}}\n- Requirements: {{requirements}}\n- Comp: {{comp}}\n\n# Instructions\n1. Role summary.\n2. Responsibilities.\n3. Must-haves vs. nice-to-haves.\n4. Benefits.\n5. Hiring process.\n\n# Constraints\n- Inclusive language; no unnecessary requirements.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nJob description.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "create-interview-questions-and-rubric",
+  "title": "Create interview questions and rubric",
+  "category": "Career & Hiring",
+  "tags": [
+   "hiring",
+   "rubric",
+   "interviewing"
+  ],
+  "description": "Structured interview with scoring rubric.",
+  "variables": [
+   {
+    "name": "role",
+    "hint": "Role"
+   },
+   {
+    "name": "competencies",
+    "hint": "Competencies to assess"
+   }
+  ],
+  "prompt": "# Role\nYou are a hiring manager trained in structured interviewing.\n\n# Goal\nCreate a fair, structured interview.\n\n# Inputs\n- Role: {{role}}\n- Competencies: {{competencies}}\n\n# Instructions\n1. Questions per competency.\n2. What good/average/poor looks like.\n3. Scoring 1-4.\n\n# Constraints\n- Job-related questions only.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nInterview guide with rubric.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "plan-a-project",
+  "title": "Plan a project",
+  "category": "Productivity & Personal",
+  "tags": [
+   "project plan",
+   "timeline",
+   "tasks"
+  ],
+  "description": "Work breakdown, timeline, risks, and owners.",
+  "variables": [
+   {
+    "name": "project",
+    "hint": "Project and goal"
+   },
+   {
+    "name": "deadline",
+    "hint": "Deadline"
+   },
+   {
+    "name": "team",
+    "hint": "Team/resources"
+   }
+  ],
+  "prompt": "# Role\nYou are a certified project manager.\n\n# Goal\nCreate an executable project plan.\n\n# Inputs\n- Project: {{project}}\n- Deadline: {{deadline}}\n- Team: {{team}}\n\n# Instructions\n1. Work breakdown structure.\n2. Dependencies.\n3. Timeline (Gantt in Mermaid).\n4. RACI.\n5. Risks and mitigations.\n6. Milestones.\n\n# Constraints\n- Realistic estimates with buffer.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nPlan with tables and Gantt.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "prioritize-my-tasks",
+  "title": "Prioritize my tasks",
+  "category": "Productivity & Personal",
+  "tags": [
+   "prioritization",
+   "eisenhower",
+   "focus"
+  ],
+  "description": "Turn a messy task list into a focused plan.",
+  "variables": [
+   {
+    "name": "tasks",
+    "hint": "Task list"
+   },
+   {
+    "name": "time",
+    "hint": "Available time"
+   },
+   {
+    "name": "goals",
+    "hint": "Goals"
+   }
+  ],
+  "prompt": "# Role\nYou are a productivity coach.\n\n# Goal\nOrganize tasks into a realistic plan.\n\n# Inputs\n- Tasks: {{tasks}}\n- Time: {{time}}\n- Goals: {{goals}}\n\n# Instructions\n1. Classify with the Eisenhower matrix.\n2. Estimate time.\n3. Schedule into time blocks.\n4. Suggest what to delegate or drop.\n\n# Constraints\n- Fit within available time.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nMatrix and schedule.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "brainstorm-ideas",
+  "title": "Brainstorm ideas",
+  "category": "Productivity & Personal",
+  "tags": [
+   "brainstorm",
+   "ideas",
+   "creativity"
+  ],
+  "description": "Many diverse ideas, then the best ones developed.",
+  "variables": [
+   {
+    "name": "challenge",
+    "hint": "Challenge"
+   },
+   {
+    "name": "constraints",
+    "hint": "Constraints"
+   }
+  ],
+  "prompt": "# Role\nYou are a creative strategist.\n\n# Goal\nGenerate and evaluate ideas.\n\n# Inputs\n- Challenge: {{challenge}}\n- Constraints: {{constraints}}\n\n# Instructions\n1. Generate 20 ideas across different angles (safe, bold, cheap, tech-driven, unconventional).\n2. Score on impact/feasibility.\n3. Develop the top 3 with next steps.\n\n# Constraints\n- Quantity before judgement.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nIdea list, scoring, top 3.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "make-a-decision-checklist",
+  "title": "Make a decision checklist",
+  "category": "Productivity & Personal",
+  "tags": [
+   "checklist",
+   "process",
+   "sop"
+  ],
+  "description": "Create a reusable checklist or SOP for any recurring task.",
+  "variables": [
+   {
+    "name": "task",
+    "hint": "Recurring task"
+   },
+   {
+    "name": "mistakes",
+    "hint": "Common mistakes"
+   }
+  ],
+  "prompt": "# Role\nYou are an operations expert.\n\n# Goal\nCreate a checklist that prevents mistakes.\n\n# Inputs\n- Task: {{task}}\n- Mistakes: {{mistakes}}\n\n# Instructions\n1. Break into ordered steps.\n2. Add verification points.\n3. Add 'don't forget' items.\n\n# Constraints\n- Short items, imperative verbs.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nChecklist.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "translate-with-cultural-adaptation",
+  "title": "Translate with cultural adaptation",
+  "category": "Language & Translation",
+  "tags": [
+   "translation",
+   "localization",
+   "i18n"
+  ],
+  "description": "Natural, culturally adapted translation, not word for word.",
+  "variables": [
+   {
+    "name": "text",
+    "hint": "Text"
+   },
+   {
+    "name": "source_language",
+    "hint": "Source language"
+   },
+   {
+    "name": "target_language",
+    "hint": "Target language and region"
+   },
+   {
+    "name": "context",
+    "hint": "Purpose and audience"
+   }
+  ],
+  "prompt": "# Role\nYou are a professional translator and localization expert for {{target_language}}.\n\n# Goal\nTranslate so it reads as if written natively.\n\n# Inputs\n- Text: {{text}}\n- Source language: {{source_language}}\n- Target language: {{target_language}}\n- Context: {{context}}\n\n# Instructions\n1. Translate meaning, tone, and intent.\n2. Adapt idioms, units, dates, currency.\n3. Keep placeholders/code unchanged.\n4. List adaptation notes.\n\n# Constraints\n- Preserve formatting.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nTranslation, then notes.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "localize-a-software-product",
+  "title": "Localize a software product",
+  "category": "Language & Translation",
+  "tags": [
+   "i18n",
+   "l10n",
+   "strings"
+  ],
+  "description": "Translate UI strings with context and plural rules.",
+  "variables": [
+   {
+    "name": "strings",
+    "hint": "Strings file (JSON, .po, .strings, XML)"
+   },
+   {
+    "name": "target_language",
+    "hint": "Target locale"
+   }
+  ],
+  "prompt": "# Role\nYou are a software localization engineer.\n\n# Goal\nLocalize the strings file.\n\n# Inputs\n- Strings: {{strings}}\n- Target language: {{target_language}}\n\n# Instructions\n1. Translate each string.\n2. Respect plural/gender rules and ICU syntax.\n3. Keep keys and placeholders.\n4. Flag strings likely to overflow UI.\n\n# Constraints\n- Output must be valid in the same format.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nLocalized file.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "language-practice-partner",
+  "title": "Language practice partner",
+  "category": "Language & Translation",
+  "tags": [
+   "language learning",
+   "conversation"
+  ],
+  "description": "Conversation practice with corrections.",
+  "variables": [
+   {
+    "name": "language",
+    "hint": "Language"
+   },
+   {
+    "name": "level",
+    "hint": "CEFR level"
+   },
+   {
+    "name": "topic",
+    "hint": "Topic"
+   }
+  ],
+  "prompt": "# Role\nYou are a friendly native-speaker language tutor.\n\n# Goal\nHelp me practise {{language}}.\n\n# Inputs\n- Language: {{language}}\n- Level: {{level}}\n- Topic: {{topic}}\n\n# Instructions\n1. Converse at my level.\n2. After each reply, correct my mistakes briefly.\n3. Introduce 3 new words per session.\n\n# Constraints\n- Mostly in the target language.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nConversation with corrections.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "explain-a-contract",
+  "title": "Explain a contract",
+  "category": "Finance & Legal",
+  "tags": [
+   "contract",
+   "legal",
+   "review"
+  ],
+  "description": "Plain-language explanation of a contract and its risks.",
+  "variables": [
+   {
+    "name": "contract",
+    "hint": "Contract text"
+   },
+   {
+    "name": "my_role",
+    "hint": "Which party I am"
+   }
+  ],
+  "prompt": "# Role\nYou are a contracts analyst (not a lawyer; informational only).\n\n# Goal\nExplain the contract so I understand what I'm agreeing to.\n\n# Inputs\n- Contract: {{contract}}\n- My role: {{my_role}}\n\n# Instructions\n1. Summary of what it does.\n2. Key obligations for each party.\n3. Payment, term, termination, liability, IP, confidentiality.\n4. Unusual or risky clauses.\n5. Questions to ask a lawyer.\n\n# Constraints\n- Informational, not legal advice.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nSummary, clause table, risks, questions.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "draft-a-privacy-policy-or-terms-outline",
+  "title": "Draft a privacy policy or terms outline",
+  "category": "Finance & Legal",
+  "tags": [
+   "privacy",
+   "terms",
+   "compliance"
+  ],
+  "description": "First-draft outline to review with counsel.",
+  "variables": [
+   {
+    "name": "product",
+    "hint": "Product and data collected"
+   },
+   {
+    "name": "jurisdictions",
+    "hint": "Jurisdictions (GDPR, CCPA, etc.)"
+   }
+  ],
+  "prompt": "# Role\nYou are a compliance specialist.\n\n# Goal\nDraft an outline for review.\n\n# Inputs\n- Product: {{product}}\n- Jurisdictions: {{jurisdictions}}\n\n# Instructions\n1. Sections required by the jurisdictions.\n2. Plain-language draft of each.\n3. List items needing legal review.\n\n# Constraints\n- Mark as draft for legal review.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nDraft document.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "personal-budget-plan",
+  "title": "Personal budget plan",
+  "category": "Finance & Legal",
+  "tags": [
+   "budget",
+   "personal finance",
+   "saving"
+  ],
+  "description": "Monthly budget with savings goals.",
+  "variables": [
+   {
+    "name": "income",
+    "hint": "Monthly income"
+   },
+   {
+    "name": "expenses",
+    "hint": "Expenses"
+   },
+   {
+    "name": "goals",
+    "hint": "Goals"
+   }
+  ],
+  "prompt": "# Role\nYou are a financial planner (informational only).\n\n# Goal\nBuild a realistic budget.\n\n# Inputs\n- Income: {{income}}\n- Expenses: {{expenses}}\n- Goals: {{goals}}\n\n# Instructions\n1. Categorize expenses.\n2. Apply a framework (50/30/20 or zero-based).\n3. Find savings opportunities.\n4. Plan toward goals.\n\n# Constraints\n- Not financial advice.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nBudget table and plan.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ },
+ {
+  "id": "analyze-financial-statements",
+  "title": "Analyze financial statements",
+  "category": "Finance & Legal",
+  "tags": [
+   "financial analysis",
+   "ratios",
+   "investing"
+  ],
+  "description": "Ratio analysis and health check of a company.",
+  "variables": [
+   {
+    "name": "statements",
+    "hint": "Income statement, balance sheet, cash flow"
+   }
+  ],
+  "prompt": "# Role\nYou are a financial analyst.\n\n# Goal\nAssess the company's financial health.\n\n# Inputs\n- Statements: {{statements}}\n\n# Instructions\n1. Calculate profitability, liquidity, leverage, efficiency ratios.\n2. Trends.\n3. Red flags.\n4. Summary.\n\n# Constraints\n- Show formulas.\n- Be complete: no placeholders, no 'etc.', no skipped sections.\n- If something is uncertain, say so instead of guessing.\n\n# Output format\nRatio table and analysis.\n\n# Before you answer\nIf a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding."
+ }
+]
