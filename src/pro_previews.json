@@ -1,0 +1,202 @@
+[
+ {
+  "title": "Design an agent tool schema suite",
+  "category": "Agents & Tool Use",
+  "preview": "Turn a messy API surface into a tight, model-friendly tool suite with error contracts, safety gates and evals built in."
+ },
+ {
+  "title": "Agent loop failure analysis",
+  "category": "Agents & Tool Use",
+  "preview": "A forensic method for reading agent traces, pinpointing the first bad decision and fixing it at the right layer."
+ },
+ {
+  "title": "Multi-agent orchestration blueprint",
+  "category": "Agents & Tool Use",
+  "preview": "Decide if you really need multiple agents, then get a topology with typed handoffs, budgets and failure mitigations."
+ },
+ {
+  "title": "Build an agent eval harness",
+  "category": "Agents & Tool Use",
+  "preview": "A rigorous blueprint for agent evals: task suites, calibrated judges, statistics and release gates your team will trust."
+ },
+ {
+  "title": "Harden an agent against prompt injection",
+  "category": "Agents & Tool Use",
+  "preview": "Defense in depth for tool-using agents: injection paths, deterministic gates and a red-team suite to prove it works."
+ },
+ {
+  "title": "Capacity plan with back-of-envelope math",
+  "category": "System Design Deep Dives",
+  "preview": "Size any system with transparent math, a bottleneck timeline and scaling triggers you can defend in a design review."
+ },
+ {
+  "title": "Multi-region active-active design",
+  "category": "System Design Deep Dives",
+  "preview": "Go multi-region without corrupting data: per-entity consistency choices, fencing, failover and a game-day plan."
+ },
+ {
+  "title": "Event-driven architecture deep dive",
+  "category": "System Design Deep Dives",
+  "preview": "Design events, sagas and delivery guarantees that stay correct under duplicates, reordering and partial failure."
+ },
+ {
+  "title": "Storage engine selection deep dive",
+  "category": "System Design Deep Dives",
+  "preview": "Pick the right datastore from access patterns and failure behaviour, with a weighted matrix and a benchmark plan."
+ },
+ {
+  "title": "Rate limiting and backpressure design",
+  "category": "System Design Deep Dives",
+  "preview": "Layered rate limits, adaptive backpressure and client contracts that stop retry storms before they take you down."
+ },
+ {
+  "title": "Live incident commander playbook",
+  "category": "Production Debugging & Incidents",
+  "preview": "Your co-pilot for a live outage: severity, ranked mitigations, roles, hypotheses and status updates in minutes."
+ },
+ {
+  "title": "Blameless postmortem with causal analysis",
+  "category": "Production Debugging & Incidents",
+  "preview": "A blameless postmortem that finds the systemic causes and turns them into ranked, owned, measurable actions."
+ },
+ {
+  "title": "Distributed tracing root cause hunt",
+  "category": "Production Debugging & Incidents",
+  "preview": "Read traces like an expert: isolate the critical path, separate waiting from working and prove the real cause."
+ },
+ {
+  "title": "Data corruption investigation and repair",
+  "category": "Production Debugging & Incidents",
+  "preview": "Contain, scope and repair corrupted production data with invariant queries and reversible, idempotent fix scripts."
+ },
+ {
+  "title": "Heisenbug hunt for concurrency issues",
+  "category": "Production Debugging & Incidents",
+  "preview": "Pin down races and deadlocks with happens-before analysis, deterministic reproduction and fixes proven by tests."
+ },
+ {
+  "title": "Large-scale codemod migration plan",
+  "category": "Code Review & Refactoring at Scale",
+  "preview": "Migrate a huge codebase with AST codemods, fixture tests, risk-ordered batches and guards against silent behavior changes."
+ },
+ {
+  "title": "Strangler fig decomposition of a monolith",
+  "category": "Code Review & Refactoring at Scale",
+  "preview": "Extract a capability from a monolith step by step: seams, data separation, dual-running and reversible cutover."
+ },
+ {
+  "title": "Review a high-risk pull request",
+  "category": "Code Review & Refactoring at Scale",
+  "preview": "A risk-weighted review method for critical PRs that finds deploy-breaking defects, not style nits."
+ },
+ {
+  "title": "Pay down tech debt with a ranked roadmap",
+  "category": "Code Review & Refactoring at Scale",
+  "preview": "Turn vague tech-debt complaints into a quantified, ranked roadmap and an investment case leadership will fund."
+ },
+ {
+  "title": "API deprecation and breaking change plan",
+  "category": "Code Review & Refactoring at Scale",
+  "preview": "Ship breaking API changes without breaking trust: versioning choice, migration tooling, brownouts and tracking."
+ },
+ {
+  "title": "Risk-based test strategy for a system",
+  "category": "Testing Strategy",
+  "preview": "Allocate tests by risk, map escaped bugs to the cheapest layer and build CI gates that stay fast."
+ },
+ {
+  "title": "Property-based and fuzz testing plan",
+  "category": "Testing Strategy",
+  "preview": "Encode real invariants as properties and fuzz targets that find the bugs your example-based tests miss."
+ },
+ {
+  "title": "Consumer-driven contract testing rollout",
+  "category": "Testing Strategy",
+  "preview": "Let teams deploy independently: contract tests, provider verification and can-i-deploy gates, rolled out step by step."
+ },
+ {
+  "title": "Kill flaky tests systematically",
+  "category": "Testing Strategy",
+  "preview": "A systematic program to measure, classify and eliminate flaky tests, with policies that stop them coming back."
+ },
+ {
+  "title": "Test a data pipeline end to end",
+  "category": "Testing Strategy",
+  "preview": "Unit tests, data contracts and production quality monitors that catch wrong data before your dashboards do."
+ },
+ {
+  "title": "STRIDE threat model with attack trees",
+  "category": "Security & Threat Modeling",
+  "preview": "A practitioner-grade STRIDE threat model with trust boundaries, attack trees and verifiable mitigations."
+ },
+ {
+  "title": "Secure code review for injection and authz",
+  "category": "Security & Threat Modeling",
+  "preview": "Source-to-sink tracing and authorization matrices that surface exploitable injection and IDOR bugs with ready fixes."
+ },
+ {
+  "title": "Software supply chain hardening plan",
+  "category": "Security & Threat Modeling",
+  "preview": "Close the gaps attackers use: dependency, build and CI hardening mapped to SLSA, plus a compromise playbook."
+ },
+ {
+  "title": "Cloud IAM least-privilege review",
+  "category": "Security & Threat Modeling",
+  "preview": "Find IAM escalation paths and wildcard grants, then roll out least-privilege policies without breaking production."
+ },
+ {
+  "title": "Security design review for a new feature",
+  "category": "Security & Threat Modeling",
+  "preview": "Review a feature's design before code: attack surface, abuse cases, testable security requirements and a clear verdict."
+ },
+ {
+  "title": "Cloud cost reduction deep dive",
+  "category": "Performance & Cost Optimization",
+  "preview": "Find the biggest cloud savings with unit economics, waste hunting and commitment math, without hurting reliability."
+ },
+ {
+  "title": "Profile-driven backend optimization",
+  "category": "Performance & Cost Optimization",
+  "preview": "Profile-first performance work: read the flame graph, estimate gains with Amdahl's law and prove every win."
+ },
+ {
+  "title": "Database performance tuning at scale",
+  "category": "Performance & Cost Optimization",
+  "preview": "Tune a busy database with evidence: ranked queries, plan analysis, index trade-offs and lock-safe rollout."
+ },
+ {
+  "title": "Caching strategy with invalidation design",
+  "category": "Performance & Cost Optimization",
+  "preview": "Caching that cuts load without serving stale or leaked data: layers, invalidation, stampede protection and sizing."
+ },
+ {
+  "title": "LLM inference cost and latency optimization",
+  "category": "Performance & Cost Optimization",
+  "preview": "Cut LLM cost and latency with caching, routing and token discipline, gated by evals so quality never slips."
+ },
+ {
+  "title": "Build a promotion packet to staff engineer",
+  "category": "Career & Tech Leadership",
+  "preview": "Build a staff-level promo packet calibration committees respect: evidence matrix, anchor stories and objection prep."
+ },
+ {
+  "title": "Critique a design doc like a principal",
+  "category": "Career & Tech Leadership",
+  "preview": "Review design docs like a principal: find the key decisions, missing alternatives and risks, with feedback that lands."
+ },
+ {
+  "title": "Design a senior engineer interview loop",
+  "category": "Career & Tech Leadership",
+  "preview": "A full senior interview loop: competency coverage matrix, session guides, anchored rubrics and a bias-resistant debrief."
+ },
+ {
+  "title": "Write a technical strategy for your org",
+  "category": "Career & Tech Leadership",
+  "preview": "A real technical strategy, not a wishlist: diagnosis, guiding policies, non-goals and actions tested against real decisions."
+ },
+ {
+  "title": "Lead a contentious technical decision",
+  "category": "Career & Tech Leadership",
+  "preview": "Resolve a heated technical disagreement with agreed criteria, steelmanned options and a decision both sides respect."
+ }
+]
