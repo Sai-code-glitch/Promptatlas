@@ -6,4 +6,4 @@ A searchable library of 125 complete, ready-to-use AI prompts across 25 categori
 - `prompts.json` holds every prompt as data.
 - `src/` holds the prompt sources and `build.py`. Run `cd src && python3 build.py` to rebuild after editing prompts.
 
-Hosted with GitHub Pages.
+Live at https://sai-code-glitch.github.io/promptatlas/
