@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sai-code-glitch.github.io/Promptatlas/sitemap.xml

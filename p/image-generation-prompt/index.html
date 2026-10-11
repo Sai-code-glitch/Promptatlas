@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Image generation prompt prompt for ChatGPT, Claude &amp; Gemini | Prompt Atlas</title>
+<meta name="description" content="Detailed prompt for AI image generators. A complete, copy-ready AI prompt with role, inputs, steps, constraints and output format.">
+<link rel="canonical" href="https://sai-code-glitch.github.io/Promptatlas/p/image-generation-prompt/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Image generation prompt prompt for ChatGPT, Claude &amp; Gemini | Prompt Atlas">
+<meta property="og:description" content="Detailed prompt for AI image generators. A complete, copy-ready AI prompt with role, inputs, steps, constraints and output format.">
+<meta property="og:url" content="https://sai-code-glitch.github.io/Promptatlas/p/image-generation-prompt/">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../assets/page.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "CreativeWork", "name": "Image generation prompt", "description": "Detailed prompt for AI image generators.", "url": "https://sai-code-glitch.github.io/Promptatlas/p/image-generation-prompt/", "keywords": "midjourney, dall-e, stable diffusion, image", "genre": "Image, Video & Audio", "isAccessibleForFree": true, "isPartOf": {"@type": "WebSite", "name": "Prompt Atlas", "url": "https://sai-code-glitch.github.io/Promptatlas/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Prompt Atlas", "item": "https://sai-code-glitch.github.io/Promptatlas/"}, {"@type": "ListItem", "position": 2, "name": "Image, Video & Audio", "item": "https://sai-code-glitch.github.io/Promptatlas/c/image-video-audio/"}, {"@type": "ListItem", "position": 3, "name": "Image generation prompt", "item": "https://sai-code-glitch.github.io/Promptatlas/p/image-generation-prompt/"}]}]}</script>
+
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="../../">Prompt <b>Atlas</b></a><a class="btn" href="../../#pro">Pro Pack</a></div></header>
+<main class="wrap">
+<div class="crumbs"><a href="../../">Prompt Atlas</a> / <a href="../../c/image-video-audio/">Image, Video &amp; Audio</a></div>
+<h1>Image generation prompt prompt</h1>
+<p class="lead">Detailed prompt for AI image generators.</p>
+<div class="pills"><span class="pill">midjourney</span><span class="pill">dall-e</span><span class="pill">stable diffusion</span><span class="pill">image</span></div>
+<div class="actions"><a class="btn primary" href="../../#image-generation-prompt">Fill in the inputs and copy</a><button class="btn" data-copy="prompt" data-id="image-generation-prompt">Copy template</button></div>
+<h2>Inputs you provide</h2>
+<table><thead><tr><th>Placeholder</th><th>What to put there</th></tr></thead><tbody><tr><td><code>{{idea}}</code></td><td>What the image shows</td></tr><tr><td><code>{{style}}</code></td><td>Style (photo, illustration, 3D, etc.)</td></tr><tr><td><code>{{tool}}</code></td><td>Midjourney, DALL-E, Stable Diffusion, Flux, etc.</td></tr><tr><td><code>{{aspect}}</code></td><td>Aspect ratio</td></tr></tbody></table>
+<h2>The prompt</h2>
+<pre id="prompt"><span class="h"># Role</span>
+You are an expert AI art director.
+
+<span class="h"># Goal</span>
+Write image prompts that produce exactly the intended image.
+
+<span class="h"># Inputs</span>
+- Idea: <span class="v">{{idea}}</span>
+- Style: <span class="v">{{style}}</span>
+- Tool: <span class="v">{{tool}}</span>
+- Aspect: <span class="v">{{aspect}}</span>
+
+<span class="h"># Instructions</span>
+1. Describe subject, action, setting, composition, camera/lens, lighting, color palette, mood, style references, and detail level.
+2. Add tool-specific parameters.
+3. Give a negative prompt if supported.
+4. Give 3 variations.
+
+<span class="h"># Constraints</span>
+- No living artists' names or trademarks unless permitted.
+- Be complete: no placeholders, no 'etc.', no skipped sections.
+- If something is uncertain, say so instead of guessing.
+
+<span class="h"># Output format</span>
+Main prompt, negative prompt, variations.
+
+<span class="h"># Before you answer</span>
+If a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding.</pre>
+<h2>How to use it</h2>
+<p>Replace each highlighted <code>{{placeholder}}</code> with your details, or open the <a href="../../#image-generation-prompt">interactive editor</a> to fill them in and copy the finished prompt. It works in Claude, ChatGPT, Gemini and any other chat model.</p>
+
+<h2>More Image, Video &amp; Audio prompts</h2>
+<div class="grid"><a class="card" href="../video-script-and-storyboard/"><strong>Video script and storyboard</strong><span>Script with shots, visuals, and timing.</span></a><a class="card" href="../ai-video-generation-prompt/"><strong>AI video generation prompt</strong><span>Prompt for text-to-video models with camera and motion detail.</span></a><a class="card" href="../podcast-episode-plan/"><strong>Podcast episode plan</strong><span>Episode outline, interview questions, and show notes.</span></a></div>
+</main>
+<footer><div class="wrap"><span>Prompt Atlas. Free prompts for developers everywhere.</span><span><a href="../../">All prompts</a> · <a href="https://github.com/Sai-code-glitch/Promptatlas">GitHub</a></span></div></footer>
+<script>
+document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async () => {
+  const t = document.getElementById(b.dataset.copy).innerText;
+  let msg = "Prompt copied";
+  try { await navigator.clipboard.writeText(t); } catch { msg = "Copy blocked. Select the text and press Ctrl+C."; }
+  const d = document.createElement("div"); d.className = "toast"; d.textContent = msg; document.body.appendChild(d); setTimeout(() => d.remove(), 1800);
+  try { window.goatcounter && window.goatcounter.count({ path: "event/copy-" + b.dataset.id, title: "copy", event: true }); } catch {}
+}));
+</script>
+</body>
+</html>

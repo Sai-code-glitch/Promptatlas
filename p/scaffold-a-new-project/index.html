@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scaffold a new project prompt for ChatGPT, Claude &amp; Gemini | Prompt Atlas</title>
+<meta name="description" content="Generate a production-ready project skeleton with tooling, CI, and conventions set up. A complete, copy-ready AI prompt with role, inputs, steps, constraints and output format.">
+<link rel="canonical" href="https://sai-code-glitch.github.io/Promptatlas/p/scaffold-a-new-project/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scaffold a new project prompt for ChatGPT, Claude &amp; Gemini | Prompt Atlas">
+<meta property="og:description" content="Generate a production-ready project skeleton with tooling, CI, and conventions set up. A complete, copy-ready AI prompt with role, inputs, steps, constraints and output format.">
+<meta property="og:url" content="https://sai-code-glitch.github.io/Promptatlas/p/scaffold-a-new-project/">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../assets/page.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "CreativeWork", "name": "Scaffold a new project", "description": "Generate a production-ready project skeleton with tooling, CI, and conventions set up.", "url": "https://sai-code-glitch.github.io/Promptatlas/p/scaffold-a-new-project/", "keywords": "boilerplate, setup, starter", "genre": "Code Generation", "isAccessibleForFree": true, "isPartOf": {"@type": "WebSite", "name": "Prompt Atlas", "url": "https://sai-code-glitch.github.io/Promptatlas/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Prompt Atlas", "item": "https://sai-code-glitch.github.io/Promptatlas/"}, {"@type": "ListItem", "position": 2, "name": "Code Generation", "item": "https://sai-code-glitch.github.io/Promptatlas/c/code-generation/"}, {"@type": "ListItem", "position": 3, "name": "Scaffold a new project", "item": "https://sai-code-glitch.github.io/Promptatlas/p/scaffold-a-new-project/"}]}]}</script>
+
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="../../">Prompt <b>Atlas</b></a><a class="btn" href="../../#pro">Pro Pack</a></div></header>
+<main class="wrap">
+<div class="crumbs"><a href="../../">Prompt Atlas</a> / <a href="../../c/code-generation/">Code Generation</a></div>
+<h1>Scaffold a new project prompt</h1>
+<p class="lead">Generate a production-ready project skeleton with tooling, CI, and conventions set up.</p>
+<div class="pills"><span class="pill">boilerplate</span><span class="pill">setup</span><span class="pill">starter</span></div>
+<div class="actions"><a class="btn primary" href="../../#scaffold-a-new-project">Fill in the inputs and copy</a><button class="btn" data-copy="prompt" data-id="scaffold-a-new-project">Copy template</button></div>
+<h2>Inputs you provide</h2>
+<table><thead><tr><th>Placeholder</th><th>What to put there</th></tr></thead><tbody><tr><td><code>{{project_type}}</code></td><td>e.g. web app, library, microservice, mobile app</td></tr><tr><td><code>{{stack}}</code></td><td>Languages, frameworks, database</td></tr><tr><td><code>{{tooling}}</code></td><td>Package manager, linter, formatter, test runner preferences</td></tr><tr><td><code>{{deploy_target}}</code></td><td>Where it will run</td></tr></tbody></table>
+<h2>The prompt</h2>
+<pre id="prompt"><span class="h"># Role</span>
+You are a staff engineer who sets up repositories that teams enjoy working in.
+
+<span class="h"># Goal</span>
+Create the full starting structure for the project below.
+
+<span class="h"># Inputs</span>
+- Project type: <span class="v">{{project_type}}</span>
+- Stack: <span class="v">{{stack}}</span>
+- Tooling: <span class="v">{{tooling}}</span>
+- Deploy target: <span class="v">{{deploy_target}}</span>
+
+<span class="h"># Instructions</span>
+1. Propose a folder structure and explain each top-level directory.
+2. Provide config files: package/dependency manifest, linter, formatter, editor config, .gitignore, env example.
+3. Add a minimal working example (hello endpoint/page/function) with a test.
+4. Add a CI workflow that installs, lints, tests, and builds.
+5. Add a Dockerfile if relevant, and a README with setup, scripts, and conventions.
+
+<span class="h"># Constraints</span>
+- Pin major versions.
+- No secrets in files; use .env.example.
+- Be complete: no placeholders, no 'etc.', no skipped sections.
+- If something is uncertain, say so instead of guessing.
+
+<span class="h"># Output format</span>
+File tree, then each file's full content in fenced blocks labelled with its path, then setup commands.
+
+<span class="h"># Before you answer</span>
+If a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding.</pre>
+<h2>How to use it</h2>
+<p>Replace each highlighted <code>{{placeholder}}</code> with your details, or open the <a href="../../#scaffold-a-new-project">interactive editor</a> to fill them in and copy the finished prompt. It works in Claude, ChatGPT, Gemini and any other chat model.</p>
+
+<h2>More Code Generation prompts</h2>
+<div class="grid"><a class="card" href="../build-a-feature-from-a-spec/"><strong>Build a feature from a spec</strong><span>Turn a written requirement into production-ready, tested code that fits an existing codebase.</span></a><a class="card" href="../generate-a-rest-api-endpoint/"><strong>Generate a REST API endpoint</strong><span>Create a complete, validated, documented REST endpoint with error handling and tests.</span></a><a class="card" href="../write-a-cli-tool/"><strong>Write a CLI tool</strong><span>Build a polished command-line tool with argument parsing, help text, errors, and exit codes.</span></a><a class="card" href="../implement-an-algorithm-with-complexity-analysis/"><strong>Implement an algorithm with complexity analysis</strong><span>Solve an algorithmic problem with a correct, optimal solution and a clear explanation.</span></a><a class="card" href="../convert-code-between-languages/"><strong>Convert code between languages</strong><span>Port code to another language idiomatically, not line by line.</span></a><a class="card" href="../write-a-regular-expression/"><strong>Write a regular expression</strong><span>Get a correct, explained regex with test cases instead of a guess.</span></a></div>
+</main>
+<footer><div class="wrap"><span>Prompt Atlas. Free prompts for developers everywhere.</span><span><a href="../../">All prompts</a> · <a href="https://github.com/Sai-code-glitch/Promptatlas">GitHub</a></span></div></footer>
+<script>
+document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async () => {
+  const t = document.getElementById(b.dataset.copy).innerText;
+  let msg = "Prompt copied";
+  try { await navigator.clipboard.writeText(t); } catch { msg = "Copy blocked. Select the text and press Ctrl+C."; }
+  const d = document.createElement("div"); d.className = "toast"; d.textContent = msg; document.body.appendChild(d); setTimeout(() => d.remove(), 1800);
+  try { window.goatcounter && window.goatcounter.count({ path: "event/copy-" + b.dataset.id, title: "copy", event: true }); } catch {}
+}));
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Write a product requirements document (PRD) prompt for ChatGPT, Claude &amp; Gemini | Prompt Atlas</title>
+<meta name="description" content="Complete PRD with problem, users, requirements, and metrics. A complete, copy-ready AI prompt with role, inputs, steps, constraints and output format.">
+<link rel="canonical" href="https://sai-code-glitch.github.io/Promptatlas/p/write-a-product-requirements-document-prd/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Write a product requirements document (PRD) prompt for ChatGPT, Claude &amp; Gemini | Prompt Atlas">
+<meta property="og:description" content="Complete PRD with problem, users, requirements, and metrics. A complete, copy-ready AI prompt with role, inputs, steps, constraints and output format.">
+<meta property="og:url" content="https://sai-code-glitch.github.io/Promptatlas/p/write-a-product-requirements-document-prd/">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../assets/page.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "CreativeWork", "name": "Write a product requirements document (PRD)", "description": "Complete PRD with problem, users, requirements, and metrics.", "url": "https://sai-code-glitch.github.io/Promptatlas/p/write-a-product-requirements-document-prd/", "keywords": "prd, requirements, spec", "genre": "Product Management", "isAccessibleForFree": true, "isPartOf": {"@type": "WebSite", "name": "Prompt Atlas", "url": "https://sai-code-glitch.github.io/Promptatlas/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Prompt Atlas", "item": "https://sai-code-glitch.github.io/Promptatlas/"}, {"@type": "ListItem", "position": 2, "name": "Product Management", "item": "https://sai-code-glitch.github.io/Promptatlas/c/product-management/"}, {"@type": "ListItem", "position": 3, "name": "Write a product requirements document (PRD)", "item": "https://sai-code-glitch.github.io/Promptatlas/p/write-a-product-requirements-document-prd/"}]}]}</script>
+
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="../../">Prompt <b>Atlas</b></a><a class="btn" href="../../#pro">Pro Pack</a></div></header>
+<main class="wrap">
+<div class="crumbs"><a href="../../">Prompt Atlas</a> / <a href="../../c/product-management/">Product Management</a></div>
+<h1>Write a product requirements document (PRD) prompt</h1>
+<p class="lead">Complete PRD with problem, users, requirements, and metrics.</p>
+<div class="pills"><span class="pill">prd</span><span class="pill">requirements</span><span class="pill">spec</span></div>
+<div class="actions"><a class="btn primary" href="../../#write-a-product-requirements-document-prd">Fill in the inputs and copy</a><button class="btn" data-copy="prompt" data-id="write-a-product-requirements-document-prd">Copy template</button></div>
+<h2>Inputs you provide</h2>
+<table><thead><tr><th>Placeholder</th><th>What to put there</th></tr></thead><tbody><tr><td><code>{{feature}}</code></td><td>Feature idea</td></tr><tr><td><code>{{users}}</code></td><td>Target users</td></tr><tr><td><code>{{problem}}</code></td><td>Problem and evidence</td></tr><tr><td><code>{{constraints}}</code></td><td>Constraints and timeline</td></tr></tbody></table>
+<h2>The prompt</h2>
+<pre id="prompt"><span class="h"># Role</span>
+You are a senior product manager.
+
+<span class="h"># Goal</span>
+Write a PRD engineering and design can build from.
+
+<span class="h"># Inputs</span>
+- Feature: <span class="v">{{feature}}</span>
+- Users: <span class="v">{{users}}</span>
+- Problem: <span class="v">{{problem}}</span>
+- Constraints: <span class="v">{{constraints}}</span>
+
+<span class="h"># Instructions</span>
+1. Problem statement and evidence.
+2. Goals and non-goals.
+3. Personas and user stories with acceptance criteria.
+4. Functional and non-functional requirements.
+5. UX flow.
+6. Success metrics.
+7. Launch plan.
+8. Risks and open questions.
+
+<span class="h"># Constraints</span>
+- Testable acceptance criteria (Given/When/Then).
+- Be complete: no placeholders, no 'etc.', no skipped sections.
+- If something is uncertain, say so instead of guessing.
+
+<span class="h"># Output format</span>
+PRD in Markdown.
+
+<span class="h"># Before you answer</span>
+If a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding.</pre>
+<h2>How to use it</h2>
+<p>Replace each highlighted <code>{{placeholder}}</code> with your details, or open the <a href="../../#write-a-product-requirements-document-prd">interactive editor</a> to fill them in and copy the finished prompt. It works in Claude, ChatGPT, Gemini and any other chat model.</p>
+
+<h2>More Product Management prompts</h2>
+<div class="grid"><a class="card" href="../write-user-stories/"><strong>Write user stories</strong><span>INVEST user stories with acceptance criteria.</span></a><a class="card" href="../prioritize-a-backlog/"><strong>Prioritize a backlog</strong><span>Score and rank features with RICE or similar.</span></a><a class="card" href="../analyze-user-feedback/"><strong>Analyze user feedback</strong><span>Find themes and priorities in raw feedback.</span></a></div>
+</main>
+<footer><div class="wrap"><span>Prompt Atlas. Free prompts for developers everywhere.</span><span><a href="../../">All prompts</a> · <a href="https://github.com/Sai-code-glitch/Promptatlas">GitHub</a></span></div></footer>
+<script>
+document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async () => {
+  const t = document.getElementById(b.dataset.copy).innerText;
+  let msg = "Prompt copied";
+  try { await navigator.clipboard.writeText(t); } catch { msg = "Copy blocked. Select the text and press Ctrl+C."; }
+  const d = document.createElement("div"); d.className = "toast"; d.textContent = msg; document.body.appendChild(d); setTimeout(() => d.remove(), 1800);
+  try { window.goatcounter && window.goatcounter.count({ path: "event/copy-" + b.dataset.id, title: "copy", event: true }); } catch {}
+}));
+</script>
+</body>
+</html>

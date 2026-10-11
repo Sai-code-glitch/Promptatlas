@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Market research prompt for ChatGPT, Claude &amp; Gemini | Prompt Atlas</title>
+<meta name="description" content="Market overview, sizing, trends, and opportunities. A complete, copy-ready AI prompt with role, inputs, steps, constraints and output format.">
+<link rel="canonical" href="https://sai-code-glitch.github.io/Promptatlas/p/market-research/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Market research prompt for ChatGPT, Claude &amp; Gemini | Prompt Atlas">
+<meta property="og:description" content="Market overview, sizing, trends, and opportunities. A complete, copy-ready AI prompt with role, inputs, steps, constraints and output format.">
+<meta property="og:url" content="https://sai-code-glitch.github.io/Promptatlas/p/market-research/">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../assets/page.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "CreativeWork", "name": "Market research", "description": "Market overview, sizing, trends, and opportunities.", "url": "https://sai-code-glitch.github.io/Promptatlas/p/market-research/", "keywords": "market, trends, sizing", "genre": "Research & Analysis", "isAccessibleForFree": true, "isPartOf": {"@type": "WebSite", "name": "Prompt Atlas", "url": "https://sai-code-glitch.github.io/Promptatlas/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Prompt Atlas", "item": "https://sai-code-glitch.github.io/Promptatlas/"}, {"@type": "ListItem", "position": 2, "name": "Research & Analysis", "item": "https://sai-code-glitch.github.io/Promptatlas/c/research-analysis/"}, {"@type": "ListItem", "position": 3, "name": "Market research", "item": "https://sai-code-glitch.github.io/Promptatlas/p/market-research/"}]}]}</script>
+
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="../../">Prompt <b>Atlas</b></a><a class="btn" href="../../#pro">Pro Pack</a></div></header>
+<main class="wrap">
+<div class="crumbs"><a href="../../">Prompt Atlas</a> / <a href="../../c/research-analysis/">Research &amp; Analysis</a></div>
+<h1>Market research prompt</h1>
+<p class="lead">Market overview, sizing, trends, and opportunities.</p>
+<div class="pills"><span class="pill">market</span><span class="pill">trends</span><span class="pill">sizing</span></div>
+<div class="actions"><a class="btn primary" href="../../#market-research">Fill in the inputs and copy</a><button class="btn" data-copy="prompt" data-id="market-research">Copy template</button></div>
+<h2>Inputs you provide</h2>
+<table><thead><tr><th>Placeholder</th><th>What to put there</th></tr></thead><tbody><tr><td><code>{{market}}</code></td><td>Market/industry</td></tr><tr><td><code>{{geography}}</code></td><td>Region</td></tr><tr><td><code>{{purpose}}</code></td><td>Why you need it</td></tr></tbody></table>
+<h2>The prompt</h2>
+<pre id="prompt"><span class="h"># Role</span>
+You are a market research consultant.
+
+<span class="h"># Goal</span>
+Assess the market opportunity.
+
+<span class="h"># Inputs</span>
+- Market: <span class="v">{{market}}</span>
+- Geography: <span class="v">{{geography}}</span>
+- Purpose: <span class="v">{{purpose}}</span>
+
+<span class="h"># Instructions</span>
+1. Define market.
+2. Size with top-down and bottom-up methods.
+3. Key players.
+4. Trends and drivers.
+5. Customer segments.
+6. Opportunities and threats.
+
+<span class="h"># Constraints</span>
+- Mark estimates and their basis.
+- Be complete: no placeholders, no 'etc.', no skipped sections.
+- If something is uncertain, say so instead of guessing.
+
+<span class="h"># Output format</span>
+Report with tables.
+
+<span class="h"># Before you answer</span>
+If a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding.</pre>
+<h2>How to use it</h2>
+<p>Replace each highlighted <code>{{placeholder}}</code> with your details, or open the <a href="../../#market-research">interactive editor</a> to fill them in and copy the finished prompt. It works in Claude, ChatGPT, Gemini and any other chat model.</p>
+
+<h2>More Research &amp; Analysis prompts</h2>
+<div class="grid"><a class="card" href="../deep-research-on-a-topic/"><strong>Deep research on a topic</strong><span>Thorough, balanced research report with sources to verify.</span></a><a class="card" href="../analyze-a-research-paper/"><strong>Analyze a research paper</strong><span>Summary and critique of an academic paper.</span></a><a class="card" href="../literature-review/"><strong>Literature review</strong><span>Synthesize research on a topic into themes and gaps.</span></a><a class="card" href="../survey-and-questionnaire-design/"><strong>Survey and questionnaire design</strong><span>Unbiased survey that answers your research question.</span></a></div>
+</main>
+<footer><div class="wrap"><span>Prompt Atlas. Free prompts for developers everywhere.</span><span><a href="../../">All prompts</a> · <a href="https://github.com/Sai-code-glitch/Promptatlas">GitHub</a></span></div></footer>
+<script>
+document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async () => {
+  const t = document.getElementById(b.dataset.copy).innerText;
+  let msg = "Prompt copied";
+  try { await navigator.clipboard.writeText(t); } catch { msg = "Copy blocked. Select the text and press Ctrl+C."; }
+  const d = document.createElement("div"); d.className = "toast"; d.textContent = msg; document.body.appendChild(d); setTimeout(() => d.remove(), 1800);
+  try { window.goatcounter && window.goatcounter.count({ path: "event/copy-" + b.dataset.id, title: "copy", event: true }); } catch {}
+}));
+</script>
+</body>
+</html>

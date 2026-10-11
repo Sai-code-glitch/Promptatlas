@@ -1,4 +1,17 @@
-<title>Prompt Atlas</title>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Atlas: __COUNT__ free, ready-to-run AI prompts for developers</title>
+<meta name="description" content="__COUNT__ complete AI prompts across __CATS__ categories for code generation, debugging, code review, testing, DevOps, writing and more. Fill in the inputs and copy into Claude, ChatGPT or Gemini.">
+<link rel="canonical" href="__SITE__">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Prompt Atlas: free, ready-to-run AI prompts for developers">
+<meta property="og:description" content="__COUNT__ complete prompts across __CATS__ categories. Fill the inputs, copy, and run in any model.">
+<meta property="og:url" content="__SITE__">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231F48C9'/%3E%3Ctext x='16' y='22' font-size='17' text-anchor='middle' fill='white' font-family='Arial' font-weight='700'%3EPA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -25,6 +38,7 @@
   --shadow: 0 18px 50px rgba(0, 0, 0, .5); color-scheme: dark; }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body { background: var(--bg); color: var(--ink); font: 15px/1.55 var(--f-body); }
 button, input, textarea { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -100,6 +114,35 @@ pre.prompt .h { color: var(--accent); font-weight: 600; }
 .d-foot .info { margin-left: auto; color: var(--muted); font: 12px var(--f-mono); font-variant-numeric: tabular-nums; }
 .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 9px 16px; border-radius: 9px; z-index: 20; font-weight: 500; }
 
+/* Monetization: header actions, newsletter, Pro Pack previews, footer. Each block hides itself when its link is not configured. */
+.top-actions { display: flex; gap: 8px; align-items: center; }
+.btn.small { padding: 7px 12px; font-size: 14px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+a.btn { color: inherit; text-decoration: none; }
+a.btn.primary { color: var(--accent-ink); }
+.badge { font: 600 10.5px var(--f-body); letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 5px; background: var(--var-bg); color: var(--var-ink); }
+.signup { margin-top: 28px; padding: 20px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); display: grid; gap: 10px; }
+.signup h4 { margin: 0; font: 600 18px var(--f-display); }
+.signup p { margin: 0; color: var(--muted); max-width: 70ch; }
+.signup form { display: flex; gap: 8px; flex-wrap: wrap; }
+.signup input[type=email] { flex: 1 1 240px; min-width: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--bg); }
+.pro { margin-top: 36px; padding: 24px 20px; border-radius: 14px; background: var(--accent-soft); display: grid; gap: 16px; scroll-margin-top: 90px; }
+.pro-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; }
+.pro-head h3 { margin: 0 0 4px; font: 700 clamp(22px, 3vw, 30px)/1.15 var(--f-display); letter-spacing: -.01em; }
+.pro-head p { margin: 0; color: var(--muted); max-width: 60ch; }
+.pro-cta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.pro-cta .price { font: 700 22px var(--f-display); }
+.pro-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+.pro-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 4px; min-width: 0; }
+.pro-card .cat-label { font: 600 10.5px var(--f-body); text-transform: uppercase; letter-spacing: .07em; color: var(--accent); }
+.pro-card h4 { margin: 0; font: 600 14.5px/1.3 var(--f-body); }
+.pro-card p { margin: 0; color: var(--muted); font-size: 13px; }
+.pro-card .lock { font-size: 12px; color: var(--muted); }
+.pro-more { color: var(--muted); font-size: 14px; }
+footer.site { border-top: 1px solid var(--line); padding-block: 22px 40px; color: var(--muted); font-size: 14px; display: flex; gap: 16px; flex-wrap: wrap; justify-content: space-between; }
+footer.site nav { display: flex; gap: 14px; flex-wrap: wrap; }
+footer.site a { color: inherit; }
+.d-foot a.btn { font-size: 15px; }
+
 @media (max-width: 820px) {
   .layout { grid-template-columns: minmax(0, 1fr); }
   nav.cats { position: static; max-height: none; display: flex; overflow-x: auto; gap: 6px; padding-bottom: 4px; }
@@ -110,6 +153,9 @@ pre.prompt .h { color: var(--accent); font-weight: 600; }
 }
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
 </style>
+__ANALYTICS__
+</head>
+<body>
 
 <header class="top">
   <div class="wrap top-row">
@@ -117,6 +163,10 @@ pre.prompt .h { color: var(--accent); font-weight: 600; }
     <div class="search">
       <input id="q" type="search" placeholder="Search prompts, tags, or tasks (e.g. sql, debug, landing page)" aria-label="Search prompts" autocomplete="off">
       <kbd>/</kbd>
+    </div>
+    <div class="top-actions">
+      <a class="btn small primary" href="#pro" id="proLink">Pro Pack <span class="badge" style="background:var(--accent-ink);color:var(--accent)">New</span></a>
+      <a class="btn small" id="supportTop" href="#" target="_blank" rel="noopener" hidden>♥ Support</a>
     </div>
   </div>
 </header>
@@ -133,13 +183,40 @@ pre.prompt .h { color: var(--accent); font-weight: 600; }
     <section aria-live="polite">
       <div class="results-head"><h3 id="resTitle">All prompts</h3><span id="resCount"></span></div>
       <div class="list" id="list"></div>
+      <div class="signup" id="signup" hidden>
+        <h4>Get one new prompt every week</h4>
+        <p>Join the Prompt Atlas newsletter for a battle-tested prompt each week, plus early access and a launch discount on the Pro Pack. No spam, unsubscribe anytime.</p>
+        <form id="signupForm" method="post" target="_blank">
+          <input type="email" name="email" required placeholder="you@company.com" aria-label="Email address" autocomplete="email">
+          <input type="hidden" name="tag" value="site">
+          <button class="btn primary" type="submit">Subscribe</button>
+        </form>
+      </div>
+
+      <section class="pro" id="pro" aria-labelledby="proTitle">
+        <div class="pro-head">
+          <div>
+            <h3 id="proTitle">Prompt Atlas Pro Pack</h3>
+            <p id="proBlurb"></p>
+          </div>
+          <div class="pro-cta" id="proCta"></div>
+        </div>
+        <div class="pro-list" id="proList"></div>
+        <div class="pro-more" id="proMore"></div>
+      </section>
+
       <div class="request">
         <h4>Need a prompt that isn't here?</h4>
-        <p>Ask in the PROMPTING project chat with the task you want to automate (for example "a prompt to review Terraform plans"). New prompts are added to this library with the same complete structure.</p>
+        <p>Request it with the task you want to automate (for example "a prompt to review Terraform plans"). New prompts are added with the same complete structure. <a id="requestLink" href="#" target="_blank" rel="noopener">Request a prompt</a></p>
       </div>
     </section>
   </div>
 </main>
+
+<footer class="wrap site">
+  <span>Prompt Atlas. Free prompts for developers everywhere.</span>
+  <nav id="footNav"></nav>
+</footer>
 
 <div class="scrim" id="scrim" hidden></div>
 <aside class="drawer" id="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="dTitle">
@@ -162,6 +239,7 @@ pre.prompt .h { color: var(--accent); font-weight: 600; }
     <button class="btn primary" id="copyFilled">Copy prompt</button>
     <button class="btn" id="copyRaw">Copy template</button>
     <button class="btn" id="clearFields">Clear inputs</button>
+    <a class="btn" id="permalink" href="#">Share page</a>
     <span class="info" id="dInfo"></span>
   </div>
 </aside>
@@ -169,6 +247,8 @@ pre.prompt .h { color: var(--accent); font-weight: 600; }
 
 <script>
 const PROMPTS = /*__PROMPTS__*/[];
+const CONFIG = /*__CONFIG__*/{};
+const PRO = /*__PRO__*/[];
 const $ = s => document.querySelector(s);
 const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const store = {
@@ -244,6 +324,8 @@ function openPrompt(id, push = true) {
     ${v.hint ? `<small>${esc(v.hint)}</small>` : ""}</div>`).join("");
   $("#dFieldsWrap").hidden = !current.variables.length;
   updatePreview();
+  $("#permalink").href = "p/" + id + "/";
+  track("open-" + id);
   $("#drawer").hidden = false; $("#scrim").hidden = false;
   document.body.style.overflow = "hidden";
   if (push) history.replaceState(null, "", "#" + id);
@@ -254,6 +336,30 @@ function closeDrawer() {
   history.replaceState(null, "", location.pathname + location.search);
   const card = current && document.querySelector(`.card[data-id="${current.id}"]`); if (card) card.focus();
   current = null;
+}
+
+function track(name) { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: "event/" + name, title: name, event: true }); } catch {} }
+
+function renderMoney() {
+  const C = CONFIG, link = (u, label) => `<a href="${esc(u)}" target="_blank" rel="noopener">${label}</a>`;
+  if (C.support_url) { const s = $("#supportTop"); s.href = C.support_url; s.hidden = false; }
+  if (C.newsletter_action) { $("#signupForm").action = C.newsletter_action; $("#signup").hidden = false; $("#signupForm").addEventListener("submit", () => { track("subscribe"); setTimeout(() => toast("Thanks! Check your inbox to confirm."), 300); }); }
+  $("#requestLink").href = C.repo_url + "/issues/new?title=" + encodeURIComponent("Prompt request: ");
+  const cats = [...new Set(PRO.map(p => p.category))];
+  $("#proBlurb").textContent = PRO.length
+    ? `${PRO.length} advanced prompts across ${cats.length} categories for senior engineers: agent workflows, system design, incident response, security reviews, performance and tech leadership. Same fill-and-copy structure, delivered as Markdown, JSON and Notion-ready files.`
+    : "Advanced prompts for senior engineers, coming soon.";
+  $("#proCta").innerHTML = C.pro_checkout_url
+    ? `<span class="price">${esc(C.pro_price || "")}</span><a class="btn primary" id="buyPro" href="${esc(C.pro_checkout_url)}" target="_blank" rel="noopener">Get the Pro Pack</a>`
+    : C.newsletter_action ? `<a class="btn primary" href="#signup">Join the waitlist</a>` : `<span class="badge">Coming soon</span>`;
+  const buy = $("#buyPro"); if (buy) buy.addEventListener("click", () => track("buy-pro"));
+  const shown = cats.map(c => PRO.find(p => p.category === c)).concat(PRO.filter((p, i) => i % 5 === 1)).slice(0, 12);
+  $("#proList").innerHTML = shown.map(p => `<div class="pro-card"><span class="cat-label">${esc(p.category)}</span><h4>${esc(p.title)}</h4><p>${esc(p.preview)}</p><span class="lock">🔒 Pro</span></div>`).join("");
+  $("#proMore").textContent = PRO.length > shown.length ? `+ ${PRO.length - shown.length} more Pro prompts` : "";
+  $("#pro").hidden = !PRO.length;
+  $("#proLink").hidden = !PRO.length;
+  const foot = [[C.repo_url, "GitHub"], [C.support_url, "Buy me a coffee"], [C.sponsors_url, "Sponsor"], ["sitemap.xml", "Sitemap"]].filter(x => x[0]);
+  $("#footNav").innerHTML = foot.map(x => link(x[0], x[1])).join("") + `<a href="#pro">Pro Pack</a>`;
 }
 
 let toastTimer;
@@ -272,7 +378,7 @@ $("#list").addEventListener("click", e => {
 });
 $("#list").addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("card")) { e.preventDefault(); openPrompt(e.target.dataset.id); } });
 $("#dFields").addEventListener("input", e => { const v = e.target.dataset.var; if (!v) return; values[v] = e.target.value; store.set("pa-vals-" + current.id, values); updatePreview(); });
-$("#copyFilled").addEventListener("click", () => copy(filled(current.prompt), "Prompt copied"));
+$("#copyFilled").addEventListener("click", () => { copy(filled(current.prompt), "Prompt copied"); track("copy-" + current.id); });
 $("#copyRaw").addEventListener("click", () => copy(current.prompt, "Template copied with {{placeholders}}"));
 $("#clearFields").addEventListener("click", () => { values = {}; store.set("pa-vals-" + current.id, values); document.querySelectorAll("#dFields textarea").forEach(t => t.value = ""); updatePreview(); });
 $("#dClose").addEventListener("click", closeDrawer);
@@ -283,6 +389,8 @@ document.addEventListener("keydown", e => {
 });
 
 state.cat = store.get("pa-cat", "All"); if (state.cat !== "All" && state.cat !== "Saved" && !cats.includes(state.cat)) state.cat = "All";
-renderCats(); renderList();
+renderCats(); renderList(); renderMoney();
 const h = location.hash.slice(1); if (h) openPrompt(h, false);
 </script>
+</body>
+</html>

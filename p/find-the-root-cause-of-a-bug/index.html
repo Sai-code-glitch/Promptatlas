@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Find the root cause of a bug prompt for ChatGPT, Claude &amp; Gemini | Prompt Atlas</title>
+<meta name="description" content="Systematically diagnose a bug from symptoms, code, and logs, then fix it properly. A complete, copy-ready AI prompt with role, inputs, steps, constraints and output format.">
+<link rel="canonical" href="https://sai-code-glitch.github.io/Promptatlas/p/find-the-root-cause-of-a-bug/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Find the root cause of a bug prompt for ChatGPT, Claude &amp; Gemini | Prompt Atlas">
+<meta property="og:description" content="Systematically diagnose a bug from symptoms, code, and logs, then fix it properly. A complete, copy-ready AI prompt with role, inputs, steps, constraints and output format.">
+<meta property="og:url" content="https://sai-code-glitch.github.io/Promptatlas/p/find-the-root-cause-of-a-bug/">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../assets/page.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "CreativeWork", "name": "Find the root cause of a bug", "description": "Systematically diagnose a bug from symptoms, code, and logs, then fix it properly.", "url": "https://sai-code-glitch.github.io/Promptatlas/p/find-the-root-cause-of-a-bug/", "keywords": "bug, root cause, troubleshooting", "genre": "Debugging", "isAccessibleForFree": true, "isPartOf": {"@type": "WebSite", "name": "Prompt Atlas", "url": "https://sai-code-glitch.github.io/Promptatlas/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Prompt Atlas", "item": "https://sai-code-glitch.github.io/Promptatlas/"}, {"@type": "ListItem", "position": 2, "name": "Debugging", "item": "https://sai-code-glitch.github.io/Promptatlas/c/debugging/"}, {"@type": "ListItem", "position": 3, "name": "Find the root cause of a bug", "item": "https://sai-code-glitch.github.io/Promptatlas/p/find-the-root-cause-of-a-bug/"}]}]}</script>
+
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="../../">Prompt <b>Atlas</b></a><a class="btn" href="../../#pro">Pro Pack</a></div></header>
+<main class="wrap">
+<div class="crumbs"><a href="../../">Prompt Atlas</a> / <a href="../../c/debugging/">Debugging</a></div>
+<h1>Find the root cause of a bug prompt</h1>
+<p class="lead">Systematically diagnose a bug from symptoms, code, and logs, then fix it properly.</p>
+<div class="pills"><span class="pill">bug</span><span class="pill">root cause</span><span class="pill">troubleshooting</span></div>
+<div class="actions"><a class="btn primary" href="../../#find-the-root-cause-of-a-bug">Fill in the inputs and copy</a><button class="btn" data-copy="prompt" data-id="find-the-root-cause-of-a-bug">Copy template</button></div>
+<h2>Inputs you provide</h2>
+<table><thead><tr><th>Placeholder</th><th>What to put there</th></tr></thead><tbody><tr><td><code>{{symptom}}</code></td><td>What happens vs. what should happen</td></tr><tr><td><code>{{code}}</code></td><td>Relevant code</td></tr><tr><td><code>{{error_output}}</code></td><td>Error messages, stack traces, logs</td></tr><tr><td><code>{{environment}}</code></td><td>OS, runtime versions, deployment, recent changes</td></tr><tr><td><code>{{repro_steps}}</code></td><td>Steps to reproduce and how often it happens</td></tr></tbody></table>
+<h2>The prompt</h2>
+<pre id="prompt"><span class="h"># Role</span>
+You are a principal engineer known for methodical debugging.
+
+<span class="h"># Goal</span>
+Find the root cause (not just the symptom) and propose a minimal, safe fix.
+
+<span class="h"># Inputs</span>
+- Symptom: <span class="v">{{symptom}}</span>
+- Code: <span class="v">{{code}}</span>
+- Error output: <span class="v">{{error_output}}</span>
+- Environment: <span class="v">{{environment}}</span>
+- Repro steps: <span class="v">{{repro_steps}}</span>
+
+<span class="h"># Instructions</span>
+1. Summarize the observed vs. expected behaviour.
+2. List at least 3 hypotheses ranked by likelihood, each with the evidence for and against it.
+3. For each hypothesis, give the fastest experiment to confirm or rule it out.
+4. Identify the most likely root cause and explain the exact mechanism step by step.
+5. Provide the fix as a diff, and explain why it addresses the cause rather than masking it.
+6. Write a regression test that fails before the fix and passes after.
+7. List any other places in the code where the same bug pattern may exist.
+
+<span class="h"># Constraints</span>
+- Do not suggest broad rewrites when a targeted fix works.
+- If information is missing, say exactly what to collect.
+- Be complete: no placeholders, no 'etc.', no skipped sections.
+- If something is uncertain, say so instead of guessing.
+
+<span class="h"># Output format</span>
+Summary, Hypotheses table, Root cause, Fix (diff), Regression test, Related risks.
+
+<span class="h"># Before you answer</span>
+If a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding.</pre>
+<h2>How to use it</h2>
+<p>Replace each highlighted <code>{{placeholder}}</code> with your details, or open the <a href="../../#find-the-root-cause-of-a-bug">interactive editor</a> to fill them in and copy the finished prompt. It works in Claude, ChatGPT, Gemini and any other chat model.</p>
+
+<h2>More Debugging prompts</h2>
+<div class="grid"><a class="card" href="../explain-an-error-message/"><strong>Explain an error message</strong><span>Decode a cryptic error or stack trace and get exact steps to fix it.</span></a><a class="card" href="../diagnose-a-performance-problem/"><strong>Diagnose a performance problem</strong><span>Find bottlenecks and get prioritized optimizations with expected impact.</span></a><a class="card" href="../fix-a-memory-leak/"><strong>Fix a memory leak</strong><span>Track down growing memory usage and stop the leak.</span></a><a class="card" href="../debug-a-flaky-test/"><strong>Debug a flaky test</strong><span>Make an intermittently failing test deterministic.</span></a><a class="card" href="../debug-a-production-incident/"><strong>Debug a production incident</strong><span>Structured help during a live incident: triage, mitigate, and find the cause.</span></a></div>
+</main>
+<footer><div class="wrap"><span>Prompt Atlas. Free prompts for developers everywhere.</span><span><a href="../../">All prompts</a> · <a href="https://github.com/Sai-code-glitch/Promptatlas">GitHub</a></span></div></footer>
+<script>
+document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async () => {
+  const t = document.getElementById(b.dataset.copy).innerText;
+  let msg = "Prompt copied";
+  try { await navigator.clipboard.writeText(t); } catch { msg = "Copy blocked. Select the text and press Ctrl+C."; }
+  const d = document.createElement("div"); d.className = "toast"; d.textContent = msg; document.body.appendChild(d); setTimeout(() => d.remove(), 1800);
+  try { window.goatcounter && window.goatcounter.count({ path: "event/copy-" + b.dataset.id, title: "copy", event: true }); } catch {}
+}));
+</script>
+</body>
+</html>

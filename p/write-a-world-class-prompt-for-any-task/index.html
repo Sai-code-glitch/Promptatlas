@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Write a world-class prompt for any task prompt for ChatGPT, Claude &amp; Gemini | Prompt Atlas</title>
+<meta name="description" content="Meta-prompt: turn a rough idea into a complete, structured prompt for any AI model. A complete, copy-ready AI prompt with role, inputs, steps, constraints and output format.">
+<link rel="canonical" href="https://sai-code-glitch.github.io/Promptatlas/p/write-a-world-class-prompt-for-any-task/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Write a world-class prompt for any task prompt for ChatGPT, Claude &amp; Gemini | Prompt Atlas">
+<meta property="og:description" content="Meta-prompt: turn a rough idea into a complete, structured prompt for any AI model. A complete, copy-ready AI prompt with role, inputs, steps, constraints and output format.">
+<meta property="og:url" content="https://sai-code-glitch.github.io/Promptatlas/p/write-a-world-class-prompt-for-any-task/">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../assets/page.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "CreativeWork", "name": "Write a world-class prompt for any task", "description": "Meta-prompt: turn a rough idea into a complete, structured prompt for any AI model.", "url": "https://sai-code-glitch.github.io/Promptatlas/p/write-a-world-class-prompt-for-any-task/", "keywords": "prompt engineering, meta prompt, llm", "genre": "AI, Prompts & Agents", "isAccessibleForFree": true, "isPartOf": {"@type": "WebSite", "name": "Prompt Atlas", "url": "https://sai-code-glitch.github.io/Promptatlas/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Prompt Atlas", "item": "https://sai-code-glitch.github.io/Promptatlas/"}, {"@type": "ListItem", "position": 2, "name": "AI, Prompts & Agents", "item": "https://sai-code-glitch.github.io/Promptatlas/c/ai-prompts-agents/"}, {"@type": "ListItem", "position": 3, "name": "Write a world-class prompt for any task", "item": "https://sai-code-glitch.github.io/Promptatlas/p/write-a-world-class-prompt-for-any-task/"}]}]}</script>
+
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="../../">Prompt <b>Atlas</b></a><a class="btn" href="../../#pro">Pro Pack</a></div></header>
+<main class="wrap">
+<div class="crumbs"><a href="../../">Prompt Atlas</a> / <a href="../../c/ai-prompts-agents/">AI, Prompts &amp; Agents</a></div>
+<h1>Write a world-class prompt for any task prompt</h1>
+<p class="lead">Meta-prompt: turn a rough idea into a complete, structured prompt for any AI model.</p>
+<div class="pills"><span class="pill">prompt engineering</span><span class="pill">meta prompt</span><span class="pill">llm</span></div>
+<div class="actions"><a class="btn primary" href="../../#write-a-world-class-prompt-for-any-task">Fill in the inputs and copy</a><button class="btn" data-copy="prompt" data-id="write-a-world-class-prompt-for-any-task">Copy template</button></div>
+<h2>Inputs you provide</h2>
+<table><thead><tr><th>Placeholder</th><th>What to put there</th></tr></thead><tbody><tr><td><code>{{task_idea}}</code></td><td>What I want the AI to do, in my own words</td></tr><tr><td><code>{{audience}}</code></td><td>Who will use the output</td></tr><tr><td><code>{{model}}</code></td><td>Target model or tool, if known</td></tr><tr><td><code>{{examples}}</code></td><td>Any examples of good output (optional)</td></tr><tr><td><code>{{placeholders}}</code></td><td>placeholders</td></tr></tbody></table>
+<h2>The prompt</h2>
+<pre id="prompt"><span class="h"># Role</span>
+You are an expert prompt engineer who writes clear, complete, testable prompts for large language models.
+
+<span class="h"># Goal</span>
+Turn my rough request into a production-quality prompt that leaves nothing to guesswork.
+
+<span class="h"># Inputs</span>
+- Task idea: <span class="v">{{task_idea}}</span>
+- Audience: <span class="v">{{audience}}</span>
+- Model: <span class="v">{{model}}</span>
+- Examples: <span class="v">{{examples}}</span>
+
+<span class="h"># Instructions</span>
+1. Ask me up to 5 clarifying questions if anything critical is missing; otherwise proceed.
+2. Write the prompt with these sections: Role, Context, Task, Inputs (as <span class="v">{{placeholders}}</span>), Step-by-step instructions, Constraints, Output format, Quality checklist.
+3. Include 1-2 short examples if they would improve consistency.
+4. Add instructions for handling missing or ambiguous input.
+5. Add a self-check the model should run before answering.
+6. Explain briefly why each section is there and how to adapt it.
+
+<span class="h"># Constraints</span>
+- Be explicit and specific; no vague words like 'good' or 'nice' without criteria.
+- Use clear delimiters for inputs.
+- Be complete: no placeholders, no 'etc.', no skipped sections.
+- If something is uncertain, say so instead of guessing.
+
+<span class="h"># Output format</span>
+1. The final prompt in one fenced block
+2. Placeholder list with descriptions
+3. Tips to tune it
+
+<span class="h"># Before you answer</span>
+If a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding.</pre>
+<h2>How to use it</h2>
+<p>Replace each highlighted <code>{{placeholder}}</code> with your details, or open the <a href="../../#write-a-world-class-prompt-for-any-task">interactive editor</a> to fill them in and copy the finished prompt. It works in Claude, ChatGPT, Gemini and any other chat model.</p>
+
+<h2>More AI, Prompts &amp; Agents prompts</h2>
+<div class="grid"><a class="card" href="../improve-an-existing-prompt/"><strong>Improve an existing prompt</strong><span>Diagnose why a prompt underperforms and rewrite it.</span></a><a class="card" href="../design-an-ai-agent/"><strong>Design an AI agent</strong><span>Design an autonomous agent: tools, loop, memory, guardrails, and evaluation.</span></a><a class="card" href="../design-a-rag-system/"><strong>Design a RAG system</strong><span>Retrieval-augmented generation design: chunking, retrieval, prompting, evaluation.</span></a><a class="card" href="../write-a-system-prompt-for-a-chatbot/"><strong>Write a system prompt for a chatbot</strong><span>Complete system prompt for a customer-facing or internal assistant.</span></a><a class="card" href="../create-an-llm-evaluation-set/"><strong>Create an LLM evaluation set</strong><span>Build test cases and grading rubrics to measure an AI feature.</span></a><a class="card" href="../automate-a-workflow-with-ai/"><strong>Automate a workflow with AI</strong><span>Map a manual process and automate it with AI and integration tools.</span></a></div>
+</main>
+<footer><div class="wrap"><span>Prompt Atlas. Free prompts for developers everywhere.</span><span><a href="../../">All prompts</a> · <a href="https://github.com/Sai-code-glitch/Promptatlas">GitHub</a></span></div></footer>
+<script>
+document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async () => {
+  const t = document.getElementById(b.dataset.copy).innerText;
+  let msg = "Prompt copied";
+  try { await navigator.clipboard.writeText(t); } catch { msg = "Copy blocked. Select the text and press Ctrl+C."; }
+  const d = document.createElement("div"); d.className = "toast"; d.textContent = msg; document.body.appendChild(d); setTimeout(() => d.remove(), 1800);
+  try { window.goatcounter && window.goatcounter.count({ path: "event/copy-" + b.dataset.id, title: "copy", event: true }); } catch {}
+}));
+</script>
+</body>
+</html>

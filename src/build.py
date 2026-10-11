@@ -5,6 +5,7 @@ Usage: python3 build.py   (run from this folder)
 import json, re, pathlib
 import prompts_a
 import prompts_b  # noqa: F401  (registers its prompts on import)
+import pages
 
 HERE = pathlib.Path(__file__).parent
 OUT = HERE.parent
@@ -46,12 +47,24 @@ def main():
                 o["variables"].append({"name": name, "hint": ""})
     data = json.dumps(out, ensure_ascii=False, indent=1)
     (OUT / "prompts.json").write_text(data)
-    tpl = (HERE / "template.html").read_text()
-    safe = json.dumps(out, ensure_ascii=False).replace("</", "<\\/")
-    (OUT / "index.html").write_text(tpl.replace("/*__PROMPTS__*/[]", safe))
+    cfg = json.loads((HERE / "config.json").read_text())
+    cfg = {k: v for k, v in cfg.items() if not k.startswith("_")}
+    pro_file = HERE / "pro_previews.json"
+    pro = json.loads(pro_file.read_text()) if pro_file.exists() else []
+    js = lambda v: json.dumps(v, ensure_ascii=False).replace("</", "<\\/")
     cats = {}
     for o in out:
         cats[o["category"]] = cats.get(o["category"], 0) + 1
+    gc = cfg.get("goatcounter")
+    analytics = (f'<script data-goatcounter="https://{gc}.goatcounter.com/count" async '
+                 f'src="https://gc.zgo.at/count.js"></script>') if gc else ""
+    tpl = (HERE / "template.html").read_text()
+    html = (tpl.replace("/*__PROMPTS__*/[]", js(out)).replace("/*__CONFIG__*/{}", js(cfg))
+               .replace("/*__PRO__*/[]", js(pro)).replace("__ANALYTICS__", analytics)
+               .replace("__COUNT__", str(len(out))).replace("__CATS__", str(len(cats)))
+               .replace("__SITE__", cfg["site_url"]))
+    (OUT / "index.html").write_text(html)
+    pages.build(out, cfg, pro, analytics, OUT)
     print(len(out), "prompts in", len(cats), "categories")
     for c, n in cats.items():
         print(f"  {n:3d}  {c}")

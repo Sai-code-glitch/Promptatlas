@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build a UI component prompt for ChatGPT, Claude &amp; Gemini | Prompt Atlas</title>
+<meta name="description" content="Create an accessible, responsive, reusable component with states and tests. A complete, copy-ready AI prompt with role, inputs, steps, constraints and output format.">
+<link rel="canonical" href="https://sai-code-glitch.github.io/Promptatlas/p/build-a-ui-component/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Build a UI component prompt for ChatGPT, Claude &amp; Gemini | Prompt Atlas">
+<meta property="og:description" content="Create an accessible, responsive, reusable component with states and tests. A complete, copy-ready AI prompt with role, inputs, steps, constraints and output format.">
+<meta property="og:url" content="https://sai-code-glitch.github.io/Promptatlas/p/build-a-ui-component/">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../assets/page.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "CreativeWork", "name": "Build a UI component", "description": "Create an accessible, responsive, reusable component with states and tests.", "url": "https://sai-code-glitch.github.io/Promptatlas/p/build-a-ui-component/", "keywords": "react, component, ui", "genre": "Frontend & Mobile", "isAccessibleForFree": true, "isPartOf": {"@type": "WebSite", "name": "Prompt Atlas", "url": "https://sai-code-glitch.github.io/Promptatlas/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Prompt Atlas", "item": "https://sai-code-glitch.github.io/Promptatlas/"}, {"@type": "ListItem", "position": 2, "name": "Frontend & Mobile", "item": "https://sai-code-glitch.github.io/Promptatlas/c/frontend-mobile/"}, {"@type": "ListItem", "position": 3, "name": "Build a UI component", "item": "https://sai-code-glitch.github.io/Promptatlas/p/build-a-ui-component/"}]}]}</script>
+
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="../../">Prompt <b>Atlas</b></a><a class="btn" href="../../#pro">Pro Pack</a></div></header>
+<main class="wrap">
+<div class="crumbs"><a href="../../">Prompt Atlas</a> / <a href="../../c/frontend-mobile/">Frontend &amp; Mobile</a></div>
+<h1>Build a UI component prompt</h1>
+<p class="lead">Create an accessible, responsive, reusable component with states and tests.</p>
+<div class="pills"><span class="pill">react</span><span class="pill">component</span><span class="pill">ui</span></div>
+<div class="actions"><a class="btn primary" href="../../#build-a-ui-component">Fill in the inputs and copy</a><button class="btn" data-copy="prompt" data-id="build-a-ui-component">Copy template</button></div>
+<h2>Inputs you provide</h2>
+<table><thead><tr><th>Placeholder</th><th>What to put there</th></tr></thead><tbody><tr><td><code>{{framework}}</code></td><td>React, Vue, Svelte, Angular, SwiftUI, Flutter, Jetpack Compose</td></tr><tr><td><code>{{component}}</code></td><td>What it is and does</td></tr><tr><td><code>{{design}}</code></td><td>Design details: variants, sizes, states, tokens</td></tr><tr><td><code>{{styling}}</code></td><td>CSS modules, Tailwind, styled-components, etc.</td></tr></tbody></table>
+<h2>The prompt</h2>
+<pre id="prompt"><span class="h"># Role</span>
+You are a senior frontend engineer expert in <span class="v">{{framework}}</span> and accessibility.
+
+<span class="h"># Goal</span>
+Build the component below ready for a design system.
+
+<span class="h"># Inputs</span>
+- Framework: <span class="v">{{framework}}</span>
+- Component: <span class="v">{{component}}</span>
+- Design: <span class="v">{{design}}</span>
+- Styling: <span class="v">{{styling}}</span>
+
+<span class="h"># Instructions</span>
+1. Define the props/API with types and defaults.
+2. Implement all states: default, hover, focus, active, disabled, loading, error, empty.
+3. Make it keyboard accessible with correct ARIA roles and labels (WCAG 2.2 AA).
+4. Make it responsive.
+5. Write tests for rendering, interaction, and accessibility.
+6. Write a usage example and a Storybook story if relevant.
+
+<span class="h"># Constraints</span>
+- No hard-coded colors; use tokens.
+- Respect prefers-reduced-motion.
+- Be complete: no placeholders, no 'etc.', no skipped sections.
+- If something is uncertain, say so instead of guessing.
+
+<span class="h"># Output format</span>
+Props table, Component code, Styles, Tests, Usage example.
+
+<span class="h"># Before you answer</span>
+If a required input above is missing or ambiguous, ask up to 3 focused clarifying questions first. Otherwise, proceed, then check your answer against every instruction and constraint above and fix any gaps before responding.</pre>
+<h2>How to use it</h2>
+<p>Replace each highlighted <code>{{placeholder}}</code> with your details, or open the <a href="../../#build-a-ui-component">interactive editor</a> to fill them in and copy the finished prompt. It works in Claude, ChatGPT, Gemini and any other chat model.</p>
+
+<h2>More Frontend &amp; Mobile prompts</h2>
+<div class="grid"><a class="card" href="../convert-a-design-to-code/"><strong>Convert a design to code</strong><span>Turn a screenshot or design description into pixel-accurate, semantic code.</span></a><a class="card" href="../fix-a-css-layout-problem/"><strong>Fix a CSS layout problem</strong><span>Diagnose and fix layout, overflow, alignment, or responsive bugs.</span></a><a class="card" href="../improve-web-performance-core-web-vitals/"><strong>Improve web performance (Core Web Vitals)</strong><span>Raise Lighthouse and Core Web Vitals scores with prioritized fixes.</span></a><a class="card" href="../audit-accessibility/"><strong>Audit accessibility</strong><span>WCAG 2.2 audit of markup or a UI with concrete fixes.</span></a></div>
+</main>
+<footer><div class="wrap"><span>Prompt Atlas. Free prompts for developers everywhere.</span><span><a href="../../">All prompts</a> · <a href="https://github.com/Sai-code-glitch/Promptatlas">GitHub</a></span></div></footer>
+<script>
+document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async () => {
+  const t = document.getElementById(b.dataset.copy).innerText;
+  let msg = "Prompt copied";
+  try { await navigator.clipboard.writeText(t); } catch { msg = "Copy blocked. Select the text and press Ctrl+C."; }
+  const d = document.createElement("div"); d.className = "toast"; d.textContent = msg; document.body.appendChild(d); setTimeout(() => d.remove(), 1800);
+  try { window.goatcounter && window.goatcounter.count({ path: "event/copy-" + b.dataset.id, title: "copy", event: true }); } catch {}
+}));
+</script>
+</body>
+</html>

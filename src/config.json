@@ -1,0 +1,16 @@
+{
+  "_readme": "Monetization settings. Leave a value empty to hide that feature on the site. Run `python3 build.py` after editing.",
+  "site_url": "https://sai-code-glitch.github.io/Promptatlas/",
+  "repo_url": "https://github.com/Sai-code-glitch/Promptatlas",
+  "newsletter_action": "",
+  "_newsletter_action": "Buttondown: https://buttondown.com/api/emails/embed-subscribe/YOUR_USERNAME  (any provider whose form accepts a POST with an 'email' field works)",
+  "support_url": "",
+  "_support_url": "Buy Me a Coffee or Ko-fi page, e.g. https://buymeacoffee.com/YOUR_NAME",
+  "sponsors_url": "",
+  "_sponsors_url": "https://github.com/sponsors/Sai-code-glitch once GitHub Sponsors is approved",
+  "pro_checkout_url": "",
+  "_pro_checkout_url": "Lemon Squeezy or Gumroad product link for the Pro Pack",
+  "pro_price": "$19",
+  "goatcounter": "",
+  "_goatcounter": "Your GoatCounter code, e.g. promptatlas for https://promptatlas.goatcounter.com"
+}
